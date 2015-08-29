@@ -18,21 +18,13 @@ public class leapYear {
         userInputYear = reader.next();
         year = Integer.parseInt(userInputYear);   
   
-        if (year % 4 != 0) {
+        if (year % 4 != 0 &&
+            (year % 100 == 0 && year % 400 != 0)) {
             System.out.println("Not leap year");
 
             return;
         }
-
-        if (year % 100 == 0 && year % 400 != 0) {
-            System.out.println("Not leap year");
-
-            return;
-        }
-
+        
         System.out.println("Leap year");
     }
-}
-
-
-        
+}        
