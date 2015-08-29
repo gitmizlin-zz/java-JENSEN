@@ -3,7 +3,12 @@
 Conditions:
   1. A personal number is a 10-digit number.
   2. The first 8 digits represents a birth date (before today).
-  3. Checksum: To calculate the checksum, multiply the individual digits in the identity number and 212121-212. The resulting products (a two digit product, such as 16, would be converted to 1 + 6) are added together. The checksum is the last digit of 10 minus the last digit in this sum (note that if the last digit of the sum is zero, the checksum is 0).
+  3. Checksum: To calculate the checksum, multiply the individual
+   digits in the identity number and 212121-212. The resulting 
+   products (a two digit product, such as 16, would be converted 
+   to 1 + 6) are added together. The checksum is the last digit of 
+   10 minus the last digit in this sum (note that if the last 
+   digit of the sum is zero, the checksum is 0).
 */
 
 import java.text.ParseException;
