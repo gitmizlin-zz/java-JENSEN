@@ -14,9 +14,9 @@ public class gameboard {
     int sizeOfBoardSide = 3;
     int sizeOfSpace = 2;
     int numOfLettersInLine = sizeOfBoardSide * 2 + sizeOfBoardSide - 1;
-    String space = "  ";
+    String horLine = "-";
+    String space = "  "; // two spaces
     String verLine = "|";
-    String  horLine = "-";
 
     for (int i = 1; i <= sizeOfBoardSide + 2; i++) {
       if (i % 2 == 0) {
