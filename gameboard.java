@@ -1,36 +1,38 @@
 /** Rita ut ett tre-i-rad-spelbräde (förbättra gärna!) Förtydligande: gör ett program som ritar ut ett spelbräde för tre-i-rad
 
-  |  |  
+  |  |
 --------
-  |  | 
+  |  |
 --------
   |  |
 
 */
 
-public class gameboard {  
+public class gameboard {
   public static void main(String[] args) {
 
     int sizeOfBoardSide = 3;
     int sizeOfSpace = 2;
-    String space = " ";
+    int numOfLettersInLine = sizeOfBoardSide * 2 + sizeOfBoardSide - 1;
+    String space = "  ";
     String separator = "|";
 
-
-    for (int i = 0; i <= sizeOfBoardSide + 1; i++) {
-      if (i % 2 != 0) {
-        for (int n = 0; n <= Math.pow(sizeOfBoardSide, 2); n++) {
-        System.out.print("-");
+    for (int i = 1; i <= sizeOfBoardSide + 2; i++) {
+      if (i % 2 == 0) {
+        for (int n = 0; n < numOfLettersInLine; n++) {
+          System.out.print("-");
         }
-      } else { 
-          for (int n = 0; n <= Math.pow(sizeOfBoardSide, 2); n++) {
-          System.out.print("M"); // fixa här!!!
-        }
+      } else {
+          for (int n = 0; n < sizeOfBoardSide - 1; n += sizeOfSpace) {
+            for (int k = 0; k <= sizeOfSpace; k++) {
+              System.out.print(space);
+              if (k != sizeOfSpace) {
+                System.out.print(separator);
+              }
+            }
+          }
       }
-
       System.out.print("\n");
     }
   }
 }
-
-// 0 1 "2" 3 4 "5" 6 7
