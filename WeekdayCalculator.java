@@ -83,8 +83,6 @@ public class WeekdayCalculator {
 			case 4: result = "Wednesday";
 			case 5: result = "Thursday";
 			case 6: result = "Friday";
-
-
 		}
 		return result;
 	}
