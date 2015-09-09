@@ -4,9 +4,9 @@ public class WeekdayCalculator {
 
 	public static void main (String[] args) {
 
-		Scanner keyboard = new Scanner(System.in);
+		Scanner keyboard = new Scanner(System.in); // Scanner object to put in lots of data i g where it fetches the data from etc into a variable
 
-		System.out.println("Now it's your turn!  What's your birthday?");
+		System.out.println("What's your birthday?");
 		System.out.print("Birth date (mm dd yyyy): ");
 
 		int mm = keyboard.nextInt();
@@ -61,11 +61,11 @@ public class WeekdayCalculator {
 
 	public static boolean isLeap (int year) {
 		boolean result;
-		if ( year%400 == 0 )
+		if (year % 400 == 0)
 			result = true;
-		else if ( year%100 == 0 )
+		else if (year % 100 == 0)
 			result = false;
-		else if ( year%4 == 0 )
+		else if (year % 4 == 0)
 			result = true;
 		else
 			result = false;
@@ -97,7 +97,7 @@ public class WeekdayCalculator {
 			case 6: return "June";
 			case 7: return "July";
 			case 8: return "August";
-			case 9: return "Semtember";
+			case 9: return "September";
 			case 10: return "October";
 			case 11: return "November";
 			case 12: return "December";
