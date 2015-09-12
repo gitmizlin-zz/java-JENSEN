@@ -12,10 +12,10 @@ public class gameboard {
   public static void main(String[] args) {
 
     int sizeOfBoardSide = 3;
-    int sizeOfSpace = 2;
-    int numOfLettersInLine = sizeOfBoardSide * 2 + sizeOfBoardSide - 1;
+    int sizeOfSpace = 3;
+    int numOfLettersInLine = sizeOfBoardSide * sizeOfSpace + sizeOfBoardSide - 1;
     String horLine = "-";
-    String space = "  "; // two spaces
+    String space = "   "; // three spaces
     String verLine = "|";
 
     for (int i = 1; i <= sizeOfBoardSide + 2; i++) {
@@ -27,7 +27,7 @@ public class gameboard {
           for (int n = 0; n < sizeOfBoardSide - 1; n += sizeOfSpace) {
             for (int k = 0; k <= sizeOfSpace; k++) {
               System.out.print(space);
-              if (k != sizeOfSpace) {
+              if (k != sizeOfSpace && k != sizeOfBoardSide - 1) {
                 System.out.print(verLine);
               }
             }
