@@ -12,6 +12,20 @@ public class TicTacToe {
 	    drawBoard(rows, cols);
 	}
 
+	public static void userPlay(int turn) {
+	    System.out.print("Player1's turn. Enter the row and column indices: ");
+	    int row = keyboard.nextInt();
+	    int col = keyboard.nextInt();
+
+	    while (board[row][col] != '   ') {
+	      System.out.print("\n!! The cell is already taken.\nEnter the row and column indices: ");
+	    	row = keyboard.nextInt();
+	    	col = keyboard.nextInt();
+	    }
+
+    	brd[row][col] = turn;
+  	}
+
 
 	public static void drawBoard (int row, int col) {
 
