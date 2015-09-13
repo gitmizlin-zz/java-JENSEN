@@ -17,10 +17,13 @@ public class ttt {
 	public static int player = 1;
 	public static int lastPlayer;
 
+	public static boolean win = false;
+
 	public static Scanner keyboard = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		initGame();
+
 		play();
 	}
 
@@ -35,7 +38,7 @@ public class ttt {
 	public static void play() {
 		showBoard();
 
-		while(true) {
+		while(!win) {
 			move();
 		}
 	}
@@ -46,8 +49,8 @@ public class ttt {
 
 			System.out.print("Player" + player + "'s turn. Enter your indices. (1-3 / 1-3): \n");
 
-			int row = keyboard.nextInt() - 1;
-			int col = keyboard.nextInt() - 1;
+			row = keyboard.nextInt() - 1;
+			col = keyboard.nextInt() - 1;
 
 			if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == empty) {
 
@@ -76,10 +79,11 @@ public class ttt {
 				} else {
 					checkWinner(nought);
 				}
-			}
+			} 
 
-			if (moveCounter == 9) {
-				System.out.println("Draw");
+			if (win) {
+				player = 1;
+				move();
 			}
 
 		} while (!input);
@@ -107,6 +111,7 @@ public class ttt {
 	public static void checkWinner(String move) {
 
 		for (int row = 0; row < rows; row++) {
+
 			if 	 ((board[row][0] == move
 				&& board[row][1] == move
 				&& board[row][2] == move)
@@ -123,11 +128,14 @@ public class ttt {
 				&& board[1][1] == move
 				&& board[2][0] == move)) {
 
-				System.out.println("Player " + player + " won.");
-
-			} else {
-			System.out.println("Player " + player + " is playing");
+				System.out.println("Player " + lastPlayer + " won.");
+				win = true;
+				return;
 			}
+		}
+		if (moveCounter == 9) {
+			System.out.println("Draw!");
+			win = true;
 		}
 	}
 }
