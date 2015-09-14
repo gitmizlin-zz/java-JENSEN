@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class ttt {
-
 	public static final int rows = 3, cols = 3;
 	public static final String[][] board = new String[rows][cols];
 
@@ -9,13 +8,9 @@ public class ttt {
 	public static final String cross = " X ";
 	public static final String nought = " O ";
 
-	public static int row;
-	public static int col;
-
 	public static int moveCounter = 0;
 
-	public static int player = 1;
-	public static int lastPlayer;
+	public static int currentPlayer = 1;
 
 	public static boolean win = false;
 
@@ -45,27 +40,23 @@ public class ttt {
 
 	public static void move() {
 		boolean input = false;
-		do {
 
-			System.out.print("Player" + player + "'s turn. Enter your indices. (1-3 / 1-3): \n");
+		do {
+			System.out.print("Player " + currentPlayer + "'s turn. Enter your indices. (1-3 / 1-3): \n");
 
 			row = keyboard.nextInt() - 1;
 			col = keyboard.nextInt() - 1;
 
 			if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == empty) {
-
-				if (player == 1) {
-					board[row][col]= cross;
-					lastPlayer = 1;
-					player = 2;
+				if (currentPlayer == 1) {
+					board[row][col] = cross;
+					currentPlayer = 2;
 				} else {
 					board[row][col] = nought;
-					lastPlayer = 2;
-					player = 1;
+					currentPlayer = 1;
 				}
 
-			showBoard();
-
+				showBoard();
 			} else {
 				System.out.println("Invalid input. Enter your indices. (1-3 / 1-3): ");
 			}
@@ -74,7 +65,7 @@ public class ttt {
 			moveCounter++;
 
 			if (moveCounter >= 5) {
-				if (lastPlayer == 1) {
+				if (currentPlayer == 2) {
 					checkWinner(cross);
 				} else {
 					checkWinner(nought);
@@ -82,10 +73,9 @@ public class ttt {
 			} 
 
 			if (win) {
-				player = 1;
+				currentPlayer = 1;
 				move();
 			}
-
 		} while (!input);
 	}
 
@@ -93,10 +83,12 @@ public class ttt {
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				System.out.print(board[row][col]);
+
 				if (col != cols - 1) {
 					System.out.print("|");
 				}
 			}
+
 			System.out.println();
 
 			if (row != rows - 1) {
@@ -104,15 +96,14 @@ public class ttt {
 					System.out.print("-");
 				}
 			}
+
 			System.out.println();
 		}
 	}
-
+	
 	public static void checkWinner(String move) {
-
 		for (int row = 0; row < rows; row++) {
-
-			if 	 ((board[row][0] == move
+			if ((board[row][0] == move
 				&& board[row][1] == move
 				&& board[row][2] == move)
 				||
@@ -128,11 +119,12 @@ public class ttt {
 				&& board[1][1] == move
 				&& board[2][0] == move)) {
 
-				System.out.println("Player " + lastPlayer + " won.");
+				System.out.println("Player " + ((currentPlayer % 2) + 1) + " won.");
 				win = true;
 				return;
 			}
 		}
+
 		if (moveCounter == 9) {
 			System.out.println("Draw!");
 			win = true;
