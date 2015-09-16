@@ -23,8 +23,8 @@ public class ttt {
 	}
 
 	public static void initGame() {
-		for (row = 0; row < rows; row++) {
-			for (col = 0; col < cols; col++) {
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
 				board[row][col] = empty;
 			}
 		}
@@ -36,6 +36,7 @@ public class ttt {
 		while(!win) {
 			move();
 		}
+		initGame();
 	}
 
 	public static void move() {
@@ -44,8 +45,8 @@ public class ttt {
 		do {
 			System.out.print("Player " + currentPlayer + "'s turn. Enter your indices. (1-3 / 1-3): \n");
 
-			row = keyboard.nextInt() - 1;
-			col = keyboard.nextInt() - 1;
+			int row = keyboard.nextInt() - 1;
+			int col = keyboard.nextInt() - 1;
 
 			if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == empty) {
 				if (currentPlayer == 1) {
@@ -63,19 +64,19 @@ public class ttt {
 
 			input = true;
 			moveCounter++;
-
+		
 			if (moveCounter >= 5) {
-				if (currentPlayer == 2) {
-					checkWinner(cross);
+				if (currentPlayer == 1) {
+					checkWinner(cross);		
 				} else {
-					checkWinner(nought);
+					checkWinner(nought);		
 				}
-			} 
 
-			if (win) {
-				currentPlayer = 1;
-				move();
-			}
+				if (!win && moveCounter == 9) {
+				System.out.println("Draw!");
+				}
+			} 	
+
 		} while (!input);
 	}
 
@@ -96,38 +97,66 @@ public class ttt {
 					System.out.print("-");
 				}
 			}
-
 			System.out.println();
 		}
 	}
-	
-	public static void checkWinner(String move) {
-		for (int row = 0; row < rows; row++) {
-			if ((board[row][0] == move
-				&& board[row][1] == move
-				&& board[row][2] == move)
-				||
-				  (board[0][col] == move
-				&& board[1][col] == move
-				&& board[2][col] == move)
-				||
-				  (board[0][0] == move
-				&& board[1][1] == move
-				&& board[2][2] == move)
-				||
-				  (board[0][2] == move
-				&& board[1][1] == move
-				&& board[2][0] == move)) {
 
-				System.out.println("Player " + ((currentPlayer % 2) + 1) + " won.");
-				win = true;
-				return;
+	public static boolean checkHorizontal(String move) {
+		boolean win = false;
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0, i = 0; col < cols; col++) {	
+				move = board[0][0];	
+				if (board[row][col] != move) {
+					return false;
+				} 
+			}
+		}
+		System.out.println("hor" + win);
+		return true;
+	}
+
+	public static boolean checkVertical(String move) {
+		boolean win = true;
+		move = board[0][0];
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; ) {				
+				if (board[row][col] != move) {
+					win = false;
+				}
+			}
+		} 
+		System.out.println("ver" + win);
+		return win;
+	}
+
+	public static boolean checkDiagonal(String move) {
+		boolean win = false;
+		move = board[0][0];
+		for (int row = 0, col = 0; row < rows && col < cols; row++, col++) {
+			if (board[row][col] != move) {
+				win = false;
 			}
 		}
 
-		if (moveCounter == 9) {
-			System.out.println("Draw!");
-			win = true;
+    	move = board[0][cols];
+		for (int row = 0, col = cols; row < rows && col < cols; row++, col--) {
+			if (board[row][col] != move) {
+				win = false;
+			}
+		}
+		System.out.println("dia" + win);
+		return win;
+	}
+
+	public static void checkWinner(String move) {
+		if (checkHorizontal(move) || checkVertical(move) || checkDiagonal(move)) {
+			System.out.println(currentPlayer + " has won!");		
+			currentPlayer = 1;
+			move();
+		} else {
+			System.out.println("currentplayer = " + currentPlayer);
 		}
 	}
 }
+
+			
