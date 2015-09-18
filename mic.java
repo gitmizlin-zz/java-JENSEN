@@ -65,28 +65,69 @@ public class mic {
 
 	public void move() {
 		boolean input = false;
+		boolean gameEnd = false;
 		currentPlayer = p1;
-		System.out.print(currentPlayer.name);
+		int moveCounter = 0;
 
-		do {
-			System.out.print("Player " + currentPlayer.name + "'s turn. Enter your indices. (1-3 / 1-3): \n");
+		while (!gameEnd) {
 
-			int row = keyboard.nextInt() - 1;
-			int col = keyboard.nextInt() - 1;
+			do {
+				System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-3 / 1-3): \n");
 
-			if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == empty) {
+				int row = keyboard.nextInt() - 1;
+				int col = keyboard.nextInt() - 1;
 
-				if (currentPlayer == p1) {
-					board[row][col] = p1.piece;
-					currentPlayer = p2;
+				if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == empty) {
+
+					if (currentPlayer == p1) {
+						board[row][col] = p1.piece;
+						currentPlayer = p2;
+					} else {
+						board[row][col] = p2.piece;
+						currentPlayer = p1;
+					}
+					showBoard();
 				} else {
-					board[row][col] = p2.piece;
-					currentPlayer = p1;
+					System.out.println("Invalid input. Enter your indices. (1-3 / 1-3): ");
+				}
+
+				input = true;
+				++moveCounter;
+
+				if (moveCounter >= 5 && checkWinner()) {
+					System.out.println(currentPlayer.name + " won!");
+					gameEnd = true;
+				}
+
+				if (moveCounter == 9) {
+					System.out.println("Draw!");
+					gameEnd = true;
+				}
+
+			} while (!input);
+		} // how to go back to the start?
+	}
+
+	public boolean checkWinner() {
+		if (checkHorizontal(currentPlayer.piece)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean checkHorizontal(String move) {
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0, i = 0; col < cols; col++) {
+				move = board[0][0];
+				if (board[row][col] != move) {
+					System.out.println(move + board[row][col]);
+					return false;
 				}
 			}
-
-			input = true;
-		} while (!input);
+		}
+		System.out.println("hor true!");
+		return true;
 	}
 }
 
