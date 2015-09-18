@@ -142,23 +142,60 @@ public class mic {
 
 	public boolean checkVertical() {
 		for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-            	String first = board[row][col];
-                if (first == empty) {
-                    break;
-                }
-                if (col == 0) {
-                    first = board[row][col];
-                } else if (first != board[row][col]) {
-                    break;
-                }
-                if (row == rows -1) {
-                	System.out.println("ver!");
-                    return true;
-                }
-            }
-        }
-        return false;
+			for (int row = 0; row < rows; row++) {
+				String first = board[row][col];
+				if (first == empty) {
+					break;
+				}
+				if (col == 0) {
+					first = board[row][col];
+				} else if (first != board[row][col]) {
+					break;
+				}
+				if (row == rows -1) {
+					System.out.println("ver!");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean checkDiagonal() {
+		for (int row = 0; row < rows; row++) {
+			String first = board[row][row];
+			if (first == empty) {
+				break;
+			}
+			if (row == 0) {
+				first = board[row][row];
+			} else if (first != board[row][row]) {
+				break;
+			}
+			if (row == rows -1) {
+				System.out.println("dia!");
+				return true;
+			}
+		}
+
+		for (int row = 0; row < rows; row++) {
+			for (int col = cols - 1; col < cols; col--) {
+				String first = board[row][row];
+				if (first == empty) {
+					break;
+				}
+				if (row == 0) {
+					first = board[row][col];
+				} else if (first != board[row][col]) {
+					break;
+				}
+				if (row == rows -1) {
+					System.out.println("dia!");
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
 
