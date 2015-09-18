@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class mic {
 	public final int rows = 3, cols = 3;
 	public Player currentPlayer;
+	public Player nextPlayer;
 
 	public Scanner keyboard = new Scanner(System.in);
 
@@ -81,10 +82,10 @@ public class mic {
 
 					if (currentPlayer == p1) {
 						board[row][col] = p1.piece;
-						currentPlayer = p2;
+						nextPlayer = p2;
 					} else {
 						board[row][col] = p2.piece;
-						currentPlayer = p1;
+						nextPlayer = p1;
 					}
 					showBoard();
 				} else {
@@ -99,35 +100,65 @@ public class mic {
 					gameEnd = true;
 				}
 
-				if (moveCounter == 9) {
+				if (moveCounter == 9 && !checkWinner()) {
 					System.out.println("Draw!");
 					gameEnd = true;
 				}
+
+				currentPlayer = nextPlayer;
 
 			} while (!input);
 		} // how to go back to the start?
 	}
 
 	public boolean checkWinner() {
-		if (checkHorizontal(currentPlayer.piece)) {
+		if (checkHorizontal() || checkVertical()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean checkHorizontal(String move) {
+	public boolean checkHorizontal() {
 		for (int row = 0; row < rows; row++) {
-			for (int col = 0, i = 0; col < cols; col++) {
-				move = board[0][0];
-				if (board[row][col] != move) {
-					System.out.println(move + board[row][col]);
-					return false;
+			for (int col = 0; col < cols; col++) {
+				String first = board[row][col];
+				if (first == empty) {
+					break;
+				}
+				if (col == 0) {
+					first = board[row][col];
+				} else if (first != board[row][col]) {
+					break;
+				}
+				if (col == cols - 1) {
+					System.out.println("hor!");
+					return true;
 				}
 			}
 		}
-		System.out.println("hor true!");
-		return true;
+		return false;
+	}
+
+	public boolean checkVertical() {
+		for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+            	String first = board[row][col];
+                if (first == empty) {
+                    break;
+                }
+                if (col == 0) {
+                    first = board[row][col];
+                } else if (first != board[row][col]) {
+                    break;
+                }
+                if (row == rows -1) {
+                	System.out.println("ver!");
+                    return true;
+                }
+            }
+        }
+        return false;
 	}
 }
 
