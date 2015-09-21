@@ -13,8 +13,8 @@ public class mic {
 	public Player p1;
 	public Player p2;
 
-	public static void main(String[] args) {
-		new mic();
+	public static void main(String[] args) { 
+		new mic(); // what is this? Why not in main?
 	}
 
 	public mic() {
@@ -27,7 +27,7 @@ public class mic {
 		initGame();
 		showBoard();
 		move();
-
+		checkQuit();
 	}
 
 	public String askName(int playerNumber) {
@@ -201,6 +201,22 @@ public class mic {
 		}
 
 		return false;
+	}
+
+	public void checkQuit() {
+		System.out.println("Do you want to quit? (y/n): " );
+		String userInput = keyboard.next();	
+		System.out.println("Userinput: " + userInput);	
+
+		if (userInput.toLowerCase() == "y") {
+			System.out.print("Bye bye!");
+
+		} else if (userInput.toLowerCase() == "n") {
+			System.out.print("New game!");
+
+		} else {
+			System.out.println("Invalid input!"); // blir true oavsett.
+		}
 	}
 }
 

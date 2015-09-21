@@ -11,6 +11,9 @@ public class CardGame {
     PlayingCard card3 = new PlayingCard("Spades", 7);
     System.out.println(card3);
 
+    PlayingCard card4 = new PlayingCard();
+    System.out.println(card4);
+
   }
 }
 
@@ -29,7 +32,9 @@ class PlayingCard {
     this.rank = rank;
   }
 
-
+  public PlayingCard() {
+    this("diamonds", 2);
+  }
   // Statiska metoder (klassmetoder)
 
 
