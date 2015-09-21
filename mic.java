@@ -13,7 +13,7 @@ public class mic {
 	public Player p1;
 	public Player p2;
 
-	public static void main(String[] args) { 
+	public static void main(String[] args) {
 		new mic(); // what is this? Why not in main?
 	}
 
@@ -22,7 +22,7 @@ public class mic {
 		String player2 = askName(2);
 
 		this.p1 = new Player(player1, " X ", 1);
-		this.p2 = new Player(player2, " 0 ", 2);
+		this.p2 = new Player(player2, " O ", 2);
 
 		initGame();
 		showBoard();
@@ -114,14 +114,14 @@ public class mic {
 		return checkHorizontal() || checkVertical() || checkDiagonal();
 	}
 
-	public boolean checkHorizontal() {	
+	public boolean checkHorizontal() {
 		for (int row = 0; row < rows; row++) {
 			String piece = board[row][0];
 
 			if (piece == empty) {
 				continue;
 			}
-			
+
 			for (int col = 0; col < cols; col++) {
 				if (board[row][col] != piece) {
 					break;
@@ -160,7 +160,7 @@ public class mic {
 
 	public boolean checkDiagonal() {
 		// from upleft to downright
-		for (int row = 0; row < rows; row++) {		
+		for (int row = 0; row < rows; row++) {
 			String piece = board[0][0];
 
 			if (piece == empty) {
@@ -182,10 +182,10 @@ public class mic {
 		// from upright to downleft
 		for (int row = 0, col = cols-1; row < rows; row++, col--) {
 			String piece = board[0][cols - 1];
-			
+
 			if (piece == empty) {
 				break;
-			}	
+			}
 
 			if (board[row][col] != piece) {
 				break;
@@ -204,19 +204,27 @@ public class mic {
 	}
 
 	public void checkQuit() {
-		System.out.println("Do you want to quit? (y/n): " );
-		String userInput = keyboard.next();	
-		System.out.println("Userinput: " + userInput);	
+		boolean  flag = false;
 
-		if (userInput.toLowerCase() == "y") {
+		do {
+			String urge = "Do you want to quit? (y/n): ";
+			System.out.println(urge);
+			char userInput = keyboard.next().charAt(0);
+			userInput = Character.toLowerCase(userInput);
+
+			if (userInput == 'y') {
 			System.out.print("Bye bye!");
+			return;
 
-		} else if (userInput.toLowerCase() == "n") {
-			System.out.print("New game!");
+			} else if (userInput == 'n') {
+				System.out.println("New game!");
+				flag = true;
+				new mic(); // how to aboid recursive?
 
-		} else {
-			System.out.println("Invalid input!"); // blir true oavsett.
-		}
+			} else {
+				System.out.println("Invalid input!");
+			}
+		} while (!flag);
 	}
 }
 
