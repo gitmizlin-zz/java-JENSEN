@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
-public class mic {
-	public final int rows = 3, cols = 3;
+public class mic { // *1
+	public final int rows = 3, cols = rows;
+	public boolean quit = false;
+
 	public Player currentPlayer;
 	public Player nextPlayer;
 
@@ -14,20 +16,23 @@ public class mic {
 	public Player p2;
 
 	public static void main(String[] args) {
-		new mic(); // what is this? Why not in main?
+		new mic(); // create a new instance of *1, will call *1 constructor
 	}
 
-	public mic() {
+	public mic() { // constructor of *1
 		String player1 = askName(1);
 		String player2 = askName(2);
 
-		this.p1 = new Player(player1, " X ", 1);
-		this.p2 = new Player(player2, " O ", 2);
+		this.p1 = new Player(player1, " X ", 1, 0);
+		this.p2 = new Player(player2, " O ", 2, 0);
 
-		initGame();
-		showBoard();
-		move();
-		checkQuit();
+		while (!quit) {
+			initGame();
+			showBoard();
+			move();
+			showResults();
+			checkQuit();
+		}
 	}
 
 	public String askName(int playerNumber) {
@@ -56,7 +61,7 @@ public class mic {
 			System.out.println();
 
 			if (row != rows - 1) {
-				for (int col = 0; col < cols * 3 + 2; col++) {
+				for (int col = 0; col < cols * 4 - 1; col++) {
 					System.out.print("-");
 				}
 			}
@@ -95,6 +100,7 @@ public class mic {
 					if (checkWinner()) {
 						System.out.println(currentPlayer.name + " won!");
 						gameEnd = true;
+						currentPlayer.wins++;
 					}
 
 					if (moveCounter == (rows * cols) && !checkWinner()) {
@@ -167,15 +173,13 @@ public class mic {
 				continue;
 			}
 
-			for (row = 0; row < rows; row++) {
+			if (board[row][row] != piece) {
+				break;
+			}
 
-				if (board[row][row] != piece) {
-					continue;
-				}
-
-				if (row == rows - 1) {
-					return true;
-				}
+			if (row == rows - 1) {
+				System.out.println("d1");
+				return true;
 			}
 		}
 
@@ -196,11 +200,16 @@ public class mic {
 			}
 
 			if (row == rows - 1) {
+				System.out.println("d2");
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public void showResults() {
+		System.out.print("**** Results ****\n" + p1.name + " : " + p1.wins + " wins\n" + p2.name + " : " + p2.wins + " wins\n");
 	}
 
 	public void checkQuit() {
@@ -214,12 +223,13 @@ public class mic {
 
 			if (userInput == 'y') {
 			System.out.print("Bye bye!");
-			return;
+			quit = true;
+			System.exit(0);
 
 			} else if (userInput == 'n') {
 				System.out.println("New game!");
 				flag = true;
-				new mic(); // how to aboid recursive?
+				quit = false;
 
 			} else {
 				System.out.println("Invalid input!");
@@ -232,10 +242,12 @@ class Player {
 	public String name;
 	public String piece;
 	public int playerNo;
+	public int wins;
 
-	public Player(String name, String piece, int playerNo) {
+	public Player(String name, String piece, int playerNo, int wins) {
 		this.name = name;
 		this.piece = piece;
 		this.playerNo = playerNo;
+		this.wins = wins;
 	}
 }
