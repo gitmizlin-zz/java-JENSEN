@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class mic { // *1
-	public final int rows = 3, cols = rows;
+	public final int rows = 2, cols = rows;
 	public boolean quit = false;
 
 	public Player currentPlayer;
@@ -208,8 +208,19 @@ public class mic { // *1
 		return false;
 	}
 
-	public void showResults() {
-		System.out.print("**** Results ****\n" + p1.name + " : " + p1.wins + " wins\n" + p2.name + " : " + p2.wins + " wins\n");
+	public void showResults() { // want to make this shorter.
+		String p1Wins = "wins", p2Wins = "wins";
+
+		if (p1.wins == 1) {
+			p1Wins = "win";
+		}
+		if (p2.wins == 1) {
+			p2Wins = "win";
+		}
+
+		System.out.println("**** Results ****");
+		System.out.println(p1.name + " : " + p1.wins + " " + p1Wins);
+		System.out.println(p2.name + " : " + p2.wins + " " + p2Wins);
 	}
 
 	public void checkQuit() {
