@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
 public class mic { // *1
-	public final int rows = 2, cols = rows;
+	public final int rows = 3, cols = rows;
+	public final int cellSize = 3;
 	public boolean quit = false;
 
 	public Player currentPlayer;
@@ -61,7 +62,7 @@ public class mic { // *1
 			System.out.println();
 
 			if (row != rows - 1) {
-				for (int col = 0; col < cols * 4 - 1; col++) {
+				for (int col = 0; col < cols * (cellSize + 1) - 1; col++) {
 					System.out.print("-");
 				}
 			}
@@ -78,7 +79,7 @@ public class mic { // *1
 
 		while (!gameEnd) {
 			do {
-				System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-3 / 1-3):\n");
+				System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
 
 				int row = keyboard.nextInt() - 1;
 				int col = keyboard.nextInt() - 1;
