@@ -114,7 +114,7 @@ public class mic { // *1
 					System.out.println("Invalid input. Enter your indices. (1-3 / 1-3): ");
 				}
 			} while (!input);
-		} // how to go back to the start?
+		}
 	}
 
 	public boolean checkWinner() {
@@ -210,18 +210,14 @@ public class mic { // *1
 	}
 
 	public void showResults() { // want to make this shorter.
-		String p1Wins = "wins", p2Wins = "wins";
-
-		if (p1.wins == 1) {
-			p1Wins = "win";
-		}
-		if (p2.wins == 1) {
-			p2Wins = "win";
-		}
+		Map<int, String> wins = new HashMap<int, String>();
+		wins.put(0, "wins");
+		wins.put(1, "win");
+		wins.put(2, "wins");
 
 		System.out.println("**** Results ****");
-		System.out.println(p1.name + " : " + p1.wins + " " + p1Wins);
-		System.out.println(p2.name + " : " + p2.wins + " " + p2Wins);
+		System.out.println(p1.name + " : " + p1.wins + " " + wins.get(Math.min(p1.wins, 2));
+		System.out.println(p2.name + " : " + p2.wins + " " + wins.get(Math.min(p2.wins, 2));
 	}
 
 	public void checkQuit() {
