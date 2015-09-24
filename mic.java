@@ -1,7 +1,10 @@
 import java.util.Scanner;
 
-public class mic {
-	public final int rows = 3, cols = 3;
+public class mic { // *1
+	public final int rows = 3, cols = rows;
+	public final int cellSize = 3;
+	public boolean quit = false;
+
 	public Player currentPlayer;
 	public Player nextPlayer;
 
@@ -13,21 +16,24 @@ public class mic {
 	public Player p1;
 	public Player p2;
 
-	public static void main(String[] args) { 
-		new mic(); // what is this? Why not in main?
+	public static void main(String[] args) {
+		new mic(); // create a new instance of *1, will call *1 constructor
 	}
 
-	public mic() {
+	public mic() { // constructor of *1
 		String player1 = askName(1);
 		String player2 = askName(2);
 
-		this.p1 = new Player(player1, " X ", 1);
-		this.p2 = new Player(player2, " 0 ", 2);
+		this.p1 = new Player(player1, " X ", 1, 0);
+		this.p2 = new Player(player2, " O ", 2, 0);
 
-		initGame();
-		showBoard();
-		move();
-		checkQuit();
+		while (!quit) {
+			initGame();
+			showBoard();
+			move();
+			showResults();
+			checkQuit();
+		}
 	}
 
 	public String askName(int playerNumber) {
@@ -56,7 +62,7 @@ public class mic {
 			System.out.println();
 
 			if (row != rows - 1) {
-				for (int col = 0; col < cols * 3 + 2; col++) {
+				for (int col = 0; col < cols * (cellSize + 1) - 1; col++) {
 					System.out.print("-");
 				}
 			}
@@ -73,7 +79,7 @@ public class mic {
 
 		while (!gameEnd) {
 			do {
-				System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-3 / 1-3):\n");
+				System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
 
 				int row = keyboard.nextInt() - 1;
 				int col = keyboard.nextInt() - 1;
@@ -95,6 +101,7 @@ public class mic {
 					if (checkWinner()) {
 						System.out.println(currentPlayer.name + " won!");
 						gameEnd = true;
+						currentPlayer.wins++;
 					}
 
 					if (moveCounter == (rows * cols) && !checkWinner()) {
@@ -107,21 +114,21 @@ public class mic {
 					System.out.println("Invalid input. Enter your indices. (1-3 / 1-3): ");
 				}
 			} while (!input);
-		} // how to go back to the start?
+		}
 	}
 
 	public boolean checkWinner() {
 		return checkHorizontal() || checkVertical() || checkDiagonal();
 	}
 
-	public boolean checkHorizontal() {	
+	public boolean checkHorizontal() {
 		for (int row = 0; row < rows; row++) {
 			String piece = board[row][0];
 
 			if (piece == empty) {
 				continue;
 			}
-			
+
 			for (int col = 0; col < cols; col++) {
 				if (board[row][col] != piece) {
 					break;
@@ -160,32 +167,30 @@ public class mic {
 
 	public boolean checkDiagonal() {
 		// from upleft to downright
-		for (int row = 0; row < rows; row++) {		
+		for (int row = 0; row < rows; row++) {
 			String piece = board[0][0];
 
 			if (piece == empty) {
 				continue;
 			}
 
-			for (row = 0; row < rows; row++) {
+			if (board[row][row] != piece) {
+				break;
+			}
 
-				if (board[row][row] != piece) {
-					continue;
-				}
-
-				if (row == rows - 1) {
-					return true;
-				}
+			if (row == rows - 1) {
+				System.out.println("d1");
+				return true;
 			}
 		}
 
 		// from upright to downleft
 		for (int row = 0, col = cols-1; row < rows; row++, col--) {
 			String piece = board[0][cols - 1];
-			
+
 			if (piece == empty) {
 				break;
-			}	
+			}
 
 			if (board[row][col] != piece) {
 				break;
@@ -196,6 +201,7 @@ public class mic {
 			}
 
 			if (row == rows - 1) {
+				System.out.println("d2");
 				return true;
 			}
 		}
@@ -203,20 +209,40 @@ public class mic {
 		return false;
 	}
 
+	public void showResults() { // want to make this shorter.
+		Map<int, String> wins = new HashMap<int, String>();
+		wins.put(0, "wins");
+		wins.put(1, "win");
+		wins.put(2, "wins");
+
+		System.out.println("**** Results ****");
+		System.out.println(p1.name + " : " + p1.wins + " " + wins.get(Math.min(p1.wins, 2));
+		System.out.println(p2.name + " : " + p2.wins + " " + wins.get(Math.min(p2.wins, 2));
+	}
+
 	public void checkQuit() {
-		System.out.println("Do you want to quit? (y/n): " );
-		String userInput = keyboard.next();	
-		System.out.println("Userinput: " + userInput);	
+		boolean  flag = false;
 
-		if (userInput.toLowerCase() == "y") {
+		do {
+			String urge = "Do you want to quit? (y/n): ";
+			System.out.println(urge);
+			char userInput = keyboard.next().charAt(0);
+			userInput = Character.toLowerCase(userInput);
+
+			if (userInput == 'y') {
 			System.out.print("Bye bye!");
+			quit = true;
+			System.exit(0);
 
-		} else if (userInput.toLowerCase() == "n") {
-			System.out.print("New game!");
+			} else if (userInput == 'n') {
+				System.out.println("New game!");
+				flag = true;
+				quit = false;
 
-		} else {
-			System.out.println("Invalid input!"); // blir true oavsett.
-		}
+			} else {
+				System.out.println("Invalid input!");
+			}
+		} while (!flag);
 	}
 }
 
@@ -224,10 +250,12 @@ class Player {
 	public String name;
 	public String piece;
 	public int playerNo;
+	public int wins;
 
-	public Player(String name, String piece, int playerNo) {
+	public Player(String name, String piece, int playerNo, int wins) {
 		this.name = name;
 		this.piece = piece;
 		this.playerNo = playerNo;
+		this.wins = wins;
 	}
 }
