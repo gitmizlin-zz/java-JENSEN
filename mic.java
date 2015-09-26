@@ -1,38 +1,38 @@
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Random;
-import java.io.IOException;
 
 public class mic { // *1
-	public final int rows = 3, cols = rows;
+	public final int rows = 4, cols = rows;
 	public final int cellSize = 3;
+	public final String[][] board = new String[rows][cols];
+	public final String empty = "   ";
+
 	public boolean quit = false;
 
 	public Player currentPlayer;
 	public Player nextPlayer;
-
-	public Scanner keyboard = new Scanner(System.in);
-
-	public final String[][] board = new String[rows][cols];
-	public final String empty = "   ";
-
 	public Player p1;
 	public Player p2;
+
+	public char opponent = '\0';
+
+	public Scanner keyboard = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		new mic(); // create a new instance of *1, will call *1 constructor
 	}
 
-	public mic() { // constructor of *1 (against player)
+	public mic() { // constructor of *1
 		String player1;
 		String player2;
 		String gameType = "";
+		
 
 		switch (chooseOpponent()) {
 
 			case 'p' : player1 = askName(1);
 					   player2 = askName(2);
-					   gameType = "vsHuman";
 					   break;
 
 			case 'c' : player1 = askName(1);
@@ -56,7 +56,7 @@ public class mic { // *1
 	}
 
 	public char chooseOpponent() {
-		char opponent = '\0';
+		
 		boolean  flag = false;
 
 		while (!flag) {
@@ -79,7 +79,11 @@ public class mic { // *1
 	}
 
 	public String askName(int playerNumber) {
-		System.out.println("Player" + playerNumber + "'s name? ");
+		if (opponent == 'p') {
+			System.out.print("Player" + playerNumber + "'s name: ");			
+		} else {
+			System.out.print("Your name: ");
+		}
 		return keyboard.next();
 	}
 
@@ -124,7 +128,7 @@ public class mic { // *1
 
 		while (!gameEnd) {
 			do {
-				if (p2.name != "Computer") {
+				if (opponent == 'p') {
 					System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
 
 					row = keyboard.nextInt() - 1;
