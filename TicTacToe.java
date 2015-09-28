@@ -2,8 +2,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Random;
 
-public class mic { // *1
-	public final int rows = 4, cols = rows;
+public class TicTacToe { // *1
+	public final int rows = 3, cols = rows;
 	public final int cellSize = 3;
 	public final String[][] board = new String[rows][cols];
 	public final String empty = "   ";
@@ -20,10 +20,10 @@ public class mic { // *1
 	public Scanner keyboard = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		new mic(); // create a new instance of *1, will call *1 constructor
+		new TicTacToe(); // create a new instance of *1, will call *1 constructor
 	}
 
-	public mic() { // constructor of *1
+	public TicTacToe() { // constructor of *1
 		String player1;
 		String player2;
 		String gameType = "";
@@ -35,7 +35,7 @@ public class mic { // *1
 					   player2 = askName(2);
 					   break;
 
-			case 'c' : player1 = askName(1);
+			case 'c' : player1 = "You";
 					   player2 = "Computer";
 					   break;
 
@@ -81,9 +81,8 @@ public class mic { // *1
 	public String askName(int playerNumber) {
 		if (opponent == 'p') {
 			System.out.print("Player" + playerNumber + "'s name: ");			
-		} else {
-			System.out.print("Your name: ");
 		}
+
 		return keyboard.next();
 	}
 
@@ -252,7 +251,6 @@ public class mic { // *1
 			}
 
 			if (row == rows - 1) {
-				System.out.println("d1");
 				return true;
 			}
 		}
@@ -274,7 +272,6 @@ public class mic { // *1
 			}
 
 			if (row == rows - 1) {
-				System.out.println("d2");
 				return true;
 			}
 		}
@@ -316,19 +313,5 @@ public class mic { // *1
 				System.out.println("Invalid input!");
 			}
 		} while (!flag);
-	}
-}
-
-class Player {
-	public String name;
-	public String piece;
-	public int playerNo;
-	public int wins;
-
-	public Player(String name, String piece, int playerNo, int wins) {
-		this.name = name;
-		this.piece = piece;
-		this.playerNo = playerNo;
-		this.wins = wins;
 	}
 }
