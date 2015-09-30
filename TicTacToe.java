@@ -1,43 +1,88 @@
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Random;
 
-public class mic { // *1
+public class TicTacToe { // *1
 	public final int rows = 3, cols = rows;
 	public final int cellSize = 3;
+	public final String[][] board = new String[rows][cols];
+	public final String empty = "   ";
+
 	public boolean quit = false;
 
 	public Player currentPlayer;
 	public Player nextPlayer;
-
-	public Scanner keyboard = new Scanner(System.in);
-
-	public final String[][] board = new String[rows][cols];
-	public final String empty = "   ";
-
 	public Player p1;
 	public Player p2;
 
+	public char opponent = '\0';
+
+	public Scanner keyboard = new Scanner(System.in);
+
 	public static void main(String[] args) {
-		new mic(); // create a new instance of *1, will call *1 constructor
+		new TicTacToe(); // create a new instance of *1, will call *1 constructor
 	}
 
-	public mic() { // constructor of *1
-		String player1 = askName(1);
-		String player2 = askName(2);
+	public TicTacToe() { // constructor of *1
+		String player1;
+		String player2;
+		String gameType = "";
+		
 
+		switch (chooseOpponent()) {
+
+			case 'p' : player1 = askName(1);
+					   player2 = askName(2);
+					   break;
+
+			case 'c' : player1 = "You";
+					   player2 = "Computer";
+					   break;
+
+			default  : System.out.println("Invalid input");	
+					   return;
+		}
+		
 		this.p1 = new Player(player1, " X ", 1, 0);
-		this.p2 = new Player(player2, " O ", 2, 0);
+		this.p2 = new Player(player2, " O ", 2, 0); 
 
 		while (!quit) {
 			initGame();
 			showBoard();
-			move();
+			placeMark();			
 			showResults();
 			checkQuit();
 		}
 	}
 
+	public char chooseOpponent() {
+		
+		boolean  flag = false;
+
+		while (!flag) {
+			System.out.println("Play against Computer -> Enter c");
+			System.out.println("Play against Player -> Enter p");
+			opponent = keyboard.next().charAt(0);			
+			opponent = Character.toLowerCase(opponent);
+			
+			if (opponent == 'c') {
+				flag = true;
+				
+			} else if (opponent == 'p') {
+				flag = true;	
+
+			} else {
+				System.out.println("Invalid input");
+			}
+		}
+		return opponent;
+	}
+
 	public String askName(int playerNumber) {
-		System.out.println("Player" + playerNumber + "'s name? ");
+		if (opponent == 'p') {
+			System.out.print("Player" + playerNumber + "'s name: ");			
+		}
+
 		return keyboard.next();
 	}
 
@@ -71,18 +116,45 @@ public class mic { // *1
 		}
 	}
 
-	public void move() {
+	public void placeMark() {
 		boolean input = false;
 		boolean gameEnd = false;
 		currentPlayer = p1;
 		int moveCounter = 0;
 
+		int row = 0;
+		int col = 0;
+
 		while (!gameEnd) {
 			do {
-				System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
+				if (opponent == 'p') {
+					System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
 
-				int row = keyboard.nextInt() - 1;
-				int col = keyboard.nextInt() - 1;
+					row = keyboard.nextInt() - 1;
+					col = keyboard.nextInt() - 1;
+				
+				} else if (currentPlayer == p1) {
+					System.out.print("Your turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
+
+					row = keyboard.nextInt() - 1;
+					col = keyboard.nextInt() - 1;
+
+				} else {
+					boolean isValid = false;
+
+					while (!isValid) {						
+						Random r = new Random();
+						int i1 = r.nextInt(rows);
+						int i2 = r.nextInt(cols);
+						
+						if (board[i1][i2] == empty) {					
+							row = i1;
+							col = i2;
+							isValid = true;
+							System.out.print(currentPlayer.name + "'s turn.\n");
+						}
+					}
+				}
 
 				if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == empty) {
 					board[row][col] = currentPlayer.piece;
@@ -179,7 +251,6 @@ public class mic { // *1
 			}
 
 			if (row == rows - 1) {
-				System.out.println("d1");
 				return true;
 			}
 		}
@@ -201,7 +272,6 @@ public class mic { // *1
 			}
 
 			if (row == rows - 1) {
-				System.out.println("d2");
 				return true;
 			}
 		}
@@ -209,15 +279,15 @@ public class mic { // *1
 		return false;
 	}
 
-	public void showResults() { // want to make this shorter.
-		Map<int, String> wins = new HashMap<int, String>();
+	public void showResults() {
+		HashMap<Integer, String> wins = new HashMap<Integer, String>();
 		wins.put(0, "wins");
 		wins.put(1, "win");
 		wins.put(2, "wins");
 
 		System.out.println("**** Results ****");
-		System.out.println(p1.name + " : " + p1.wins + " " + wins.get(Math.min(p1.wins, 2));
-		System.out.println(p2.name + " : " + p2.wins + " " + wins.get(Math.min(p2.wins, 2));
+		System.out.println(p1.name + " : " + p1.wins + " " + wins.get(Math.min(p1.wins, 2)));
+		System.out.println(p2.name + " : " + p2.wins + " " + wins.get(Math.min(p2.wins, 2)));
 	}
 
 	public void checkQuit() {
@@ -230,7 +300,7 @@ public class mic { // *1
 			userInput = Character.toLowerCase(userInput);
 
 			if (userInput == 'y') {
-			System.out.print("Bye bye!");
+			System.out.println("Bye bye!");
 			quit = true;
 			System.exit(0);
 
@@ -243,19 +313,5 @@ public class mic { // *1
 				System.out.println("Invalid input!");
 			}
 		} while (!flag);
-	}
-}
-
-class Player {
-	public String name;
-	public String piece;
-	public int playerNo;
-	public int wins;
-
-	public Player(String name, String piece, int playerNo, int wins) {
-		this.name = name;
-		this.piece = piece;
-		this.playerNo = playerNo;
-		this.wins = wins;
 	}
 }
