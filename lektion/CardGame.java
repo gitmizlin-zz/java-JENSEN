@@ -82,14 +82,26 @@ public class CardGame {
     // generera en hel kortlek, en array med 52 element
     String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
 
+    PlayingCard[] deckOfCards = new PlayingCard[52];
+
+    int cardNumber = 0;
+
     //ropa igenom suits
-    for(String theSuit : suits) {
+    for(String theSuit : suits) { // ":" = where
+
       // skapa 13 kort av färgen theSuit
       for(int i = 1; i <= 13; i++) {
         PlayingCard someCard = new PlayingCard(theSuit, i);
-        System.out.println(someCard);
+        System.out.println("Card" + cardNumber + " : " + someCard);
+
+        deckOfCards[cardNumber] = someCard;
+        cardNumber++; 
       }
     }
+
+    System.out.println("Deck size: " + deckOfCards.length);
+    System.out.println("Card at index 13: " + deckOfCards[13]);
+
   }
 }
 

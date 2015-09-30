@@ -15,7 +15,21 @@ public class Cat {
 		this(name, age, "Sverige");
 	}
 
+	// parameter order changed. works.
+	Cat (int age, String name) {
+		this(name, age, "Boo!!!");
+	}
+
+
 	Cat () {
 		this("unknown", 10, "Japan");
+	}
+
+	Cat (String name, String land) { // String * 2
+		this(name, 34, land);
+	}
+
+	Cat (String land, String name) { // String * 2 i samma datatyp som ovan. funkar inte.
+		this(land, 899, name);
 	}
 }

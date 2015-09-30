@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class TicTacToe { // *1
-	public final int rows = 3, cols = rows;
+	public final int rows = 5, cols = rows;
 	public final int cellSize = 3;
 	public final String[][] board = new String[rows][cols];
 	public final String empty = "   ";
@@ -15,7 +15,7 @@ public class TicTacToe { // *1
 	public Player p1;
 	public Player p2;
 
-	public char opponent = '\0';
+	public char opponent = '\0'; // (char) "0" (string)
 
 	public Scanner keyboard = new Scanner(System.in);
 
@@ -128,13 +128,13 @@ public class TicTacToe { // *1
 		while (!gameEnd) {
 			do {
 				if (opponent == 'p') {
-					System.out.print(currentPlayer.name + "'s turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
+					System.out.print(currentPlayer.name + "'s turn. Enter your indices. (Row: 1-" + rows + " / Colum: 1-" + rows + "):\n");
 
 					row = keyboard.nextInt() - 1;
 					col = keyboard.nextInt() - 1;
 				
 				} else if (currentPlayer == p1) {
-					System.out.print("Your turn. Enter your indices. (1-" + rows + " / 1-" + rows + "):\n");
+					System.out.print("Your turn. Enter your indices. (Row: 1-" + rows + " / Colum: 1-" + rows + "):\n");
 
 					row = keyboard.nextInt() - 1;
 					col = keyboard.nextInt() - 1;
@@ -271,8 +271,8 @@ public class TicTacToe { // *1
 				break;
 			}
 
-			if (row == rows - 1) {
-				return true;
+			if (row == rows - 1) { // row = currentRow etc
+				return true; 
 			}
 		}
 
