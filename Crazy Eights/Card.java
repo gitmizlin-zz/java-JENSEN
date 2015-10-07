@@ -28,21 +28,18 @@ public class Card {
 		return value;
 	}
 
-	public Card() {
-		int i = 0;
-		Card deck[] = new Card[52];
-		String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+	public String toString() { // metod
 
-		for(String suit : suits) {
+		String output = "";
+		output = suit + " ";
 
-			for(int k = 1; k <= 13; k++) {
-				Card card = new Card(suit, k);
-				deck[i] = card;
-				i++;
-			}
+		switch(value) {
+			case  1: output += "A"; break;
+			case 11: output += "J"; break;
+			case 12: output += "Q"; break;
+			case 13: output += "K"; break;
+			default: output += value; break;
 		}
-		return i;
-
+		return output;
 	}
-
 }
