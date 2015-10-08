@@ -2,6 +2,7 @@ public class Cat {
 	String name;
 	int age;
 	String land;
+	int counter = 0;
 
 	// when an instance with no parameters is created, the first method is called because of "this". "this()" means this class' constructor.
 
@@ -23,6 +24,7 @@ public class Cat {
 
 	Cat () {
 		this("unknown", 10, "Japan");
+		conter++;
 	}
 
 	Cat (String name, String land) { // String * 2
