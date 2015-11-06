@@ -1,6 +1,6 @@
 public class TestStatic {
 
-	static int totalAmount = 0; // Class variables are always static. 
+	static int totalAmount = 0; // Class variables are always static.
 	private int id; // instance variables should be private.
 
 	public TestStatic() { // Constructors cannot be static.
@@ -16,4 +16,3 @@ public class TestStatic {
 		return id;
 	}
 }
-	
