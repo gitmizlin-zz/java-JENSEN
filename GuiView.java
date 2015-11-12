@@ -1,0 +1,4 @@
+class SwingView implements DiceInterface {
+
+
+}

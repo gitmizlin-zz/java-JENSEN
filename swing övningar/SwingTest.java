@@ -41,9 +41,9 @@ public class SwingTest extends JFrame { // *1
 		panel.setBackground(Color.red);
 
 		panel2 = new JPanel();
-		panel2.setSize(600, 400);
+		panel2.setSize(300, 500);
 		// panel2.setPreferredSize(new Dimension(300, 300));// does not work. panel expands to the frame size.
-		panel2.setBackground(Color.black);
+		panel2.setBackground(Color.white);
 
 		label = new JLabel("test test", SwingConstants.CENTER);
 		label.setPreferredSize(new Dimension(200, 200));
@@ -62,11 +62,12 @@ public class SwingTest extends JFrame { // *1
 
 		// pack();
 		setResizable(false);
-		setVisible(true);
-		setSize(1200, 800);
+		
+		setSize(1200, 800);		
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+		setVisible(true);
 	}
 
 }

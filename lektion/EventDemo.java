@@ -32,12 +32,20 @@ public class EventDemo extends JFrame implements ActionListener {
         add(mainPanel);
 
         button = new JButton("Click here!");
+<<<<<<< HEAD
         button.addActionListener(new MyActionListener()); // ?? why new object? instead of calling method?
+=======
+        button.addActionListener(new MyActionListener());
+>>>>>>> 1c05819bb7bff603534f294a7dce827d4b944501
         mainPanel.add(button);
 
         button2 = new JButton("I want to change this text!");
         // Anonym inre klass
+<<<<<<< HEAD
         button2.addActionListener(new ActionListener(){ // ??
+=======
+        button2.addActionListener(new ActionListener(){
+>>>>>>> 1c05819bb7bff603534f294a7dce827d4b944501
             public void actionPerformed(ActionEvent ae) {
                 System.out.println("TEST!");
                 button2.setText("I changed! Eureka!");
@@ -81,6 +89,7 @@ public class EventDemo extends JFrame implements ActionListener {
 //        }
 
         // Alternativ 2
+<<<<<<< HEAD
         Color c = button4.getBackground();
 
 
@@ -102,12 +111,25 @@ public class EventDemo extends JFrame implements ActionListener {
             }
         }
 
+=======
+        if(event.getSource() == button4) {
+            button4.setBackground(Color.blue);
+        } else if (event.getSource() == button5) {
+            button5.setBackground(Color.red);
+        }
+​
+>>>>>>> 1c05819bb7bff603534f294a7dce827d4b944501
         System.out.println("event = " + event.toString());
         System.out.println("getActionCommand() = " + event.getActionCommand());
         System.out.println("getSource() = " + event.getSource());
         System.out.println("getId() = " + event.getID());
+<<<<<<< HEAD
         System.out.println("color = " + c.toString());
 
+=======
+​
+​
+>>>>>>> 1c05819bb7bff603534f294a7dce827d4b944501
         // Hur kan vi göra koden flexibel -
         // så att det blir knappen vi klickar på vi ändrar färg på!
     }

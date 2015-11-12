@@ -1,0 +1,130 @@
+
+
+2015-11-09
+
+OOP och design
+
+Hur kan kod ser ut?
+
+Design kriterier
+
+inkapsling (encapsulation)
+lös koppling (loose coupling)
+sammanhällning (cohesion)
+ansvarsdrivet
+återanvändbarhet
+	arv
+	importera paket
+	metoder
+	ramverk (Math, Collections m.fl)
+
+Designmönster
+"Gang of Four" skrev boken Design Patterns 1995.
+	- Samlade "sätt att programera på" som mönster
+	- Återanvändbara lösningar på specifika problem
+	- ett enhetligt språk att kommunicera programmering på
+	- Delas in i tre kategorier
+		Skapandemönster
+		Strukturmönster
+		Beteendemönster
+	- Ej bundet till programmeringsspråk (förutom att OOP stöds)
+
+
+MVC: model view control
+Ett sätt att strukturera upp program (delar):
+	MODEL
+		data
+		algoritmer
+		logik
+		ingen grafik!!
+
+	VIEW
+		grafiska representation av MODEL
+		speglar / visar upp MODEL
+
+	CONTROL
+		interaktionen som uppdaterar MODEL (och då sin tur VIEW)
+
+A -> B
+riktad association. 
+A känner till B. 
+B oberoende av A
+
+A - B
+association ex Teacher-Student
+
+
+Delas ofta upp i Model + (View Control)
+
+M + V + C 
+
+
+
+
+*** Abstrakt klass - adaptrar ***
+
+När vi implementerar ett interface så måste vi implementera ALLA (absutrakta) metoder.
+
+abstrakt metod ex: 
+public String getName(); // ";" --> abstrakt
+gränssnitt XXXListener i java har ibland flera metoder (t ex så har mauseListener 5 st metoder)
+Om vi inte vill använda alla, hur gör vi så?
+
+Scenario 1
+MyMouseListener - - - > <<Interface>> MoseListener
+
+Alla metoder i gränssnittet måste implementeras
+
+Sxenario 2
+MyMouseListener - - - > MouseAdapter - - -> <<Interface>> MoseListener
+
+MouseAdapter är en abstrakt klass. Den implementerar alla metoder i MouseListener. Vi ärver från den och överskuggar (override) de metoder vi vill ha.
+
+En abstrakt klass har måde abstrakta metoder och implementerade metoder, men det går ej att skapa objekt av den.
+
+
+
+
+-------------------------
+
+2015-11-05
+
+Händelser (events)
+
+Ex: knapptryck, fokus i textruta, fönstret förstoras om,
+oväntade händelser (krasch)
+muspekaren äver något, klicka på något
+tangenttyrck
+swipe
+
+
+Interaktion i swing
+1. Det finns händelser...
+2. Vi behöver lyssna (efter händelser)
+3. Vi behöver (en klass som ÄR) en lyssnare
+
+ a) class MyActionListner implements ActionListener {
+         // Skriv kod för action Performed()
+     }
+
+b) En inre klass
+     Anonym
+     Med lambda (java8)
+
+c) klassen vi befinner oss i, ex: myWindow, myFrame etc 
+
+4. Eftersom lyssnare är gränssnitt (interface) så måste vi ha med lyssnarens metoder
+5. Vi skriver kod för vad som ska ske i respektive metod
+6. för samman lyssnare - händelser med addXXXListener(Liste ner listener)
+
+
+Lyssnare
+gränssnitt/interface 
+
+interface ActionListener { }
+en metod:
+void actionPerformance(ActionEvent e)
+
+interface WindowListener { }
+interface KeyListener { }
+interface MouseListener
