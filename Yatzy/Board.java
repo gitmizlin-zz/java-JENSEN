@@ -5,13 +5,15 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.io.File;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class Board extends JFrame implements ActionListener  {
-	JPanel mainPanel, tablePanel, dicePanel, tableAndDicePanel, panelD1, panelD2, panelD3, panelD4, panelD5;
+	JPanel mainPanel, tablePanel, dicePanel, tableAndDicePanel;
 	JLabel label;
 	JLabel dl1, dl2, dl3, dl4, dl5;
-	JButton d1, d2, d3, d4, d5, rollButton, readRules;
+	JButton die, rollButton, readRules;
 	JTable table;
+	ArrayList<JButton> dieList;
 
 	public Board() {
 		super();
@@ -58,55 +60,22 @@ public class Board extends JFrame implements ActionListener  {
 
 		table.setRowHeight(30);
 
-		panelD1 = new JPanel();
-		panelD2 = new JPanel();
-		panelD3 = new JPanel();
-		panelD4 = new JPanel();
-		panelD5 = new JPanel();
-
-		d1 = new JButton();
-		d1.setIcon(new ImageIcon("img/dice1.png"));
-
-		d2 = new JButton();
-		d2.setIcon(new ImageIcon("img/dice1.png"));
-		d3 = new JButton();
-		d3.setIcon(new ImageIcon("img/dice1.png"));
-		d4 = new JButton();
-		d4.setIcon(new ImageIcon("img/dice1.png"));
-		d5 = new JButton();
-		d5.setIcon(new ImageIcon("img/dice1.png"));
+		dieList = new ArrayList<>();
+		int i = 1;
+		while (i <= 5) {
+			die = new JButton(i, false);
+			die.setIcon(new ImageIcon("img/d" + i + ".png"));
+			die.addActionListener(this);
+			dieList.add(die);
+			dicePanel.add(die);
+			i++;
+		}
 
 		dl1 = new JLabel("Roll1");	
 		dl2 = new JLabel("Roll2");
 		dl3 = new JLabel("Roll3");
 		dl4 = new JLabel("Roll4");
 		dl5 = new JLabel("Roll5");
-
-		panelD1.add(d1);
-		panelD1.setLayout(new BoxLayout(panelD1, BoxLayout.Y_AXIS));
-		panelD1.add(dl1);
-
-		panelD2.add(d2);
-		panelD2.setLayout(new BoxLayout(panelD2, BoxLayout.Y_AXIS));
-		panelD2.add(dl2);
-
-		panelD3.add(d3);
-		panelD3.setLayout(new BoxLayout(panelD3, BoxLayout.Y_AXIS));
-		panelD3.add(dl3);
-
-		panelD4.add(d4);		
-		panelD4.setLayout(new BoxLayout(panelD4, BoxLayout.Y_AXIS));
-		panelD4.add(dl4);
-
-		panelD5.add(d5);
-		panelD5.setLayout(new BoxLayout(panelD5, BoxLayout.Y_AXIS));
-		panelD5.add(dl5);
-
-		dicePanel.add(panelD1);
-		dicePanel.add(panelD2);
-		dicePanel.add(panelD3);
-		dicePanel.add(panelD4);
-		dicePanel.add(panelD5);
 
 		rollButton = new JButton("Roll dice");
 		mainPanel.add(rollButton);
@@ -125,7 +94,18 @@ public class Board extends JFrame implements ActionListener  {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event) {
-		JOptionPane.showMessageDialog(null, "rules here", "Yatzy Rules", 1);
+	public void actionPerformed(ActionEvent e) {
+		JButton button = (JButton) e.getSource();
+		int n = dieList.indexOf(button) + 1;
+		if (held) {
+			button.setIcon(new ImageIcon("img/d" + n + ".png"));
+		} else {
+			button.setIcon(new ImageIcon("img/d" + n + "hold.png"));
+		}
 	}
+
+//	@Override
+//	public void actionPerformed(ActionEvent event) {
+//		JOptionPane.showMessageDialog(null, "rules here", "Yatzy Rules", 1);
+//	}
 }
