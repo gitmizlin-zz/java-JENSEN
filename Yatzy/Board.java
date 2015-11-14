@@ -1,19 +1,20 @@
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.io.IOException;
 import java.io.File;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
-public class Board extends JFrame implements ActionListener  {
+
+public class Board extends JFrame {
 	JPanel mainPanel, tablePanel, dicePanel, tableAndDicePanel;
-	JLabel label;
-	JLabel dl1, dl2, dl3, dl4, dl5;
-	JButton die, rollButton, readRules;
+	JButton dButton, rollButton, readRules;
 	JTable table;
-	ArrayList<JButton> dieList;
+	ArrayList<Die> dieList;
+	HashMap<Die, JButton> dieAndButtonMap;
 
 	public Board() {
 		super();
@@ -60,28 +61,27 @@ public class Board extends JFrame implements ActionListener  {
 
 		table.setRowHeight(30);
 
-		dieList = new ArrayList<>();
+		dieList = new ArrayList<Die>();
+		dieAndButtonMap = new HashMap<Die, JButton>();
+
 		int i = 1;
 		while (i <= 5) {
-			die = new JButton(i, false);
-			die.setIcon(new ImageIcon("img/d" + i + ".png"));
-			die.addActionListener(this);
+			Die die = new Die (i, false);
+			dButton = new JButton();
+			dButton.setIcon(new ImageIcon("img/d" + i + ".png"));
+			dButton.addActionListener(new InnerListener(die));
 			dieList.add(die);
-			dicePanel.add(die);
+
+			dieAndButtonMap.put(die, dButton);
+			dicePanel.add(dButton);
 			i++;
 		}
 
-		dl1 = new JLabel("Roll1");	
-		dl2 = new JLabel("Roll2");
-		dl3 = new JLabel("Roll3");
-		dl4 = new JLabel("Roll4");
-		dl5 = new JLabel("Roll5");
-
 		rollButton = new JButton("Roll dice");
+		rollButton.addActionListener(new RollInnerLister());
 		mainPanel.add(rollButton);
 
 		readRules = new JButton("Read rules");
-		readRules.addActionListener(this);
 		mainPanel.add(readRules);
 
 		pack();
@@ -93,19 +93,29 @@ public class Board extends JFrame implements ActionListener  {
 		setVisible(true);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JButton button = (JButton) e.getSource();
-		int n = dieList.indexOf(button) + 1;
-		if (held) {
-			button.setIcon(new ImageIcon("img/d" + n + ".png"));
-		} else {
-			button.setIcon(new ImageIcon("img/d" + n + "hold.png"));
+	class RollInnerLister implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			for (Die die : dieList) {
+				if (!die.isHeld()) {
+					die.roll();
+					int i = die.getFaceUp();
+					dieAndButtonMap.get(die).setIcon(new ImageIcon("img/d" + i + ".png"));
+				}
+			}
 		}
 	}
 
-//	@Override
-//	public void actionPerformed(ActionEvent event) {
-//		JOptionPane.showMessageDialog(null, "rules here", "Yatzy Rules", 1);
-//	}
+	class InnerListener implements ActionListener {
+		private Die die;
+
+		InnerListener(Die die) {
+			this.die = die;
+		}
+		public void actionPerformed(ActionEvent event) {
+			int faceNr = die.getFaceUp();
+			JButton button = (JButton) event.getSource();
+			die.toggleHeld();
+			button.setIcon(new ImageIcon("img/d" + faceNr + (die.isHeld() ? "hold" : "") + ".png"));
+		}
+	}
 }
