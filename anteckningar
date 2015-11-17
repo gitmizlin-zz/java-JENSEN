@@ -1,4 +1,70 @@
 
+Havva:
+
+Vad har du gjort sen förra mötet?
+ - Har kollat Yatzy-reglerna och swing och kotat knapparna.
+
+Vad planerar du att få gjort till nästa möte?
+ - Läsa reglerna mer och koda tärningarna.
+
+Vad behöver du hjälp med? Kan du få det av gruppen?
+ - Allt. Det känns väldigt mycket.
+
+
+Mi
+
+Vad har du gjort sen förra mötet?
+ - Har lagt till ActionListener så att bilder på tärningarna ändras när de klickas. Händerna ones till sexes har också lags till.
+
+Vad planerar du att få gjort till nästa möte?
+ - Lägga till alla andra händer som three of a kind, four of a kind etc. 
+
+Vad behöver du hjälp med? Kan du få det av gruppen?
+ - Layouten. Komponenterna hamnar inte i rätta platser. Hur man strukturerar känns också väldigt svårt. Vet inte hur man skan dela upp koden. Har också problem med att skriva ut texter (reglerna) från en annan fil till en JPane eller JTextArea.
+
+
+
+
+
+
+
+
+2015-11-16
+Model
+View
+Control
+
+ - flexibilitet
+ - utbytbarhet
+ - data/model oberoende av vy
+
+Ex. program i olika språk
+view (vyer) fem svenska / five engelska
+model       dice: 5
+
+statistik 
+data finns kvar om graf försvinner
+
+t ex : Varje vy(tärning) motsvarar en modell.
+
+
+---
+
+Designmönster Observer/observable
+problem: Hur kan vi ordna så att ett objekt speglar/följer/observerar ett annat objekt?
+
+Observer: den som tittar (observatör) ex: facebook-news feed, twitter: följare, pernumeranter
+Observable / subject : den som tittas på ex: vännerna(s uppdateringar), en person, tidning
+
+subjekt har något som är observer
+
+
+
+
+
+
+----
+
 
 2015-11-09
 

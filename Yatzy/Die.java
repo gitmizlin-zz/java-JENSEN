@@ -1,11 +1,11 @@
 import javax.swing.*;
+import java.util.Observable;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by mizuho on 2015-11-14.
  */
-public class Die extends JFrame {
+public class Die extends Observable {
     private int faceUp;
     private boolean held;
 
@@ -37,5 +37,7 @@ public class Die extends JFrame {
         Random r = new Random();
         rand = r.nextInt(max - min + 1) + min;
         faceUp = rand;
+        setChanged();
+        notifyObservers();
     }
 }

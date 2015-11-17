@@ -100,9 +100,11 @@ public class Board extends JFrame {
 		int i = 1;
 		while (i <= 5) {
 			Die die = new Die (i, false);
+
 			dButton = new JButton();
 			dButton.setIcon(new ImageIcon("img/d" + i + ".png"));
 			dButton.addActionListener(new InnerListener(die));
+
 			dieList.add(die);
 
 			dieAndButtonMap.put(die, dButton);
@@ -136,8 +138,6 @@ public class Board extends JFrame {
 			for (Die die : dieList) {
 				if (!die.isHeld()) {
 					die.roll();
-					int i = die.getFaceUp();
-					dieAndButtonMap.get(die).setIcon(new ImageIcon("img/d" + i + ".png"));
 				}
 			}
 
