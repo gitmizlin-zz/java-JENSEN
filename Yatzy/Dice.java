@@ -5,21 +5,17 @@ import java.util.Random;
 /**
  * Created by mizuho on 2015-11-14.
  */
-public class Die extends Observable {
-    private int faceUp;
+public class Dice extends Observable implements DiceInterface {
+    private int value = 1;
     private boolean held;
 
-    Die(int faceUp, boolean held) {
-        this.faceUp = faceUp;
+    Dice() {
+        this(1, false);
+    }
+
+    Dice(int value, boolean held) {
+        this.value = value;
         this.held = held;
-    }
-
-    int getFaceUp() {
-        return faceUp;
-    }
-
-    void setFaceUp(int faceUp) {
-        this.faceUp = faceUp;
     }
 
     void toggleHeld() {
@@ -30,14 +26,21 @@ public class Die extends Observable {
         return held;
     }
 
-    void roll() {
+    @Override
+    public void roll() {
         int rand;
         int min = 1;
         int max = 6;
         Random r = new Random();
         rand = r.nextInt(max - min + 1) + min;
-        faceUp = rand;
+        value = rand;
         setChanged();
         notifyObservers();
     }
+
+    @Override
+    public int getValue() {
+        return value;
+    }
 }
+

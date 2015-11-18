@@ -17,8 +17,8 @@ public class Board extends JFrame {
 	JButton dButton, rollButton, readRulesButton;
 	JLabel ones, onesPoint, twos, twosPoint, threes, threesPoint, fours, foursPoint, fives, fivesPoint, sixes, sixesPoint, threeOfAKind, threeOfAKindPoint;
 	JTextArea ruleArea;
-	ArrayList<Die> dieList;
-	HashMap<Die, JButton> dieAndButtonMap;
+	ArrayList<Dice> dieList;
+	HashMap<Dice, JButton> dieAndButtonMap;
 
 	public Board() {
 		super();
@@ -94,12 +94,12 @@ public class Board extends JFrame {
 
 		tablePanel.setBackground(Color.pink);
 
-		dieList = new ArrayList<Die>();
-		dieAndButtonMap = new HashMap<Die, JButton>();
+		dieList = new ArrayList<Dice>();
+		dieAndButtonMap = new HashMap<Dice, JButton>();
 
 		int i = 1;
 		while (i <= 5) {
-			Die die = new Die (i, false);
+			Dice die = new Dice (i, false);
 
 			dButton = new JButton();
 			dButton.setIcon(new ImageIcon("img/d" + i + ".png"));
@@ -135,7 +135,7 @@ public class Board extends JFrame {
 
 	class RollInnerLister extends Hand implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			for (Die die : dieList) {
+			for (Dice die : dieList) {
 				if (!die.isHeld()) {
 					die.roll();
 				}
@@ -179,14 +179,14 @@ public class Board extends JFrame {
 	}
 
 	class InnerListener implements ActionListener {
-		private Die die;
+		private Dice die;
 
-		InnerListener(Die die) {
+		InnerListener(Dice die) {
 			this.die = die;
 		}
 
 		public void actionPerformed(ActionEvent event) {
-			int faceNr = die.getFaceUp();
+			int faceNr = die.getValue();
 			JButton button = (JButton) event.getSource();
 			die.toggleHeld();
 			button.setIcon(new ImageIcon("img/d" + faceNr + (die.isHeld() ? "hold" : "") + ".png"));

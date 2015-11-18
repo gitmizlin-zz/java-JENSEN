@@ -6,10 +6,10 @@ import java.util.Comparator;
 public class Hand {
     Hand ones, twos, threes, fours, fives, sixes;
 
-    public int checkOnes(ArrayList<Die> dice) {
+    public int checkOnes(ArrayList<Dice> dice) {
         int i = 0;
-        for (Die die : dice) {
-            if (die.getFaceUp() == 1) {
+        for (Dice die : dice) {
+            if (die.getValue() == 1) {
                 i++;
             }
         }
@@ -17,10 +17,10 @@ public class Hand {
         return i;
     }
 
-    public int checkTwos(ArrayList<Die> dice) {
+    public int checkTwos(ArrayList<Dice> dice) {
         int i = 0;
-        for (Die die : dice) {
-            if (die.getFaceUp() == 2) {
+        for (Dice die : dice) {
+            if (die.getValue() == 2) {
                 i += 2;
             }
         }
@@ -28,10 +28,10 @@ public class Hand {
         return i;
     }
 
-    public int checkThrees(ArrayList<Die> dice) {
+    public int checkThrees(ArrayList<Dice> dice) {
         int i = 0;
-        for (Die die : dice) {
-            if (die.getFaceUp() == 3) {
+        for (Dice die : dice) {
+            if (die.getValue() == 3) {
                 i += 3;
             }
         }
@@ -39,10 +39,10 @@ public class Hand {
         return i;
     }
 
-    public int checkFours(ArrayList<Die> dice) {
+    public int checkFours(ArrayList<Dice> dice) {
         int i = 0;
-        for (Die die : dice) {
-            if (die.getFaceUp() == 4) {
+        for (Dice die : dice) {
+            if (die.getValue() == 4) {
                 i += 4;
             }
         }
@@ -50,10 +50,10 @@ public class Hand {
         return i;
     }
 
-    public int checkFives(ArrayList<Die> dice) {
+    public int checkFives(ArrayList<Dice> dice) {
         int i = 0;
-        for (Die die : dice) {
-            if (die.getFaceUp() == 5) {
+        for (Dice die : dice) {
+            if (die.getValue() == 5) {
                 i += 5;
             }
         }
@@ -61,10 +61,10 @@ public class Hand {
         return i;
     }
 
-    public int checkSixes(ArrayList<Die> dice) {
+    public int checkSixes(ArrayList<Dice> dice) {
         int i = 0;
-        for (Die die : dice) {
-            if (die.getFaceUp() == 6) {
+        for (Dice die : dice) {
+            if (die.getValue() == 6) {
                 i += 6;
             }
         }
@@ -79,9 +79,9 @@ public class Hand {
     ArrayList <Integer> fivesList = new ArrayList<Integer>();
     ArrayList <Integer> sixesList = new ArrayList<Integer>();
 
-    public int checkThreeOfAKind(ArrayList<Die> dice) {
-        for (Die die : dice) {
-            switch (die.getFaceUp()){
+    public int checkThreeOfAKind(ArrayList<Dice> dice) {
+        for (Dice die : dice) {
+            switch (die.getValue()){
                 case 1:
                     onesList.add(1);
                     break;

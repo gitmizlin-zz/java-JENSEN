@@ -8,7 +8,8 @@ public class Yatzy {
 	}
 
 	public Yatzy() { // Constructor
-		new Board();
+		// new Board();
+		new FiveDiceView();
 	}
 
 }
