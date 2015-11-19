@@ -1,11 +1,10 @@
-import javax.swing.*;
 import java.util.Observable;
 import java.util.Random;
 
 /**
  * Created by mizuho on 2015-11-14.
  */
-public class Dice extends Observable implements DiceInterface {
+public class Dice extends Observable implements DiceInterface, Comparable {
     private int value = 1;
     private boolean held;
 
@@ -41,6 +40,12 @@ public class Dice extends Observable implements DiceInterface {
     @Override
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Dice d = (Dice) o;
+        return (Integer.toString(this.getValue())).compareTo(Integer.toString(d.getValue()));
     }
 }
 

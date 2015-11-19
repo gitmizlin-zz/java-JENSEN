@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
-
-public class FiveDiceView extends JFrame {
+public class FiveDiceView extends JFrame implements ActionListener, MouseListener {
 	JPanel mainPanel;
 	JPanel dicePanel;
 	JPanel buttonPanel;
@@ -15,6 +15,7 @@ public class FiveDiceView extends JFrame {
 	Dice dice3;
 	Dice dice4;
 	Dice dice5;
+
 	ArrayList<Dice> diceList = new ArrayList<>();
 
 	DiceImage diceImage1;
@@ -28,8 +29,10 @@ public class FiveDiceView extends JFrame {
 	}
 
 	public void createAndShowGui() {
+		new Rules();
 		mainPanel = new JPanel();
 		mainPanel.setBackground(Color.red);
+		mainPanel.add(Rules.rulePanel);
 
 		dicePanel = new JPanel();
 		dicePanel.setBackground(Color.yellow);
@@ -57,16 +60,17 @@ public class FiveDiceView extends JFrame {
 		diceImage4 = new DiceImage();
 		diceImage5 = new DiceImage();
 
-		System.out.println(diceList);
+		diceImage1.setDiceModel(dice1);
+		diceImage2.setDiceModel(dice2);
+		diceImage3.setDiceModel(dice3);
+		diceImage4.setDiceModel(dice4);
+		diceImage5.setDiceModel(dice5);
 
-		diceImage1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
-				dice1.toggleHeld();
-				System.out.println(dice1.isHeld());
-			}
-		});
+		diceImage1.addMouseListener(this);
+		diceImage2.addMouseListener(this);
+		diceImage3.addMouseListener(this);
+		diceImage4.addMouseListener(this);
+		diceImage5.addMouseListener(this);
 
 		// add a DiceImage as observer on a Dice
 		dice1.addObserver(diceImage1);
@@ -77,16 +81,7 @@ public class FiveDiceView extends JFrame {
 
 		// button "Roll dice" and what occurs when it is clicked
 		rollButton = new JButton("Roll dice");
-		rollButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Dice dice : diceList) {
-					if (!dice.isHeld()) {
-						dice.roll();
-					}
-				}
-			}
-		});
+		rollButton.addActionListener(this);
 
 		dicePanel.add(diceImage1);
 		dicePanel.add(diceImage2);
@@ -106,4 +101,43 @@ public class FiveDiceView extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+
+	public void mouseClicked(MouseEvent e) {
+		// If diceImage is clicked, change "Held" status
+		DiceImage diceImage = (DiceImage) e.getSource();
+		Dice dice = diceImage.getDiceModel();
+		dice.toggleHeld();
+		int i = dice.getValue();
+
+		if (dice.isHeld()) {
+			diceImage.setIcon(DiceImage.iconsHold[i - 1]);
+		} else {
+			diceImage.setIcon(DiceImage.icons[i - 1]);
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for (Dice dice : diceList) {
+			if (!dice.isHeld()) {
+				dice.roll();
+			}
+		}
+		Collections.sort(diceList);
+		System.out.println(diceList);
+	}
+
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	public void mouseExited(MouseEvent e) {
+	}
+
+	public void mousePressed(MouseEvent e) {
+	}
+
+	public void mouseReleased(MouseEvent e) {
+	}
+
+
 }

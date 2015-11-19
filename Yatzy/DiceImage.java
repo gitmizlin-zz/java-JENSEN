@@ -5,6 +5,8 @@ import java.util.Observer;
 import java.util.Observer;
 
 public class DiceImage extends JLabel implements Observer {
+	Dice diceModel;
+
 	static ImageIcon icon1 = new ImageIcon(DiceImage.class.getResource("img/d1.png"));
 	static ImageIcon icon2 = new ImageIcon(DiceImage.class.getResource("img/d2.png"));
 	static ImageIcon icon3 = new ImageIcon(DiceImage.class.getResource("img/d3.png"));
@@ -29,18 +31,22 @@ public class DiceImage extends JLabel implements Observer {
 
 	public void changeImage (int diceValue) {
 		if(diceValue >= 1 && diceValue <= 6) {
-			setIcon(icons[diceValue-1]);
-
-		} else {
-			setIcon(icons[(diceValue%6)-1]);
+			setIcon(icons[diceValue - 1]);
 		}
 	}
 
 	// Observer implemented, so you have to have the method update()
 	@Override
 	public void update(Observable o, Object arg) {
-
 		// Get the observed die
-		changeImage(((Dice)o).getValue());
+		changeImage(((Dice) o).getValue());
+	}
+
+	public void setDiceModel(Dice diceModel) {
+		this.diceModel = diceModel;
+	}
+
+	public Dice getDiceModel() {
+		return diceModel;
 	}
 }

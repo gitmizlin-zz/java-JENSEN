@@ -1,33 +1,62 @@
+2015-11-19
 
-Havva:
+Mer om felhantering
 
-Vad har du gjort sen förra mötet?
- - Har kollat Yatzy-reglerna och swing och kotat knapparna.
+try {
+	// kod som kan gå fel
+} catch(Exception e) {
+	// vad göra när det går fel
+}
 
-Vad planerar du att få gjort till nästa möte?
- - Läsa reglerna mer och koda tärningarna.
+--
 
-Vad behöver du hjälp med? Kan du få det av gruppen?
- - Allt. Det känns väldigt mycket.
+main()
+ |_startGame()
+ 	|_addPlayer()
+ 		|_checkPlayer()
 
+FEL (Exceptions) kastas när fel uppstår
 
-Mi
-
-Vad har du gjort sen förra mötet?
- - Har lagt till ActionListener så att bilder på tärningarna ändras när de klickas. Händerna ones till sexes har också lags till.
-
-Vad planerar du att få gjort till nästa möte?
- - Lägga till alla andra händer som three of a kind, four of a kind etc. 
-
-Vad behöver du hjälp med? Kan du få det av gruppen?
- - Layouten. Komponenterna hamnar inte i rätta platser. Hur man strukturerar känns också väldigt svårt. Vet inte hur man skan dela upp koden. Har också problem med att skriva ut texter (reglerna) från en annan fil till en JPane eller JTextArea.
+Vi kan skapa och hantera egna fel (Exceptions)
 
 
+Exception <- MyException
+
+--
+
+Sortering av lista
+
+med comparable (tänk "jag" jämförs och sorteras)
+ex: 
+Dice d1 = new Dice();
+Dice d2 = new Dice();
+ArrayList<Dice> list = new ArrayList<Dice>();
+Collections.sort(list);
+sort(list) gpr igenom alla objekt i listan och kollar hur de förhåller sig till varandra med hjälp av deras metod compareTo(object o)
+
+Objekten har metoden eftersom klassen implements Comparable
+
+Ex 
+class Dice implements Comparable { ... }
+	
+dice1.compareTo(dice2)
 
 
+med comparator (tänk något/någon extern/yttre part jämför och sorterar)
+
+ex
+Player p1 = new Player("Oscar", "Björkman");
+Player p1 = new Player("Oscar", "C");
+ArrayList<Player> plyaers = new ArrayList<>();
+// add ....
+
+players.sort(new SortByLastName());
+
+	SortByLastName() är en Comparator, dvs en klass som implementerar Comparator 
+	SortByLastName måste då ha med metoden public int compare(Object o1, Object o2)
 
 
-
+---
 
 2015-11-16
 Model
