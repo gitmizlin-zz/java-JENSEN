@@ -1,22 +1,16 @@
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Rules extends JFrame {
-    static JPanel rulePanel;
-    JButton ruleButton;
-    JTextArea textArea;
-    static JFrame frame = new JFrame("Yatzy rules");
-    static JPanel panel;
+    private JPanel rulePanel;
+    private JButton ruleButton;
+    private JTextArea textArea;
+    private JFrame frame;
+    private JPanel panel;
 
     Rules() {
         panel = new JPanel();
@@ -29,42 +23,48 @@ public class Rules extends JFrame {
         rulePanel.add(ruleButton);
     }
 
-// Använd en annan panel som öppnas separat.
-
     class RulesInnerListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            readFile();
-            createFrame();
+            if (frame == null) {
+                frame = new JFrame("Yatzy rules");
 
+                frame.addWindowListener(new setWindowNull());
+                readFile();
+                createFrame();
+            }
         }
 
-    public void createFrame() {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                JTextArea textArea = new JTextArea(30, 50);
-                textArea.append(readFile());
-                textArea.setEditable(false);
-                panel.add(textArea);
+        public void createFrame() {
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    try {
+                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    JTextArea textArea = new JTextArea(30, 50);
+                    textArea.append(readFile());
+                    textArea.setEditable(false);
+                    panel.add(textArea);
 
-                JScrollPane scroller = new JScrollPane(textArea);
-                scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                panel.add(scroller);
-                frame.getContentPane().add(BorderLayout.CENTER, panel);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                frame.setResizable(true);
-            }
-        });
-    }
+                    JScrollPane scroller = new JScrollPane(textArea);
+                    scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                    scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    scroller.getVerticalScrollBar().setValue(0); // not working
+
+                    panel.add(scroller);
+                    frame.setSize(600, 600); // size changes second time.
+                    frame.getContentPane().add(BorderLayout.CENTER, panel);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                    frame.setResizable(true);
+                }
+            });
+        }
+
         public String readFile() {
             String line;
             String txt = "";
@@ -86,6 +86,48 @@ public class Rules extends JFrame {
                 e.printStackTrace();
             }
             return txt;
+        }
+    }
+
+    public JPanel getRulePanel() {
+        return this.rulePanel = rulePanel;
+    }
+
+    class setWindowNull implements WindowListener {
+        @Override
+        public void windowClosing(WindowEvent event) {
+            dispose();
+            frame = null;
+        }
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+
         }
     }
 }

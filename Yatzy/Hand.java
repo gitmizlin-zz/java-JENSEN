@@ -1,138 +1,171 @@
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class Hand {
-    Hand ones, twos, threes, fours, fives, sixes;
 
-    public int checkOnes(ArrayList<Dice> dice) {
+    public static int checkSameValues(ArrayList<Dice> diceList, int diceValue) {
+        int tot =0;
         int i = 0;
-        for (Dice die : dice) {
-            if (die.getValue() == 1) {
+        for (Dice dice : diceList) {
+            if (dice.getValue() == diceValue) {
+                tot = tot + diceValue;
                 i++;
             }
         }
-
-        return i;
+        return tot;
     }
 
-    public int checkTwos(ArrayList<Dice> dice) {
-        int i = 0;
-        for (Dice die : dice) {
-            if (die.getValue() == 2) {
-                i += 2;
+    public static int checkOnePair(ArrayList<Dice> diceList) {
+        int tot = 0;
+
+        for (int i = 0; i < 4; i++) {
+            int firstValue = diceList.get(i).getValue();
+            int secondValue = diceList.get(i + 1).getValue();
+
+            if (firstValue == secondValue) {
+                tot = firstValue + secondValue;
             }
         }
-
-        return i;
+        return tot;
     }
 
-    public int checkThrees(ArrayList<Dice> dice) {
-        int i = 0;
-        for (Dice die : dice) {
-            if (die.getValue() == 3) {
-                i += 3;
+    public static int checkTwoPairs(ArrayList<Dice> diceList) {
+        int tot = 0;
+
+        for (int i = 0; i < 3; i++) {
+            int firstValue = diceList.get(i).getValue();
+            int secondValue = diceList.get(i + 1).getValue();
+
+            if (firstValue == secondValue) {
+                for (int k = i + 2; k < 4; k++) {
+                    int thirdValue = diceList.get(k).getValue();
+                    int fourthValue = diceList.get(k + 1).getValue();
+
+                    if (secondValue != thirdValue && thirdValue == fourthValue) {
+                        tot = firstValue + secondValue + thirdValue + fourthValue;
+                    }
+                }
             }
         }
-
-        return i;
+        return tot;
     }
 
-    public int checkFours(ArrayList<Dice> dice) {
-        int i = 0;
-        for (Dice die : dice) {
-            if (die.getValue() == 4) {
-                i += 4;
+    public static int checkThreeOfAKind(ArrayList<Dice> diceList) {
+        // source http://stackoverflow.com/questions/10359781/comparing-poker-hand-in-java
+        int tot = 0;
+
+        for (int i = 0; i < 3; i++) {
+            int firstValue = diceList.get(i).getValue();
+            int secondValue = diceList.get(i + 1).getValue();
+            int thirdValue = diceList.get(i + 2).getValue();
+
+            if (firstValue == secondValue && secondValue == thirdValue) {
+                tot = firstValue + secondValue + thirdValue;
             }
         }
-
-        return i;
+        return tot;
     }
 
-    public int checkFives(ArrayList<Dice> dice) {
-        int i = 0;
-        for (Dice die : dice) {
-            if (die.getValue() == 5) {
-                i += 5;
+    public static int checkFourOfAKind(ArrayList<Dice> diceList) {
+        int tot = 0;
+
+        for (int i = 0; i < 2; i++) {
+            int firstValue = diceList.get(i).getValue();
+            int secondValue = diceList.get(i + 1).getValue();
+            int thirdValue = diceList.get(i + 2).getValue();
+            int fourthValue = diceList.get(i + 3).getValue();
+
+            if (i < 1) {
+                int fifthValue = diceList.get(i + 4).getValue();
+
+                if (firstValue == secondValue && secondValue == thirdValue && thirdValue == fourthValue && fourthValue != fifthValue) {
+                    tot = firstValue + secondValue + thirdValue + fourthValue;
+                }
+
+            } else if (firstValue == secondValue && secondValue == thirdValue && thirdValue == fourthValue) {
+                tot = firstValue + secondValue + thirdValue + fourthValue;
             }
         }
-
-        return i;
+        return tot;
     }
 
-    public int checkSixes(ArrayList<Dice> dice) {
+    public static int checkFullHouse(ArrayList<Dice> diceList) {
         int i = 0;
-        for (Dice die : dice) {
-            if (die.getValue() == 6) {
-                i += 6;
-            }
-        }
+        int tot = 0;
+        int firstValue = diceList.get(i).getValue();
+        int secondValue = diceList.get(i + 1).getValue();
+        int thirdValue = diceList.get(i + 2).getValue();
+        int fourthValue = diceList.get(i + 3).getValue();
+        int fifthValue = diceList.get(i + 4).getValue();
 
-        return i;
+        if (((firstValue == secondValue) && (secondValue== thirdValue) && (fourthValue == fifthValue) && (thirdValue != fourthValue)) ||
+        ((firstValue == secondValue) && (secondValue != thirdValue) && (thirdValue == fourthValue) && (fourthValue == fifthValue))) {
+            tot = firstValue + secondValue + thirdValue + fourthValue + fifthValue;
+        }
+        return tot;
     }
 
-    ArrayList <Integer> onesList = new ArrayList<Integer>();
-    ArrayList <Integer> twosList = new ArrayList<Integer>();
-    ArrayList <Integer> threesList = new ArrayList<Integer>();
-    ArrayList <Integer> foursList = new ArrayList<Integer>();
-    ArrayList <Integer> fivesList = new ArrayList<Integer>();
-    ArrayList <Integer> sixesList = new ArrayList<Integer>();
+     public static int checkStraight(ArrayList<Dice> diceList, int largestNr) {
+         int seqCnt = 0;
+         int tot = 0;
 
-    public int checkThreeOfAKind(ArrayList<Dice> dice) {
-        for (Dice die : dice) {
-            switch (die.getValue()){
-                case 1:
-                    onesList.add(1);
-                    break;
-                case 2:
-                    twosList.add(2);
-                    break;
-                case 3:
-                    threesList.add(3);
-                    break;
-                case 4:
-                    foursList.add(4);
-                    break;
-                case 5:
-                    fivesList.add(5);
-                    break;
-                case 6:
-                    sixesList.add(6);
-                    break;
-            }
-        }
-        System.out.println(fivesList);
+         for(int i = 0; i < 4; i++) {
+             int firstValue = diceList.get(i).getValue();
+             int secondValue = diceList.get(i + 1).getValue();
+             if (secondValue == firstValue + 1) {
+                 seqCnt++;
+             }
+         }
+         // Small straight
+         if (diceList.get(diceList.size() - 1).getValue() == largestNr && seqCnt == 4) {
+             if (largestNr == 5) {
+                 tot = 15;
+             } else if (largestNr == 6) {
+                 tot = 20;
+             }
+         }
+         return tot;
+     }
+
+    public static int checkChance(ArrayList<Dice> diceList) {
+        int tot = 0;
         int i = 0;
 
-        if (sixesList.size() == 3) {
-            i = 6 * 3;
-            sixesList.clear();
-            System.out.println(sixesList);
+        for(Dice dice : diceList) {
+            int diceValue = dice.getValue();
+            tot = tot + diceValue;
+            i++;
+        }
+        return tot;
+    }
+    public static int checkYatzy(ArrayList<Dice> diceList) {
+        int tot = 0;
+        int counter = 0;
 
-        } else if (fivesList.size() == 3) {
-            i = 5 * 3;
-            fivesList.clear();
+        for(int i = 0; i < 4; i++) {
+            int firstValue = diceList.get(i).getValue();
+            int secondValue = diceList.get(i + 1).getValue();
+            if (firstValue == secondValue) {
+                counter++;
+            }
+        }
+        if (counter == 4) {
+            tot = 50;
+        }
+        return tot;
+    }
 
-        } else if (foursList.size() == 3) {
-            i = 4 * 3;
-            foursList.clear();
+    public static int checkBonus(ArrayList<Dice> diceList) {
+        int tot = 0;
+        int bonus = 0;
 
-        } else if (threesList.size() == 3) {
-            i = 3 * 3;
-            threesList.clear();
-
-        } else if (twosList.size() == 3) {
-            i = 2 * 3;
-            twosList.clear();
-
-        } else if (onesList.size() == 3) {
-            i = 1 * 3;
-            onesList.clear();
+        for (int i = 1; i <= 6; i++) {
+            tot = tot + checkSameValues(diceList, i);
         }
 
-        System.out.println(fivesList);
-        dice = null;
-        return i;
+        if (tot >= 63) {
+            bonus = 50;
+        }
+        System.out.println("ones to sixes tot: " + tot);
+        return bonus;
     }
 }

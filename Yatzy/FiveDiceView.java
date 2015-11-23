@@ -4,35 +4,34 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class FiveDiceView extends JFrame implements ActionListener, MouseListener {
-	JPanel mainPanel;
-	JPanel dicePanel;
-	JPanel buttonPanel;
-	JButton rollButton;
+public class FiveDiceView extends JPanel implements ActionListener, MouseListener {
+	private JPanel diceButtonPanel;
+	private JPanel dicePanel;
+	private JPanel buttonPanel;
+	private JButton rollButton;
 
-	Dice dice1;
-	Dice dice2;
-	Dice dice3;
-	Dice dice4;
-	Dice dice5;
+	private Dice dice1;
+	private Dice dice2;
+	private Dice dice3;
+	private Dice dice4;
+	private Dice dice5;
 
-	ArrayList<Dice> diceList = new ArrayList<>();
+	private  ArrayList<Dice> diceList = new ArrayList<>();
 
-	DiceImage diceImage1;
-	DiceImage diceImage2;
-	DiceImage diceImage3;
-	DiceImage diceImage4;
-	DiceImage diceImage5;
+	private DiceImage diceImage1;
+	private DiceImage diceImage2;
+	private DiceImage diceImage3;
+	private DiceImage diceImage4;
+	private DiceImage diceImage5;
 
 	FiveDiceView() {
 		createAndShowGui();
 	}
 
 	public void createAndShowGui() {
-		new Rules();
-		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.red);
-		mainPanel.add(Rules.rulePanel);
+		diceButtonPanel = new JPanel();
+		diceButtonPanel.setBackground(Color.red);
+		diceButtonPanel.setLayout(new BoxLayout(diceButtonPanel, BoxLayout.Y_AXIS));
 
 		dicePanel = new JPanel();
 		dicePanel.setBackground(Color.yellow);
@@ -91,15 +90,12 @@ public class FiveDiceView extends JFrame implements ActionListener, MouseListene
 
 		buttonPanel.add(rollButton);
 
-		mainPanel.add(dicePanel);
-		mainPanel.add(buttonPanel);
+		diceButtonPanel.add(dicePanel);
+		diceButtonPanel.add(buttonPanel);
 
-		add(mainPanel);
+		add(diceButtonPanel);
 
-		pack();
 
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -107,6 +103,7 @@ public class FiveDiceView extends JFrame implements ActionListener, MouseListene
 		DiceImage diceImage = (DiceImage) e.getSource();
 		Dice dice = diceImage.getDiceModel();
 		dice.toggleHeld();
+
 		int i = dice.getValue();
 
 		if (dice.isHeld()) {
@@ -124,7 +121,19 @@ public class FiveDiceView extends JFrame implements ActionListener, MouseListene
 			}
 		}
 		Collections.sort(diceList);
-		System.out.println(diceList);
+		for (Dice dice : diceList) {
+			System.out.println(dice.getValue());
+		}
+		System.out.println("fullhouse point: " + Hand.checkFullHouse(diceList));
+		System.out.println("one pair: " + Hand.checkOnePair(diceList));
+		System.out.println("two paris: " + Hand.checkTwoPairs(diceList));
+		System.out.println("three of a kind point: " + Hand.checkThreeOfAKind(diceList));
+		System.out.println("four of a kind point: " + Hand.checkFourOfAKind(diceList));
+		System.out.println("small straight: " + Hand.checkStraight(diceList, 5));
+		System.out.println("large straight: " + Hand.checkStraight(diceList, 6));
+		System.out.println("chance: " + Hand.checkChance(diceList));
+		System.out.println("yatzy: " + Hand.checkYatzy(diceList));
+		System.out.println("bonus: " + Hand.checkBonus(diceList));
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -137,6 +146,10 @@ public class FiveDiceView extends JFrame implements ActionListener, MouseListene
 	}
 
 	public void mouseReleased(MouseEvent e) {
+	}
+
+	public JPanel getDiceButtonPanel() {
+		return this.diceButtonPanel;
 	}
 
 

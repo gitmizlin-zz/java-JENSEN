@@ -6,8 +6,4 @@
 			this.name = name;
 			this.score = score;
 		}
-
-		public Player() {
-			this("Player1", 0);
-		}
 	}

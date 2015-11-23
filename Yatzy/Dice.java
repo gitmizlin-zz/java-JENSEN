@@ -47,5 +47,6 @@ public class Dice extends Observable implements DiceInterface, Comparable {
         Dice d = (Dice) o;
         return (Integer.toString(this.getValue())).compareTo(Integer.toString(d.getValue()));
     }
+
 }
 
