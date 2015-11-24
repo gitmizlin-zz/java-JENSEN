@@ -33,36 +33,32 @@ public class Rules extends JFrame {
         }
 
         public void createFrame() {
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JPanel panel = new JPanel();
+            JPanel panel = new JPanel();
 
-                    frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                    try {
-                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    JTextArea textArea = new JTextArea(30, 50);
-                    textArea.append(readFile());
-                    textArea.setEditable(false);
-                    panel.add(textArea);
+            frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                    JScrollPane scroller = new JScrollPane(textArea);
-                    scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                    scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                    scroller.getVerticalScrollBar().setValue(0); // not working
+            JTextArea textArea = new JTextArea(30, 50);
+            textArea.append(readFile());
+            textArea.setEditable(false);
+            panel.add(textArea);
 
-                    panel.add(scroller);
-                    frame.setSize(600, 600); // size changes second time.
-                    frame.getContentPane().add(BorderLayout.CENTER, panel);
-                    frame.pack();
-                    frame.setLocationRelativeTo(null);
-                    frame.setVisible(true);
-                    frame.setResizable(true);
-                }
-            });
+            JScrollPane scroller = new JScrollPane(textArea);
+            scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scroller.getVerticalScrollBar().setValue(0); // not working
+
+            panel.add(scroller);
+            frame.setSize(600, 600); // size changes second time.
+            frame.getContentPane().add(BorderLayout.CENTER, panel);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(true);
         }
 
         public String readFile() {
