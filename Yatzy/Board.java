@@ -19,7 +19,9 @@ public class Board extends JFrame {
 		FiveDiceView diceView = new FiveDiceView();
 		Rules rulesView = new Rules();
 		Table tableView = new Table();
+		Status statusView = new Status();
 
+		mainPanel.add(statusView.getStatusPanel());
 		mainPanel.add(tableView.getTablePanel());
 		mainPanel.add(rulesView.getRulePanel());
 		mainPanel.add(diceView.getDiceButtonPanel());
