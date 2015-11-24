@@ -94,8 +94,6 @@ public class FiveDiceView extends JPanel implements ActionListener, MouseListene
 		diceButtonPanel.add(buttonPanel);
 
 		add(diceButtonPanel);
-
-
 	}
 
 	public void mouseClicked(MouseEvent e) {

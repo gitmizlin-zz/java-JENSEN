@@ -10,10 +10,8 @@ public class Rules extends JFrame {
     private JButton ruleButton;
     private JTextArea textArea;
     private JFrame frame;
-    private JPanel panel;
 
     Rules() {
-        panel = new JPanel();
         rulePanel = new JPanel();
         rulePanel.setBackground(Color.BLUE);
         add(rulePanel);
@@ -38,6 +36,8 @@ public class Rules extends JFrame {
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
+                    JPanel panel = new JPanel();
+
                     frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                     try {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
