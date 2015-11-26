@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -24,7 +26,7 @@ public class Rules extends JFrame {
     class RulesInnerListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (frame == null) {
-                frame = new JFrame("Yatzy rules");
+                frame = new JFrame("src.Yatzy rules");
 
                 frame.addWindowListener(new setWindowNull());
                 readFile();

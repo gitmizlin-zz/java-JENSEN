@@ -1,7 +1,7 @@
+package src;
+
 import javax.swing.*;
-import java.awt.*;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Observer;
 
 public class DiceImage extends JLabel implements Observer {

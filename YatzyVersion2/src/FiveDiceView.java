@@ -1,3 +1,5 @@
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -71,7 +73,7 @@ public class FiveDiceView extends JPanel implements ActionListener, MouseListene
 		diceImage4.addMouseListener(this);
 		diceImage5.addMouseListener(this);
 
-		// add a DiceImage as observer on a Dice
+		// add a src.DiceImage as observer on a src.Dice
 		dice1.addObserver(diceImage1);
 		dice2.addObserver(diceImage2);
 		dice3.addObserver(diceImage3);

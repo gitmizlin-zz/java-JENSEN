@@ -1,3 +1,5 @@
+
+
 public class MockDice implements DiceInterface {
 	int value = 1;
 

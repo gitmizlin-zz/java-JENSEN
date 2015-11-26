@@ -1,3 +1,126 @@
+2015-11-26
+
+Repetition
+Klasser som har Abstract / Adapter i namnet är abstrakta klasser.
+Abstrakta klasser instansieras aldrig.
+
+
+----
+Trådar
+
+Exempel: "Programmet svarar ej. avsluta?"
+* Chat (Servern har en tråd / klient)
+
+Prioriteringar
+	Problem kan uppstå om flera trådar för anspråk på samma resurser.
+	Lösning: synkronisera trådar
+
+
+
+
+2015-11-23
+
+Dokumentation
+
+Varför?
+	Överblick
+	Samla ihop vd som är viktigt
+	Instruktioner - Hur används det?
+	Underlätta framtida utveckling
+	(Information till nästa utvecklare)
+	Påminna sig själv (och andra)
+
+Hjälpmedel dokumentation
+	Illustrationer(kan inkluderas med HTML-kod för bilder: <img src="..."/>)
+	Diagram
+	Exempel
+	Dfinitioner
+	Metaforer
+
+
+För vem?
+	För användaren
+		manualer
+		inbyggd dokumentation
+
+	För utvecklaren
+		API (kod som ska återanvändas och därför måste beskrivas, ex: Java 8 API Documentaiotn)
+		(API-Application Programmable Interface)
+
+Programming guide
+	(Beskrivande hur kod kan/ska användas i sammanhanget)
+
+javadoc: Genererar dokumentation i HTML baserad på kommentarer i källkoden.
+	Kan dokumentera:
+		klasser
+		paket
+		gränssnitt
+		metoder
+		konstruktorer
+		instans- och klassvariabler		
+
+Börja jagadoc kommentar med 
+/**  
+ * Graphical User Interface for Yatzy.
+Ej obligatoriskt -> * Creates, sets up and handles UI for Yatzy
+ *
+*/
+
+class Yatzy View {
+
+/**
+ * Change appearance of chosen dice in UI
+Block tag -> * @param dicenr Dice to update, 1-5
+ * @return Returns nothing
+*/
+
+	public void update Dice(int dicenr) {
+	
+	}
+}	
+
+Polymorfism
+poly = flera
+morf = skepad/form
+flera skepnader/former
+
+När ett objekt kan "ha flera former"
+Centralt är överskuggning (override) och arv
+
+Dice
+ - value : int <- Fält (Instans- och klassvariabler)
+ + getValue() <- metod
+ + roll() <- metod
+
+Åtkomstsynlighet
+ - private
+ + public
+ # protected
+ ~ package
+
+------
+JTable
+
+class MyFrame extends JFrame {
+	public void setupGui() {
+	b.setBackground(...) *
+	b.setFong(...)  **
+	}
+}				
+
+* class MyButton extends JButton {
+	public MyButton();
+		setBackground(...);
+		setFont(...);
+	}	
+}
+
+score board: modell
+
+
+
+
+
 2015-11-19
 
 Mer om felhantering

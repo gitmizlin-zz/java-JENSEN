@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class Board extends JFrame {
 		super();
 		frame = new JFrame();
 		setPreferredSize(new Dimension(800, 600));
-		setTitle("Play Yatzy!");
+		setTitle("Play src.Yatzy!");
 
 		mainPanel = new JPanel();
 		mainPanel.setBackground(Color.DARK_GRAY);

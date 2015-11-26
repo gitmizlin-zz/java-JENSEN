@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,7 +9,7 @@ public class Status extends JPanel {
 
     Status() {
         statusPanel = new JPanel();
-        statusLabel = new JLabel("Status");
+        statusLabel = new JLabel("src.Status");
         statusPanel.setBackground(Color.MAGENTA);
         add(statusLabel);
         setOpaque(false);

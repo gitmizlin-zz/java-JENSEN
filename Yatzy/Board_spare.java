@@ -18,15 +18,15 @@ import javax.swing.text.PlainDocument;
 
 
 
-public class Board extends JFrame {
+public class src.Board extends JFrame {
 	JPanel mainPanel, tablePanel, dicePanel, tableAndDicePanel, onesPanel, twosPanel, threesPanel, foursPanel, fivesPanel, sixesPanel, threeOfAKindPanel;
 	JButton dButton, rollButton, readRulesButton;
 	JLabel ones, onesPoint, twos, twosPoint, threes, threesPoint, fours, foursPoint, fives, fivesPoint, sixes, sixesPoint, threeOfAKind, threeOfAKindPoint;
 	JTextArea ruleArea;
-	ArrayList<Dice> dieList;
-	HashMap<Dice, JButton> dieAndButtonMap;
+	ArrayList<src.Dice> dieList;
+	HashMap<src.Dice, JButton> dieAndButtonMap;
 
-	public Board() {
+	public src.Board() {
 		super();
 		createFrame();
 	}
@@ -100,12 +100,12 @@ public class Board extends JFrame {
 
 		tablePanel.setBackground(Color.pink);
 
-		dieList = new ArrayList<Dice>();
-		dieAndButtonMap = new HashMap<Dice, JButton>();
+		dieList = new ArrayList<src.Dice>();
+		dieAndButtonMap = new HashMap<src.Dice, JButton>();
 
 		int i = 1;
 		while (i <= 5) {
-			Dice die = new Dice (i, false);
+			src.Dice die = new src.Dice (i, false);
 
 			dButton = new JButton();
 			dButton.setIcon(new ImageIcon("img/d" + i + ".png"));
@@ -132,16 +132,16 @@ public class Board extends JFrame {
 
 		pack();
 
-		setTitle("Yatzy");
+		setTitle("src.Yatzy");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
-	class RollInnerLister extends Hand implements ActionListener {
+	class RollInnerLister extends src.Hand implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			for (Dice die : dieList) {
+			for (src.Dice die : dieList) {
 				if (!die.isHeld()) {
 					die.roll();
 				}
@@ -185,9 +185,9 @@ public class Board extends JFrame {
 	}
 
 	class InnerListener implements ActionListener {
-		private Dice die;
+		private src.Dice die;
 
-		InnerListener(Dice die) {
+		InnerListener(src.Dice die) {
 			this.die = die;
 		}
 
