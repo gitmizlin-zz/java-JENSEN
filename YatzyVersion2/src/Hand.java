@@ -1,18 +1,15 @@
-
-
 import java.util.ArrayList;
 
 public class Hand {
-
     public static int checkSameValues(ArrayList<Dice> diceList, int diceValue) {
-        int tot =0;
-        int i = 0;
+        int tot = 0;
+
         for (Dice dice : diceList) {
             if (dice.getValue() == diceValue) {
                 tot = tot + diceValue;
-                i++;
             }
         }
+
         return tot;
     }
 
@@ -27,6 +24,7 @@ public class Hand {
                 tot = firstValue + secondValue;
             }
         }
+
         return tot;
     }
 
@@ -48,6 +46,7 @@ public class Hand {
                 }
             }
         }
+
         return tot;
     }
 
@@ -64,6 +63,7 @@ public class Hand {
                 tot = firstValue + secondValue + thirdValue;
             }
         }
+
         return tot;
     }
 
@@ -87,6 +87,7 @@ public class Hand {
                 tot = firstValue + secondValue + thirdValue + fourthValue;
             }
         }
+
         return tot;
     }
 
@@ -103,6 +104,7 @@ public class Hand {
         ((firstValue == secondValue) && (secondValue != thirdValue) && (thirdValue == fourthValue) && (fourthValue == fifthValue))) {
             tot = firstValue + secondValue + thirdValue + fourthValue + fifthValue;
         }
+
         return tot;
     }
 
@@ -117,6 +119,7 @@ public class Hand {
                  seqCnt++;
              }
          }
+
          // Small straight
          if (diceList.get(diceList.size() - 1).getValue() == largestNr && seqCnt == 4) {
              if (largestNr == 5) {
@@ -125,6 +128,7 @@ public class Hand {
                  tot = 20;
              }
          }
+
          return tot;
      }
 
@@ -137,6 +141,7 @@ public class Hand {
             tot = tot + diceValue;
             i++;
         }
+
         return tot;
     }
     public static int checkYatzy(ArrayList<Dice> diceList) {
@@ -150,26 +155,37 @@ public class Hand {
                 counter++;
             }
         }
+
         if (counter == 4) {
             tot = 50;
         }
+
         return tot;
     }
 
-    public static int checkBonus(ArrayList<Dice> diceList) {
+    public static int checkSum(ArrayList<Dice> diceList) {
         int tot = 0;
-        int bonus = 0;
 
         for (int i = 1; i <= 6; i++) {
             tot = tot + checkSameValues(diceList, i);
         }
 
-        if (tot >= 63) {
+        return tot;
+    }
+
+    public static int checkBonus(ArrayList<Dice> diceList) {
+        int bonus = 0;
+        if (checkSum(diceList) >= 63) {
             bonus = 50;
         }
-        System.out.println("ones to sixes tot: " + tot);
         return bonus;
     }
 
+    public static int checkGrandTotal(ArrayList<Dice> diceList) {
+        int tot = checkOnePair(diceList) + checkTwoPairs(diceList) + checkThreeOfAKind(diceList) +
+                checkFourOfAKind(diceList) + checkFullHouse(diceList) + checkStraight(diceList, 5) + checkStraight(diceList, 6) +
+                checkChance(diceList) + checkYatzy(diceList);
+        return checkSum(diceList) + checkBonus(diceList) + tot;
+    }
 
 }

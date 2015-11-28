@@ -1,27 +1,19 @@
-import java.util.ArrayList;
-
 public class GamePlay {
     private Player p1, p2, currentPlayer;
-    /**
-     * gameEnd is false as long as the game is played.
-     */
     public boolean gameEnd = false;
+    public int turnCount;
 
     GamePlay(){
-
-        Player p1 = new Player();
-        Player p2 = new Player();
-        Player currentPlayer = new Player();
-        ArrayList<Player> playerList = {p1, p2, currentPlayer};
-
-        new Status();
-
+        p1 = new Player();
+        p2 = new Player();
         currentPlayer = p1;
 
-        new Board(playerList);
+        new Status();
+        new Board();
+
+
         while (!gameEnd) {
 
-            playTurn();
             changeTurn();
 
             gameEnd = true;
@@ -36,11 +28,9 @@ public class GamePlay {
         }
     }
 
-    public void playTurn() {
-        int i = 0;
-        while (i < 3) {
-            currentPlayer = currentPlayer;
-        }
-            changeTurn();
+
+    public int getTurnCount() {
+        return turnCount;
     }
+
 }

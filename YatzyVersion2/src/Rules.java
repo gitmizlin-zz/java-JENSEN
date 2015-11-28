@@ -15,7 +15,7 @@ public class Rules extends JFrame {
 
     Rules() {
         rulePanel = new JPanel();
-        rulePanel.setBackground(Color.BLUE);
+        rulePanel.setOpaque(false);;
         add(rulePanel);
 
         ruleButton = new JButton("Read rules");

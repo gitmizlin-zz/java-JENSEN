@@ -1,4 +1,3 @@
-package src;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +17,7 @@ public class Board extends JFrame {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		add(mainPanel);
 
-		FiveDiceView diceView = new FiveDiceView();
+		FiveDiceView diceView = new src.FiveDiceView();
 		Rules rulesView = new Rules();
 		Table tableView = new Table();
 		Status statusView = new Status();

@@ -1,5 +1,3 @@
-
-
 import java.util.Scanner;
 
 public class Yatzy {
@@ -12,5 +10,4 @@ public class Yatzy {
 	public Yatzy() { // Constructor
 		new GamePlay();
 	}
-
 }

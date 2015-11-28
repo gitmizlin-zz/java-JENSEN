@@ -15,6 +15,9 @@ Prioriteringar
 	Problem kan uppstå om flera trådar för anspråk på samma resurser.
 	Lösning: synkronisera trådar
 
+updated process -> parallelism / parallelisering
+Datorn delar upp processer på mindre processer
+
 
 
 

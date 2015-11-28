@@ -1,7 +1,6 @@
 public class Player {
 	private String name;
 	private int score;
-	private boolean isCurrentPlayer;
 
 	public Player(String name, int score) {
 		this.name = name;
@@ -15,5 +14,4 @@ public class Player {
 	public String getName() {
 		return name;
 	}
-
 }

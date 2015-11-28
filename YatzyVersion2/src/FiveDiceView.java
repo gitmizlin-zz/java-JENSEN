@@ -1,156 +1,147 @@
-
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 public class FiveDiceView extends JPanel implements ActionListener, MouseListener {
 	private JPanel diceButtonPanel;
 	private JPanel dicePanel;
 	private JPanel buttonPanel;
 	private JButton rollButton;
+    private HashMap<Dice, JLabel> diceImageHashMap = new HashMap<Dice, JLabel>();
+    private ArrayList<Dice> diceList;
+    private Table tableView;
 
-	private Dice dice1;
-	private Dice dice2;
-	private Dice dice3;
-	private Dice dice4;
-	private Dice dice5;
-
-	private  ArrayList<Dice> diceList = new ArrayList<>();
-
-	private DiceImage diceImage1;
-	private DiceImage diceImage2;
-	private DiceImage diceImage3;
-	private DiceImage diceImage4;
-	private DiceImage diceImage5;
-
-	FiveDiceView() {
-		createAndShowGui();
+	FiveDiceView(Table tableView) {
+		this.tableView = tableView;
+        createAndShowGui();
 	}
 
 	public void createAndShowGui() {
 		diceButtonPanel = new JPanel();
-		diceButtonPanel.setBackground(Color.red);
+		diceButtonPanel.setOpaque(false);
 		diceButtonPanel.setLayout(new BoxLayout(diceButtonPanel, BoxLayout.Y_AXIS));
 
 		dicePanel = new JPanel();
-		dicePanel.setBackground(Color.yellow);
+		dicePanel.setOpaque(false);;
+        dicePanel.setOpaque(false);
 
 		buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.pink);
+		buttonPanel.setOpaque(false);;
 
-		// initiate Model for dice
-		dice1 = new Dice();
-		dice2 = new Dice();
-		dice3 = new Dice();
-		dice4 = new Dice();
-		dice5 = new Dice();
+        for (int i = 0; i < 5; i++) {
+            JLabel diceLabel = new JLabel();
+            diceLabel.setIcon(new ImageIcon(FiveDiceView.class.getResource("d1.png")));
+            diceLabel.addMouseListener(this);
 
-		diceList.add(dice1);
-		diceList.add(dice2);
-		diceList.add(dice3);
-		diceList.add(dice4);
-		diceList.add(dice5);
-
-		// initiate View for dice
-		diceImage1 = new DiceImage();
-		diceImage2 = new DiceImage();
-		diceImage3 = new DiceImage();
-		diceImage4 = new DiceImage();
-		diceImage5 = new DiceImage();
-
-		diceImage1.setDiceModel(dice1);
-		diceImage2.setDiceModel(dice2);
-		diceImage3.setDiceModel(dice3);
-		diceImage4.setDiceModel(dice4);
-		diceImage5.setDiceModel(dice5);
-
-		diceImage1.addMouseListener(this);
-		diceImage2.addMouseListener(this);
-		diceImage3.addMouseListener(this);
-		diceImage4.addMouseListener(this);
-		diceImage5.addMouseListener(this);
-
-		// add a src.DiceImage as observer on a src.Dice
-		dice1.addObserver(diceImage1);
-		dice2.addObserver(diceImage2);
-		dice3.addObserver(diceImage3);
-		dice4.addObserver(diceImage4);
-		dice5.addObserver(diceImage5);
+            diceImageHashMap.put(new Dice(), diceLabel);
+            dicePanel.add(diceLabel);
+        }
 
 		// button "Roll dice" and what occurs when it is clicked
 		rollButton = new JButton("Roll dice");
 		rollButton.addActionListener(this);
-
-		dicePanel.add(diceImage1);
-		dicePanel.add(diceImage2);
-		dicePanel.add(diceImage3);
-		dicePanel.add(diceImage4);
-		dicePanel.add(diceImage5);
-
 		buttonPanel.add(rollButton);
 
 		diceButtonPanel.add(dicePanel);
 		diceButtonPanel.add(buttonPanel);
 
 		add(diceButtonPanel);
-	}
 
-	public void mouseClicked(MouseEvent e) {
-		// If diceImage is clicked, change "Held" status
-		DiceImage diceImage = (DiceImage) e.getSource();
-		Dice dice = diceImage.getDiceModel();
-		dice.toggleHeld();
-
-		int i = dice.getValue();
-
-		if (dice.isHeld()) {
-			diceImage.setIcon(DiceImage.iconsHold[i - 1]);
-		} else {
-			diceImage.setIcon(DiceImage.icons[i - 1]);
-		}
+        diceList = new ArrayList<Dice>(diceImageHashMap.keySet());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (Dice dice : diceList) {
-			if (!dice.isHeld()) {
-				dice.roll();
-			}
-		}
-		Collections.sort(diceList);
-		for (Dice dice : diceList) {
-			System.out.println(dice.getValue());
-		}
-		System.out.println("fullhouse point: " + Hand.checkFullHouse(diceList));
-		System.out.println("one pair: " + Hand.checkOnePair(diceList));
-		System.out.println("two paris: " + Hand.checkTwoPairs(diceList));
-		System.out.println("three of a kind point: " + Hand.checkThreeOfAKind(diceList));
-		System.out.println("four of a kind point: " + Hand.checkFourOfAKind(diceList));
-		System.out.println("small straight: " + Hand.checkStraight(diceList, 5));
-		System.out.println("large straight: " + Hand.checkStraight(diceList, 6));
-		System.out.println("chance: " + Hand.checkChance(diceList));
-		System.out.println("yatzy: " + Hand.checkYatzy(diceList));
-		System.out.println("bonus: " + Hand.checkBonus(diceList));
-	}
+        for (Dice dice : diceImageHashMap.keySet()) {
+            if (!dice.isHeld()) {
+                dice.roll();
+                diceImageHashMap.get(dice).setIcon(createDiceIcon(dice.getValue(), dice.isHeld()));
 
-	public void mouseEntered(MouseEvent e) {
-	}
+                updateTableScores();
+            }
+        }
 
-	public void mouseExited(MouseEvent e) {
-	}
+//        Collections.sort(diceList);
+        Map<Dice, JLabel> diceList2 = new TreeMap<Dice, JLabel>(diceImageHashMap);
+        System.out.println(diceList2);
 
-	public void mousePressed(MouseEvent e) {
-	}
+        for (Dice dice : diceImageHashMap.keySet()) {
+            System.out.println(dice.getValue());
+        }
 
-	public void mouseReleased(MouseEvent e) {
-	}
+        System.out.println("fullhouse point: " + Hand.checkFullHouse(diceList));
+        System.out.println("one pair: " + Hand.checkOnePair(diceList));
+        System.out.println("two paris: " + Hand.checkTwoPairs(diceList));
+        System.out.println("three of a kind point: " + Hand.checkThreeOfAKind(diceList));
+        System.out.println("four of a kind point: " + Hand.checkFourOfAKind(diceList));
+        System.out.println("small straight: " + Hand.checkStraight(diceList, 5));
+        System.out.println("large straight: " + Hand.checkStraight(diceList, 6));
+        System.out.println("chance: " + Hand.checkChance(diceList));
+        System.out.println("yatzy: " + Hand.checkYatzy(diceList));
+        System.out.println("bonus: " + Hand.checkBonus(diceList));
+    }
+
+    private void updateTableScores() {
+        tableView.updateCell(Hand.checkSameValues(diceList, 1), 0, 1);
+        tableView.updateCell(Hand.checkSameValues(diceList, 2), 1, 1);
+        tableView.updateCell(Hand.checkSameValues(diceList, 3), 2, 1);
+        tableView.updateCell(Hand.checkSameValues(diceList, 4), 3, 1);
+        tableView.updateCell(Hand.checkSameValues(diceList, 5), 4, 1);
+        tableView.updateCell(Hand.checkSameValues(diceList, 6), 5, 1);
+        tableView.updateCell(Hand.checkSum(diceList), 6, 1);
+        tableView.updateCell(Hand.checkBonus(diceList), 7, 1);
+        tableView.updateCell(Hand.checkOnePair(diceList), 8, 1);
+        tableView.updateCell(Hand.checkTwoPairs(diceList), 9, 1);
+        tableView.updateCell(Hand.checkThreeOfAKind(diceList), 10, 1);
+        tableView.updateCell(Hand.checkFourOfAKind(diceList), 11, 1);
+        tableView.updateCell(Hand.checkFullHouse(diceList), 12, 1);
+        tableView.updateCell(Hand.checkStraight(diceList, 5), 13, 1);
+        tableView.updateCell(Hand.checkStraight(diceList, 6), 14, 1);
+        tableView.updateCell(Hand.checkChance(diceList), 15, 1);
+        tableView.updateCell(Hand.checkYatzy(diceList), 16, 1);
+        tableView.updateCell(Hand.checkGrandTotal(diceList), 17, 1);
+    }
 
 	public JPanel getDiceButtonPanel() {
 		return this.diceButtonPanel;
 	}
 
+    private ImageIcon createDiceIcon(int number, boolean held) {
+        return new ImageIcon(FiveDiceView.class.getResource("d" + number + (held ? "hold" : "") + ".png"));
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        JLabel diceLabel = (JLabel) e.getSource();
+        Dice dice;
+
+        for (Entry<Dice, JLabel> entry : diceImageHashMap.entrySet()) {
+            if (entry.getValue().equals(diceLabel)) {
+                dice = entry.getKey();
+                dice.toggleHeld();
+                diceLabel.setIcon(createDiceIcon(dice.getValue(), dice.isHeld()));
+            }
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
 
 }

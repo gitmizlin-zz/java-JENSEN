@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by mizuho on 2015-11-14.
  */
-public class Dice extends Observable implements DiceInterface, Comparable {
+public class Dice extends Observable implements Comparable {
     private int value = 1;
     private boolean held;
 
