@@ -21,7 +21,7 @@ public class Hand {
             int secondValue = diceList.get(i + 1).getValue();
 
             if (firstValue == secondValue) {
-                tot = firstValue + secondValue;
+                tot = firstValue * 2;
             }
         }
 
@@ -60,7 +60,7 @@ public class Hand {
             int thirdValue = diceList.get(i + 2).getValue();
 
             if (firstValue == secondValue && secondValue == thirdValue) {
-                tot = firstValue + secondValue + thirdValue;
+                tot = firstValue * 3;
             }
         }
 
@@ -76,15 +76,8 @@ public class Hand {
             int thirdValue = diceList.get(i + 2).getValue();
             int fourthValue = diceList.get(i + 3).getValue();
 
-            if (i < 1) {
-                int fifthValue = diceList.get(i + 4).getValue();
-
-                if (firstValue == secondValue && secondValue == thirdValue && thirdValue == fourthValue && fourthValue != fifthValue) {
-                    tot = firstValue + secondValue + thirdValue + fourthValue;
-                }
-
-            } else if (firstValue == secondValue && secondValue == thirdValue && thirdValue == fourthValue) {
-                tot = firstValue + secondValue + thirdValue + fourthValue;
+            if (firstValue == secondValue && secondValue == thirdValue && thirdValue == fourthValue) {
+                tot = firstValue * 4;
             }
         }
 
@@ -163,29 +156,31 @@ public class Hand {
         return tot;
     }
 
-    public static int checkSum(ArrayList<Dice> diceList) {
-        int tot = 0;
+//    public static int checkSum(ArrayList<Dice> diceList) {
+//        int tot = 0;
+//
+//        for (int i = 1; i <= 6; i++) {
+//            System.out.println(i + "---" + checkSameValues(diceList, i));
+//            tot = tot + checkSameValues(diceList, i);
+//        }
+//
+//        return tot;
+//    }
 
-        for (int i = 1; i <= 6; i++) {
-            tot = tot + checkSameValues(diceList, i);
-        }
+//    public static int checkBonus(ArrayList<Dice> diceList) {
+//        int bonus = 0;
+//
+//        if (checkSum(diceList) >= 63) {
+//            bonus = 50;
+//        }
+//
+//        return bonus;
+//    }
 
-        return tot;
-    }
-
-    public static int checkBonus(ArrayList<Dice> diceList) {
-        int bonus = 0;
-        if (checkSum(diceList) >= 63) {
-            bonus = 50;
-        }
-        return bonus;
-    }
-
-    public static int checkGrandTotal(ArrayList<Dice> diceList) {
-        int tot = checkOnePair(diceList) + checkTwoPairs(diceList) + checkThreeOfAKind(diceList) +
-                checkFourOfAKind(diceList) + checkFullHouse(diceList) + checkStraight(diceList, 5) + checkStraight(diceList, 6) +
-                checkChance(diceList) + checkYatzy(diceList);
-        return checkSum(diceList) + checkBonus(diceList) + tot;
-    }
-
+//    public static int checkGrandTotal(ArrayList<Dice> diceList) {
+//        int tot = checkOnePair(diceList) + checkTwoPairs(diceList) + checkThreeOfAKind(diceList) +
+//                checkFourOfAKind(diceList) + checkFullHouse(diceList) + checkStraight(diceList, 5) + checkStraight(diceList, 6) +
+//                checkChance(diceList) + checkYatzy(diceList);
+//        return checkSum(diceList) + checkBonus(diceList) + tot;
+//    }
 }

@@ -14,11 +14,17 @@ public class Dice implements Comparable {
     }
 
     public void toggleHeld() {
-        held = !held;
+        if (value != 0) {
+            held = !held;
+        }
     }
 
     public boolean isHeld() {
         return held;
+    }
+
+    public void resetHold() {
+        this.held = false;
     }
 
     public void roll() {
@@ -35,9 +41,15 @@ public class Dice implements Comparable {
         return value;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     @Override
     public int compareTo(Object o) {
         Dice d = (Dice) o;
         return (Integer.toString(this.getValue())).compareTo(Integer.toString(d.getValue()));
     }
+
+
 }

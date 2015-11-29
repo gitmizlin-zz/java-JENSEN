@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,12 +8,11 @@ import java.util.ArrayList;
 public class Rules extends JFrame {
     private JPanel rulePanel;
     private JButton ruleButton;
-    private JTextArea textArea;
     private JFrame frame;
 
     Rules() {
         rulePanel = new JPanel();
-        rulePanel.setOpaque(false);;
+        rulePanel.setOpaque(false);
         add(rulePanel);
 
         ruleButton = new JButton("Read rules");
@@ -29,7 +26,6 @@ public class Rules extends JFrame {
                 frame = new JFrame("Yatzy rules");
 
                 frame.addWindowListener(new setWindowNull());
-                readFile();
                 createFrame();
             }
         }
@@ -45,7 +41,7 @@ public class Rules extends JFrame {
             }
 
             JTextArea textArea = new JTextArea(30, 50);
-            textArea.append(readFile());
+            textArea.append(readFile("src/yatzyrules.txt"));
             textArea.setEditable(false);
             panel.add(textArea);
 
@@ -63,32 +59,33 @@ public class Rules extends JFrame {
             frame.setResizable(true);
         }
 
-        public String readFile() {
+        public String readFile(String filename) {
             String line;
             String txt = "";
-            String filename = "yatzyrules.txt";
-//
+
             ArrayList<String> records = new ArrayList<>();
 
             try {
-                BufferedReader reader = new BufferedReader(new FileReader("src/yatzyrules.txt"));
+                BufferedReader reader = new BufferedReader(new FileReader(filename));
 
                 while ((line = reader.readLine()) != null) {
                     txt = txt + "\n" + line;
                     records.add(line);
                 }
+
                 reader.close();
 
             } catch (Exception e) {
                 System.err.format("Exception occurred trying to read '%s'.", filename);
                 e.printStackTrace();
             }
+
             return txt;
         }
     }
 
     public JPanel getRulePanel() {
-        return this.rulePanel = rulePanel;
+        return rulePanel;
     }
 
     class setWindowNull implements WindowListener {

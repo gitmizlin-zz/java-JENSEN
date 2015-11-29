@@ -1,36 +1,14 @@
+import javax.swing.*;
+import java.util.ArrayList;
+
 public class GamePlay {
-    private Player p1, p2, currentPlayer;
     public boolean gameEnd = false;
-    public int turnCount;
+    Board board;
 
-    GamePlay(){
-        p1 = new Player();
-        p2 = new Player();
-        currentPlayer = p1;
+    GamePlay() {
 
-        new Status();
-        new Board();
+        board = new Board();
 
 
-        while (!gameEnd) {
-
-            changeTurn();
-
-            gameEnd = true;
-        }
     }
-
-    public void changeTurn() {
-        if (currentPlayer == p1) {
-            currentPlayer = p2;
-        } else {
-            currentPlayer = p1;
-        }
-    }
-
-
-    public int getTurnCount() {
-        return turnCount;
-    }
-
 }

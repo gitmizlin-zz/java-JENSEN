@@ -3,8 +3,9 @@ import java.awt.*;
 
 public class Board extends JFrame {
 	private JPanel mainPanel;
+    private FiveDiceView diceView;
 
-	public Board() {
+    public Board() {
 		super();
 
 		setPreferredSize(new Dimension(800, 600));
@@ -13,24 +14,25 @@ public class Board extends JFrame {
 		mainPanel = new JPanel();
 
         add(mainPanel);
+        mainPanel.setBackground(Color.yellow);
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(Color.ORANGE);
 
 		Rules rulesView = new Rules();
-		Table tableView = new Table();
-        FiveDiceView diceView = new FiveDiceView(tableView);
+		Table tableView = new Table(this);
+        diceView = new FiveDiceView(tableView);
 
         mainPanel.add(tableView.getTablePanel());
         tableView.getTablePanel().add(rulesView.getRulePanel());
 		mainPanel.add(diceView.getDiceButtonPanel());
 
-
 		pack();
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 	}
 
-
+    public void scoreSelected () { // Callback. Table tells Board that score is selected. Bord then tells FiveDiceView to reset turnCount.
+        diceView.resetTurnCount();
+        diceView.resetDice();
+    }
 }
