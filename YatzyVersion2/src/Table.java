@@ -2,17 +2,37 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Table extends JPanel {
     private JTable table;
     private JPanel tablePanel;
+    private ArrayList<Boolean> clickedRows = new ArrayList<Boolean>();
 
     Table() {
         table = new JTable(new MyTableModel());
-        table.setBackground(Color.white);
         tablePanel = new JPanel();
         tablePanel.add(new JScrollPane(table));
         tablePanel.setOpaque(false);
+
+        for (int i = 0; i < 18; i++) {
+            clickedRows.add(false);
+        }
+
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    System.out.println("clicked row: " + row);
+                    clickedRows.set(row, true);
+                }
+            }
+        });
+
     }
 
     class MyTableModel extends AbstractTableModel {
@@ -69,23 +89,9 @@ public class Table extends JPanel {
     }
 
     public void updateCell(int value, int row, int col) {
-        table.getModel().setValueAt(new Integer(value), row, col);
+        if (clickedRows.get(row) == false) {
+            table.getModel().setValueAt(new Integer(value), row, col);
+        }
     }
-//
-//    public Component prepareRenderer (TableCellRenderer renderer, int index_row, int index_col) {
-//        Component comp = table.prepareRenderer();
-//
-//        if (index_row < 20) {
-//            comp.setBackground(new Color(204,255,204));
-//
-//        } else {
-//            comp.setBackground(Color.CYAN);
-//        }
-//
-//        if(isCellSelected(index_row, index_col)){
-//            comp.setBackground(new Color(0, 0, 112));
-//
-//        }
-//        return comp;
-//    }
+
 }
