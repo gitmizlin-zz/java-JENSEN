@@ -4,15 +4,12 @@ import java.awt.*;
 public class Board extends JFrame {
 	private JPanel mainPanel;
     private FiveDiceView diceView;
-    private JLabel label;
 
     public Board() {
 		super();
 
 		setPreferredSize(new Dimension(800, 600));
 		setTitle("Play Yatzy!");
-
-        label.setText("Double-click the score you want to keep.");
 
 		mainPanel = new JPanel();
 

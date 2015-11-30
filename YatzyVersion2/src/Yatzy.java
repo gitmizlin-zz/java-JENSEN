@@ -1,6 +1,6 @@
 /* Features left:
 * Make only one score selectable per turn
-* Make scores unclickable before game start
+* Make scores unselectable before game start
 * Make scores with 0 point unselectable (or not show point)
 * Status with instruction: "Roll dice", "Hold dice or place a score", "Remaining rolls" (3-0)
 * Change the color of row, not only cell
