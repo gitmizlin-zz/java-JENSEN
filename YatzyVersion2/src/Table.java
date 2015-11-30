@@ -30,12 +30,12 @@ public class Table extends JPanel {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
 
-                    System.out.println("clicked row: " + row);
-
-                    if (fixedRows.get(row)) {
-                        JOptionPane.showMessageDialog(null, "This hand is already selected. Choose another hand.");
-                    } else {
-                        fixedRows.set(row, true);
+                    if (row != 6 && row != 7 && row != 17) {
+                        if (fixedRows.get(row)) {
+                            JOptionPane.showMessageDialog(null, "This hand is already selected. Choose another hand.");
+                        } else {
+                            fixedRows.set(row, true);
+                        }
 
                         int sum = 0;
                         for (int i = 0; i < fixedRows.size(); i++) {
@@ -76,7 +76,8 @@ public class Table extends JPanel {
                         }
                     }
                 }
-        }});
+            }
+        });
     }
 
     class MyTableModel extends AbstractTableModel {

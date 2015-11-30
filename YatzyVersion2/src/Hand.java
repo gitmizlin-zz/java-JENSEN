@@ -155,32 +155,4 @@ public class Hand {
 
         return tot;
     }
-
-//    public static int checkSum(ArrayList<Dice> diceList) {
-//        int tot = 0;
-//
-//        for (int i = 1; i <= 6; i++) {
-//            System.out.println(i + "---" + checkSameValues(diceList, i));
-//            tot = tot + checkSameValues(diceList, i);
-//        }
-//
-//        return tot;
-//    }
-
-//    public static int checkBonus(ArrayList<Dice> diceList) {
-//        int bonus = 0;
-//
-//        if (checkSum(diceList) >= 63) {
-//            bonus = 50;
-//        }
-//
-//        return bonus;
-//    }
-
-//    public static int checkGrandTotal(ArrayList<Dice> diceList) {
-//        int tot = checkOnePair(diceList) + checkTwoPairs(diceList) + checkThreeOfAKind(diceList) +
-//                checkFourOfAKind(diceList) + checkFullHouse(diceList) + checkStraight(diceList, 5) + checkStraight(diceList, 6) +
-//                checkChance(diceList) + checkYatzy(diceList);
-//        return checkSum(diceList) + checkBonus(diceList) + tot;
-//    }
 }

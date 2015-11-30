@@ -1,13 +1,11 @@
 /* Features left:
-* Change the color in the right cells in the table
-* Make sum/bonus/Total score rows unclickable
-* Make only one hand clickable until next turn begins
-* Make hands unclickable before throwing dice
-* Make hands with 0 point unclickable
-* status field to display what to do / what chosen etc
-* Layout
-* Documentation
-*
+* Make only one score selectable per turn
+* Make scores unclickable before game start
+* Make scores with 0 point unselectable (or not show point)
+* Status with instruction: "Roll dice", "Hold dice or place a score", "Remaining rolls" (3-0)
+* Change the color of row, not only cell
+* Layout (table-border, background image, button design etc)
+* Documentation*
 */
 
 public class Yatzy {
