@@ -67,12 +67,22 @@ public class Table extends JPanel {
                             }
                         }
 
+                        table.repaint();
+
+
                         if (count >= 15) {
                             JOptionPane.showMessageDialog(null, "Game end. Your score: " + grandTotal);
 
                         } else {
-                            table.repaint();
                             board.scoreSelected();
+
+                            // set the unselected scores to 0
+
+                            for (int k = 0; k < fixedRows.size(); k++) {
+                                if (k != 6 && k != 7 && k != 17 && k != row && !fixedRows.get(k)) {
+                                    updateCell(0, k, 1);
+                                }
+                            }
                         }
                     }
                 }

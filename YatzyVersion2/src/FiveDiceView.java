@@ -66,6 +66,7 @@ public class FiveDiceView extends JPanel implements ActionListener, MouseListene
             for (Dice dice : diceImageHashMap.keySet()) {
                 if (!dice.isHeld()) {
                     dice.roll();
+
                     diceImageHashMap.get(dice).setIcon(createDiceIcon(dice.getValue(), dice.isHeld()));
                 }
             }
