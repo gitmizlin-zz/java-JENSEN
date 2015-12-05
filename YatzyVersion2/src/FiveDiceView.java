@@ -63,6 +63,7 @@ public class FiveDiceView extends JPanel implements ActionListener, MouseListene
             JOptionPane.showMessageDialog(null, "You have already thrown dice three times. " +
                     "Choose a hand before next turn.");
         } else {
+            tableView.setRowSelected(false);
             for (Dice dice : diceImageHashMap.keySet()) {
                 if (!dice.isHeld()) {
                     dice.roll();

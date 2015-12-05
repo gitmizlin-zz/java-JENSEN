@@ -9,6 +9,7 @@ public class Table extends JPanel {
     private JPanel tablePanel;
     private ArrayList<Boolean> fixedRows = new ArrayList<Boolean>();
     private Board board; // reference to Board (already created, just reference)
+    private boolean rowSelected = false;
 
     Table(Board board) {
         this.board = board;
@@ -26,7 +27,7 @@ public class Table extends JPanel {
 
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2 && !rowSelected) {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
 
@@ -66,15 +67,14 @@ public class Table extends JPanel {
                                 count++;
                             }
                         }
-
                         table.repaint();
-
 
                         if (count >= 15) {
                             JOptionPane.showMessageDialog(null, "Game end. Your score: " + grandTotal);
 
                         } else {
                             board.scoreSelected();
+                            rowSelected = true;
 
                             // set the unselected scores to 0
 
@@ -83,11 +83,16 @@ public class Table extends JPanel {
                                     updateCell(0, k, 1);
                                 }
                             }
+
                         }
                     }
                 }
             }
         });
+    }
+
+    public void setRowSelected (boolean rowSelected) {
+        this.rowSelected = rowSelected;
     }
 
     class MyTableModel extends AbstractTableModel {
