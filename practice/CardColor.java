@@ -1,20 +1,16 @@
-public class Demo {
-	public static void main(String[] args) {
-		SimpleDateFormat formatA = new SimpleDateFormat(yyyy/MM/dd hh:mm:ss);
-		Date setUpdate = null;
+public enum CardColor {
+	CLOVER('\u2663'),
+	DIAMOND('\u2666'),
+	SPADE('\u2660'),
+	HEART('\u2665');
 
-		try {
-			setUpdate = formatA.parse("2014/01/01 13:22:09");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+	public final char symbol;
 
-		System.out.println("Set up date: " + setUpdate);
-
-		string formatDate = formatA.format(setUpdate);
-		System.out.println("formatted date: ");
+	CardColor(char c) { // constructor
+		symbol = c;
 	}
 }
+
 
 // public class EnumDemo {
 // 		public enum Months {
@@ -35,16 +31,16 @@ public class Demo {
 // 	Months months;
 // 		public getMonth() {
 // 			switch months {
-// 				case JANUARY: 
+// 				case JANUARY:
 // 					return 1;
 // 					break;
-// 				case FEBRUARY: 
+// 				case FEBRUARY:
 // 					return 2;
 // 					break;
-// 				case MARCH: 
+// 				case MARCH:
 // 					return 3;
 // 					break;
-// 				case APRIL: 
+// 				case APRIL:
 // 					return 4;
 // 					break;
 // 				case MAY:
@@ -70,11 +66,11 @@ public class Demo {
 // 					break;
 // 				case DECEMBER:
 // 					return 12;
-// 					break;	
-// 				default: 	
+// 					break;
+// 				default:
 // 					System.out.println("defaul!!");
-// 					break;	
+// 					break;
 // 			}
 // 		}
-// 	}	
+// 	}
 // }
