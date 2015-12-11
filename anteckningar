@@ -1,3 +1,84 @@
+2015-12-10
+Iterator (repetition)
+
+Minns att vi har ORDNADE samlingar, t ex: array, arraylist
+dvs varje element har ett index
+
+Vi kan loopa igenom en sån samling t ex : 
+for (int i = 0; i < list.size(); i++) {
+	// array - fixed length. cannot use generics.
+	list[i];
+	// arraylist cannot store primitives, only objects. Flexible length
+	lis.get(i);	
+}
+
+MEN! Det finns o-ordnade samligar.
+Dessa utgår ifrån gränssnittet Set.
+Dvs varje element har inte ett index.
+En sån samling (och alla sorters samlingar) kan loopas igenom på tre sätt (från java8)
+
+***Tre sätt att iterera över samlingar***
+1. streams & aggregating functions 
+2. for-each loop (enhanced loop) - for (Object o : myCollection)
+	"i" saknas (vi vet inte vilken iteration i ordningen vi befinner oss i)
+3. Med hjälp av iteratorer (Tänk något som pekar ut (tillhandahåller) objekten i en samling i en viss ordning = den står emellan objekten). Det är någon klass som implementerar Iterator (javas gränssnitt), dvs implementerar metoderna 
+
+hasNext()
+next()
+(och remove() innan java8)	
+
+Vi kan då iterera över allt som är "interarbart", vilket är alla klasser som implementerar gränssnittet Iterable, vilket i sin tur är allt som implementerar Collection, vilket är alla samlingar i java.
+De implementerar metoden iterator() som returnerar en iterator*(ett objekt som har Iterator för datatyp)
+
+ +++ The Iterable interface (java.lang.Iterable) is one of the root interfaces of the Java collection classes. +++
+
+ Fördelar med iterator
+ 1. vi kan ta bort saker ur samlingen
+
+
+
+
+
+
+
+2015-12-07
+
+Collections
+
+	Tillåta dubletter?
+	Ordnad samling? Måste vara sorterad?
+
+	Mappad / adresserad (samling av par)
+
+	<<Interface>>
+	Collection
+
+**** Human is a superclass of Teacher and Student****
+
+Human[] h = new Human[5];
+Teacher t = new Teacher();
+Student s = new Student();
+h[0] = t;
+h[1] = s;
+
+
+Designmönster - Composite
+När man vill hantera en grupp av objekt som ett objekt
+
+Composite = sammansatt objekt
+Component = abstrakt klass
+En metod i Component överskuggas i Composite så att den räknar med sig själv och alla objekt den innehåller.
+
+---
+Designmönster - Iterator
+3 sätt i Japa 8 att loopa över/iterera över en Collection
+ * for-each-loop ex: for(Card c _ deckOfCards)
+ * (Java 8) streams och aggregating functions	public String toString() 
+ * Iterator
+ 
+
+
+
 2015-11-26
 
 Repetition
