@@ -1,26 +1,17 @@
 public class Card {
-	private CardColor cardColor;
-	private CardValue cardValue;
+	private CardSuit suit;
+	private CardValue value;
 
-	public Card(CardColor cardColor, CardValue cardValue) { // constructor
-		this.cardColor = cardColor;
-		this.cardValue = cardValue;
+	public Card(CardSuit suit, CardValue value) {
+		this.suit = suit;
+		this.value = value;
 	}
 
-	public CardColor getColor() {
-		return cardColor;
+	public CardSuit getSuit() {
+		return suit;
 	}
 
 	public CardValue getValue() {
-		return cardValue;
-	}
-
-	@Override
-	public String toString() {
-		return cardColor.toString() + cardValue.toString();
-	}
-
-	public String toSymbol() {
-		return cardColor.symbol + cardValue.symbol;
+		return value;
 	}
 }

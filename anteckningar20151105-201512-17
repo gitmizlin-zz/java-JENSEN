@@ -1,3 +1,31 @@
+2015-12-14
+
+Enum
+Om man ofta använder en String till på förhand bestämda värden,
+ex String gender = "Male"; // eller "Female"
+eller en int (eller annan datatyp för heltal) för motsvarande,
+ex int dayOfWeek = 0; // 0 = Monday, 1 = Tuesday
+
+dvs när alla tillåtna värden för datatypen redan är kända, använd då den speciella datatypen enum.
+ex 
+public enum Gender {
+	MALE,
+	FEMALE;
+}
+
+public enum DayOfWeek {
+	MONDAY, TUESDAY....SUNDAY;
+}
+* En enum kan definieras inuti en klass (eller utanför), men inte inuti en metod
+* Precis som med klasser, ha gärna en enum / fil
+* Går utmärkt att använda i switch-case-satser
+
+DayOfWeek today = DayOFWeek.MONDAY;
+
+
+
+
+
 2015-12-10
 Iterator (repetition)
 
@@ -34,10 +62,6 @@ De implementerar metoden iterator() som returnerar en iterator*(ett objekt som h
 
  Fördelar med iterator
  1. vi kan ta bort saker ur samlingen
-
-
-
-
 
 
 
