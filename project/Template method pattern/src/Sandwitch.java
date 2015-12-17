@@ -25,7 +25,7 @@ public abstract class Sandwitch {
 		System.out.println("\nThe Sandwitch is wrapped.");		
 	}
 
-	// These methods must be overridden by the extending subclasses	
+	// These methods are overridden by the extending subclasses
 	abstract void addMeat();
 	abstract void addCheese();
 	abstract void addVegetables();
