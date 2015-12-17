@@ -7,11 +7,11 @@ public class Card {
 		this.value = value;
 	}
 
-	public CardSuit getSuit() {
-		return suit;
-	}
+	// public String getSuit() {
+	// 	return suit.getSuit();
+	// }
 
-	public CardValue getValue() {
-		return value;
-	}
+	// public int getValue() {
+	// 	return value.getValue();
+	// }
 }
