@@ -1,12 +1,14 @@
+import java.util.ArrayList;
+
 public class BlackJack {
 
 	public static void main(String[] args) {
-		Deck geme = new Deck();
+		new Deck();
 		Human human = new Human();
 		Computer computer = new Computer();
 
 		human.play();
-		computer.play();
+//		computer.play();
 
 	}
 }

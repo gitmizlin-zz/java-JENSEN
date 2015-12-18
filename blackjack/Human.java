@@ -1,9 +1,16 @@
+import java.util.ArrayList;
+
 public class Human extends Player {
-	Deck deck;
+
+	public Human(Deck deck) {
+		super(deck);
+	}
 
 	@Override
 	public void play() {
-		// hand.add(deck.getCardOnTop());
-		System.out.println("Humans hand: " + hand);
+		Deck.deckOfCards.removeCard(0);
+
+		for (Card c : hand)
+			System.out.println("Humans hand: " + c);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.*;
 public class Deck {
 	private ArrayList<Card> deckOfCards = new ArrayList<>();
 
-	public Deck() {
+	public void newDeck() {
 		deckOfCards.clear();
 		for (CardSuit suit : CardSuit.values()) {
 			for (CardValue value : CardValue.values()) {
@@ -25,5 +25,9 @@ public class Deck {
 
 	public Card getCardOnTop() {
 		return deckOfCards.get(0);
+	}
+
+	public void removeCard(int i) {
+		deckOfCards.remove(i);
 	}
 }
