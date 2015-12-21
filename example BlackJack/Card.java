@@ -17,10 +17,10 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return cardColor.toString() + cardValue.toString();
+		return cardColor.toString() + " " + cardValue.toString();
 	}
 
 	public String toSymbol() {
-		return cardColor.symbol + cardValue.symbol;
+		return cardColor.symbol + " " + cardValue.symbol;
 	}
 }

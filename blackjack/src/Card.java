@@ -17,6 +17,6 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return suit.toString() + value.toString();
+		return String.valueOf(suit.getSuit()) + " " + Integer.toString(value.getValue());
 	}
 }

@@ -1,11 +1,11 @@
-import java.util.ArrayList;
 import java.util.*;
 
 public class Deck {
-	private ArrayList<Card> deckOfCards = new ArrayList<>();
+	private List<Card> deckOfCards = new LinkedList<Card>();
 
-	public void newDeck() {
+	public void newGame() {
 		deckOfCards.clear();
+		System.out.println("deck of cards: " + deckOfCards);
 		for (CardSuit suit : CardSuit.values()) {
 			for (CardValue value : CardValue.values()) {
 				deckOfCards.add(new Card(suit, value));
@@ -14,17 +14,13 @@ public class Deck {
 		}
 		shuffle();
 
-		for (Card c : deckOfCards) {
-			System.out.println(c.getSuit() + " " + c.getValue());
-		}
+		// for (Card c : deckOfCards) {
+		// 	System.out.println(c.getSuit() + " " + c.getValue());
+		// }
 	}
 
 	public void shuffle() {
 		Collections.shuffle(deckOfCards);
-	}
-
-	public ArrayList<Card> getDeckOfCards() {
-		return deckOfCards;
 	}
 
 	public Card getCardOnTop() {
@@ -37,5 +33,9 @@ public class Deck {
 
 	public void addTop(Card card) {
 		deckOfCards.add(0, card);
+	}
+
+	public void discard() {
+		deckOfCards.clear();
 	}
 }

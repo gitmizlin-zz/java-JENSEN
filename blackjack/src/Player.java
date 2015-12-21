@@ -11,19 +11,25 @@ public abstract class Player {
 
 	public abstract void play(); // overridden in Human and Computer (subclasses)
 
+	public void newGame() {
+		hand.discard();
+		point = 0;
+		cards = "";
+	}
+
 	public Card drawCard() {
 		Card card = game.getCardOnTop();
 		hand.addTop(card);
-		game.removeCard();
 		cards += card.toString() + " ";
+		game.removeCard();
 		System.out.println("Drawn card: " + card.getSuit() + " " + card.getValue());
 		point = point + card.getValue();
-
+		System.out.println("cards: " + cards);
 		return card;
 	}
 
 	public int getPoint() {
 		return point;
 	}
-}	
+}
 
