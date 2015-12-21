@@ -23,8 +23,9 @@ public abstract class Player {
 		cards += card.toString() + " ";
 		game.removeCard();
 		System.out.println("Drawn card: " + card.getSuit() + " " + card.getValue());
+
 		point = point + card.getValue();
-		System.out.println("cards: " + cards);
+
 		return card;
 	}
 
