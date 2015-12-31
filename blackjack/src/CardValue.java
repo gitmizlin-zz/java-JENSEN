@@ -1,25 +1,24 @@
 public enum CardValue {
-	ACE(1),
-	TWO(2),
-	THREE(3),
-	FOUR(4),
-	FIVE(5),
-	SIX(6),
-	SEVEN(7),
-	EIGHT(8),
-	NINE(9),
-	TEN(10),
-	JACK(10),
-	QUEEN(10),
-	KING(10);
+    ACE(1),
+    TWO(2),
+    THTREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    NINE(9),
+    TEN(10),
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
-	private final int value;
+    private int cardValue;
 
-	private CardValue(int value) { // constructor
-		this.value = value;
-	}
+    CardValue(int cardValue) {
+        this.cardValue = cardValue;
+    }
 
-    public int getValue() {
-    	return value;
+    public int getCardValue() {
+        return cardValue;
     }
 }

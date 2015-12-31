@@ -1,16 +1,14 @@
 public enum CardSuit {
-	HEART('\u2665'),
-	DIAMOND('\u2666'),
-	SPADE('\u2660'),
-	CLOVER('\u2663');
+    DIAMONDS('\u2662'),
+    HEARTS('\u2661'),
+    SPADES('\u2660'),
+    CLUBS('\u2663');
 
-	private final char suitChar;
+    private final char cardSuit;
 
-	private CardSuit(char suitChar) { // constructor
-		this.suitChar = suitChar;
-	}
-
-	public char getSuit() {
-		return suitChar;
-	}
+    CardSuit(char cardSuit) { // constructor
+        this.cardSuit = cardSuit;
+    }
 }
+
+

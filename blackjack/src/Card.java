@@ -1,22 +1,23 @@
 public class Card {
-	private CardSuit suit;
-	private CardValue value;
+    private CardSuit suit;
+    private CardValue value;
 
-	public Card(CardSuit suit, CardValue value) {
-		this.suit = suit;
-		this.value = value;
-	}
+    public Card (CardSuit suit, CardValue value) { // constructor
+        this.suit = suit;
+        this.value = value;
+    }
 
-	public char getSuit() {
-		return suit.getSuit();
-	}
+    public CardValue getValue() {
+        return value;
+    }
 
-	public int getValue() {
-		return value.getValue();
-	}
+    public CardSuit getSuit() {
+        return suit;
+    }
 
-	@Override
-	public String toString() {
-		return String.valueOf(suit.getSuit()) + " " + Integer.toString(value.getValue());
-	}
+    @Override
+    public String toString() {
+        return suit.toString() + " " + value.toString();
+    }
+
 }
