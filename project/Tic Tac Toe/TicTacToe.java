@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class TicTacToe { // *1
-	public final int rows = 5, cols = rows;
+	public int rows = 3, cols = rows;
 	public final int cellSize = 3;
 	public final String[][] board = new String[rows][cols];
 	public final String empty = "   ";
@@ -24,6 +24,7 @@ public class TicTacToe { // *1
 	}
 
 	public TicTacToe() { // constructor of *1
+
 		String player1;
 		String player2;
 		String gameType = "";
