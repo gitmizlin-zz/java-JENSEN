@@ -9,29 +9,44 @@ body {
     height:100%;
 }
 
+*{
+	margin: 0;
+}
+
 header {
     background-color: yellow;
-    padding: 10px;
 }
 
 h1 a:active, a:visited, a:hover, a:link {
     decoration: none;
-    color: red;
     text-decoration: none;
+}
+
+h1 {
+    padding: 15px 10px 0 15px;
+    background-color: orange;
 }
 
 nav, footer {
     border:1px solid #ccc;
-    background-color: white;
     border-width:1px 0;
     list-style:none;
     text-align:center;
     background-color: pink;
+    padding: 0;
 }
 
-nav li, footer li {
+nav li {
     list-style-type: none;
     display: inline-block;
+    background-color: blue;
+    padding: 20px;
+}
+
+footer li {
+    list-style-type: none;
+    display: inline-block;
+    background-color: blue;
 }
 
 main {
@@ -40,9 +55,8 @@ main {
     padding: 20px;
 }
 
-article {
-
-
+ol {
+	margin: 15px 0;
 }
 
 figure  {
@@ -51,12 +65,16 @@ figure  {
     float: right;
     text-align: left;
     padding: 10px;
-    margin: 0;
 }
 
 figure dt {
     font-weight: bold;
-    line-height: 200%;
+    line-height: 100%;
+}
+
+figure dd {
+	margin: 0 0 10px 0;
+	text-indent: 20px;
 }
 
 lh {
@@ -65,4 +83,5 @@ lh {
 
 footer {
     clear: both;
+    padding: 15px;
 }
