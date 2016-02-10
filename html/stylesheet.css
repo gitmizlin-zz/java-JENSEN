@@ -31,7 +31,7 @@ nav, footer {
 
 nav li, footer li {
     list-style-type: none;
-    display:inline;
+    display: inline-block;
 }
 
 main {
@@ -51,6 +51,7 @@ figure  {
     float: right;
     text-align: left;
     padding: 10px;
+    margin: 0;
 }
 
 figure dt {
