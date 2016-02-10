@@ -1,0 +1,68 @@
+body {
+	background-image: url("img/linen.png");
+	background-repeat: repeat;
+    font-family: Verdana, Geneva, sans-serif;
+    position: relative;
+    width: 50%;
+    padding: 15px;
+    margin: 0 auto; /* Centering body */
+    height:100%;
+}
+
+header {
+    background-color: yellow;
+    padding: 10px;
+}
+
+h1 a:active, a:visited, a:hover, a:link {
+    decoration: none;
+    color: red;
+    text-decoration: none;
+}
+
+nav, footer {
+    border:1px solid #ccc;
+    background-color: white;
+    border-width:1px 0;
+    list-style:none;
+    text-align:center;
+    background-color: pink;
+}
+
+nav li, footer li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+main {
+    background-color: green;
+    text-align: left;
+    padding: 20px;
+}
+
+article {
+
+
+}
+
+figure  {
+    border:1px solid lightgrey;
+    background-color: orange;
+    float: right;
+    text-align: left;
+    padding: 10px;
+    margin: 0;
+}
+
+figure dt {
+    font-weight: bold;
+    line-height: 200%;
+}
+
+lh {
+    display: block;
+}
+
+footer {
+    clear: both;
+}
