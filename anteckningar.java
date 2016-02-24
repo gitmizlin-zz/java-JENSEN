@@ -1,6 +1,65 @@
+2016-02-22
+REST 
+Repsentational State Transfer 
+Det behövs ingen persistent[ständig, kontinuerlig, orubblig] uppkoppling.
+Vi har efterfrågat och fått något från en server, (upp)koppling till servern behövs ej.
+Principen för www(World Wide Web).
+
+
+1. klient ---------------------------> server 
+  http GET www.google.com (i headers) ---> server
+          request(förfråga)
+2. <---------------------------------server
+    svars (responce) html-kod + headers (information om svaret)
+  
+Innan 2005
+  För att få ny infromation från servern, för ny förfrågan => ny (eller samma) hemsida måste hämtas.
+  Även om bara en del på hemsidan behöver bytas ut, hela hemsidan måste laddas om.
+  Men i javascript fanns/finns XmlhttpRequest som gör det möjligt att göra förfrågningar och hämta data med javascript, alltså på t ex användarens begäran (knapptryck etc).
+
+  Istället för att hämta en hel hemsida med XHR, hämta bara viss data.
+  Istället för en hel del HTML-fil, hämta data som en XML-fil
+
+  Ex: sjk15.Xml
+  <teacher>Oscar</teacher>
+  <nrOfStudent>20</nrOfStudent>
+  XML- Extensible Markup Language - ett sätt att spara information / data på (t ex XML-filer istället för databas)
+
+    => AJAX (Asynchronous JavaScript and XML = en samling tekniker för att hämta data med JavaScript) 
+
+Efter 2005, AJAX...
+klient                                  server
+1. google ---------request------------->
+2. google <------responce (html)--------
+3. google ------Request "Program"------>
+4. google <------responce "program, programmering, program stv etc"
+
+
 2016-02-18
 jQuery
 Vad är jQuery?
+  Ett bibliotek av javascript - functioner som förenklar samspel mellan js och html
+  Kort namn på funktionen som hämtar html element: $
+  Använder css-selektorer som argument 
+    ex $("#id") för något med id 
+       $(".className") för klasser
+       $("p") för html-element
+
+javascript
+  blev väldigt stort - polärt väldigt snabbt.
+  tolkas olika av loka webbläsare.
+  hade vissa funktioner bara tillgängliga i vissa webbläsare.
+  kräver mycket/lång för det vanligaste man gör med javascript (interaktion, manipulering av element)
+  ex document.getElementById("myId").metod... 
+    något kortare? Ta hänsyn till webbläsare? 
+
+  -->  $("myId").metod....
+
+javascript
+
+function $(someId) {
+  return document.getElementById(someId);
+}
 
 
 2016-02-15
