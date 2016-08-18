@@ -1,0 +1,8 @@
+package com.google.gwt.sample.stockwatcher.client;
+
+public class Snippet {
+	public static void main(String[] args) {
+		StockWatcherConstants_de.properties
+	}
+}
+
