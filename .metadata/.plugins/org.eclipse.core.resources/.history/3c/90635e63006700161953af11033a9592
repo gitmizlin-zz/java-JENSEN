@@ -1,0 +1,136 @@
+package com.exempel.martin.client;
+
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
+
+/**
+ * Entry point classes define <code>onModuleLoad()</code>.
+ */
+
+
+public class ExempelProjekt implements EntryPoint {
+  private VerticalPanel mainPanel = new VerticalPanel();
+  private HorizontalPanel addPanel = new HorizontalPanel();
+  private TextBox operand1TextBox = new TextBox();
+  private TextBox operand2TextBox = new TextBox();
+  private Button calculateButton = new Button("Calculate");
+  private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+  private SuggestBox operatorTextBox=new SuggestBox(oracle);
+
+	
+  /**
+   * Entry point method.
+   */
+  public void onModuleLoad() {
+	  //Suggests the valid operators
+	  oracle.add("*");
+	  oracle.add("%");
+	  oracle.add("+");  
+	 
+		
+	  	addPanel.add(operand1TextBox);
+	    addPanel.add(operatorTextBox);
+	    addPanel.add(operand2TextBox);
+	    addPanel.add(calculateButton);
+	    
+    // TODO Assemble Main panel.
+	    
+
+	    mainPanel.add(addPanel);
+    // TODO Associate the Main panel with the HTML host page.
+	    RootPanel.get("calc").add(mainPanel);
+    // TODO Move cursor focus to the input box.
+	    
+	    
+	    calculateButton.addClickHandler(new ClickHandler() {
+        public void onClick(ClickEvent event) {
+          calculate();
+        }});   
+  }	
+
+		private void calculate() {
+			
+			final String operator = operatorTextBox.getText().trim();
+			calculateButton.setFocus(true);
+			if ((!operator.equals("+") && !operator.equals("-") && !operator.equals("*") && !operator.equals("/") && 
+					!operator.equals("%")) || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
+		        Window.alert("You have entered a non valid binary operator or one of the operands is not a double");
+		        
+		        return;
+		      }
+			
+			 double operand1 = Double.parseDouble(operand1TextBox.getText());
+			 double operand2 = Double.parseDouble(operand2TextBox.getText());
+			 double answer = 0;
+			 
+			 if (operator == "/" && operand2 == 0) {
+				 Window.alert("Zero is not a valid divisor.");
+				 return;
+			 }
+			 
+			 switch (operator) {
+			 	case "+" : 
+			 		answer = add(operand1, operand2);
+			 		break;
+			 	case "-" : 
+			 		answer = subtract(operand1, operand2);
+			 		break;			 	
+			 	case "*" : 
+			 		answer = multiply(operand1, operand2);
+				 	break;			 	
+				case "/" : 
+					answer = divide(operand1, operand2);
+					break;			 	
+				case "%" : 
+					answer = modulo(operand1, operand2);
+					break;			 		
+			 }
+			 
+			 Window.alert("Answer: " + Math.round(answer)); 
+		} 
+
+		// Addition
+		public double add(double operand1, double operand2) {
+			 return operand1 + operand2;
+		}
+		
+		// Subtraction
+		public double subtract(double operand1, double operand2) {
+			 return operand1 - operand2;
+		}
+		
+		// Multiplication
+		public double multiply(double operand1, double operand2) {
+			 return operand1 * operand2;
+		}
+		
+		// Division
+		public double divide(double operand1, double operand2) {
+			 return operand1 / operand2;
+		}
+		
+		// Modulo
+		public double modulo(double operand1, double operand2) {
+			 return operand1 % operand2;
+		}
+		
+		//Checkes if a String could be seen as a double
+		public boolean isDouble(String input) {
+		   try {
+		      Double.parseDouble(input);
+		      return true;
+		      
+		   } catch(NumberFormatException e) {
+		      return false;
+		   }
+		}	
+}

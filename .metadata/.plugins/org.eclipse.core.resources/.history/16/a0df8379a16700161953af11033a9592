@@ -1,0 +1,4 @@
+/* buttons */
+.gwt-Button {
+	width: 50px;
+}
