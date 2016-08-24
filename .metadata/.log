@@ -5572,3 +5572,6 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp
 
 !ENTRY com.google.gdt.eclipse.core 1 0 2016-08-23 07:19:11.279
 !MESSAGE Scheduled rebuild of project Mini Calculator because of plugin update (current version: 3.9.4.v20160706-2035)
+
+!ENTRY com.google.gdt.eclipse.core 2 0 2016-08-23 07:19:39.680
+!MESSAGE Unable to connect to https://dl.google.com/eclipse/plugin/3.9/compositeArtifacts.xml.

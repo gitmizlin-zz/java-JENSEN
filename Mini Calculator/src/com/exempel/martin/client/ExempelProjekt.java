@@ -20,6 +20,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import jdk.management.resource.internal.inst.WindowsAsynchronousFileChannelImplRMHooks;
+
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -38,7 +40,7 @@ public class ExempelProjekt implements EntryPoint {
 	private Button calculateButton = new Button("Calc");
 	  
 	private FlexTable numTable = new FlexTable();
-	private String[] operators = new String[] {"/", "x", "-", "+", "="};
+	private String[] operators = new String[] {"/", "*", "-", "+", "="};
 	private String[] clears = new String[] {"AC", "C"};
 	private String[] buttomRow = new String[] {"0", "."};
 		   
@@ -125,8 +127,10 @@ public class ExempelProjekt implements EntryPoint {
 	private void addClickHandlerToButtons(Button button) {
 	    button.addClickHandler(new ClickHandler() {
 	    	public void onClick(ClickEvent event) {
-	    		if (button.getText() == "=") {	    			
+	    		if (button.getText() == "=") {
+	    			calcArrayList.add(button.getText());
 	    			calculate();
+	    			getStringFromArray();
 	    		}
 	    		
 	    		if (button.getText() == "AC") {
@@ -152,35 +156,86 @@ public class ExempelProjekt implements EntryPoint {
 		}        
 	}
 	
-	private void calculate() {	
+	
+	
+//	private void calculate() {		
+//
+//		//final String str = calcTextBox.getText().trim();			
+//		
+//		// Find the operator
+//		int operatorIndex = 0;
+//		for (String string : calcArrayList) {			
+//			for (String operatorString : operators) {					
+//				if (string == operatorString && string != "=") {
+//					operator = string;
+//					operatorIndex = calcArrayList.indexOf(operator);
+//				}
+//			}		
+//		}
+//		
+//		// Get the first operand
+//		int i = 0;
+//		String listStringOp1 = "";
+//		for (String s : calcArrayList) {
+//			if (i < operatorIndex) {
+//				listStringOp1 += s;
+//			}
+//			i++;			
+//		}
+//
+//		operand1 = Double.parseDouble(listStringOp1);
+//		
+//		
+//		// Get the second operand
+//		int j = operatorIndex + 1;
+//		String listStringOp2 = "";
+//		for (String s : calcArrayList) {
+//			s = calcArrayList.get(j);
+//			listStringOp2 += s;
+//			j++;
+//			
+//		}
+//		
+//		operand2 = Double.parseDouble(listStringOp2);
+//		Window.alert(" op1: " + operand1 + " op2: " + operand2);
+//		
+//		 if (operator == "/" && operand2 == 0) {
+//			 Window.alert("Zero is not a valid divisor.");
+//			 return;
+//		 }
+//
+//		 
+//		 switch (operator) {
+//		 	case "+" : 
+//		 		answer = add(operand1, operand2);
+//		 		break;
+//		 	case "-" : 
+//		 		answer = subtract(operand1, operand2);
+//		 		break;			 	
+//		 	case "*" : 
+//		 		answer = multiply(operand1, operand2);
+//			 	break;			 	
+//			case "/" : 
+//				answer = divide(operand1, operand2);
+//				break;			 		 		
+//		 }
+//		 
+//		 // Round up to 2 decimal places.	 
+//		 answer = Math.round(answer * 100.0) / 100.0;		 
+//		 calcArrayList.add(String.valueOf(answer));
+//		 Window.alert("Answer: " + answer);
+//	} 
 
-		final String str = calcTextBox.getText().trim();			
-			
-		int operatorIndex = 0;
-		for (String string : calcArrayList) {
-			if (!string.matches("\\d+")) {
-				operator = string;
-				operatorIndex = calcArrayList.indexOf(operator);
-			}
-		}
+	private void calculate() {	 // one digit
 		
-		int i = 0;
-		String listStringOp1 = "";
-		while (i < operatorIndex) {
-			for (String s : calcArrayList) {
-				listStringOp1 += s;
-			}
-		}
-		operand1 = Double.parseDouble(listStringOp1);
+		// Find the operator
+		operator = calcArrayList.get(1);
 		
-		int j = operatorIndex + 1;
-		String listStringOp2 = "";
-		while (i < calcArrayList.size() - 1) {
-			for (String s : calcArrayList) {
-				listStringOp2 += s;
-			}
-		}
-		operand2 = Double.parseDouble(listStringOp2);
+		// Get the first operand
+		operand1 = Double.parseDouble(calcArrayList.get(0));
+
+		// Get the second operand
+		operand2 = Double.parseDouble(calcArrayList.get(2));				
 		
 		 if (operator == "/" && operand2 == 0) {
 			 Window.alert("Zero is not a valid divisor.");
@@ -199,17 +254,13 @@ public class ExempelProjekt implements EntryPoint {
 			 	break;			 	
 			case "/" : 
 				answer = divide(operand1, operand2);
-				break;			 	
-			case "%" : 
-				answer = modulo(operand1, operand2);
-				break;			 		
+				break;			 		 		
 		 }
 		 
 		 // Round up to 2 decimal places.	 
-//		 Window.alert("Answer: " + Math.round(answer * 100.0) / 100.0); 
-		 answer = Math.round(answer * 100.0) / 100.0;
-		 calcArrayList.add("=");
+		 answer = Math.round(answer * 100.0) / 100.0;		 
 		 calcArrayList.add(String.valueOf(answer));
+		 Window.alert("Answer: " + answer);
 	} 
 
 	// Addition
@@ -231,12 +282,7 @@ public class ExempelProjekt implements EntryPoint {
 	public double divide(double operand1, double operand2) {
 		 return operand1 / operand2;
 	}
-	
-	// Modulo
-	public double modulo(double operand1, double operand2) {
-		 return operand1 % operand2;
-	}
-		
+			
 	//Checks if a String could be seen as a double
 	public boolean isDouble(String input) {
 	   try {
