@@ -3,24 +3,15 @@ package com.exempel.martin.client;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-
-import jdk.management.resource.internal.inst.WindowsAsynchronousFileChannelImplRMHooks;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -36,8 +27,6 @@ public class ExempelProjekt implements EntryPoint {
 	private HorizontalPanel addPanel = new HorizontalPanel();
 	  
 	private TextBox calcTextBox  = new TextBox();
-	private TextBox operand2TextBox = new TextBox();
-	private Button calculateButton = new Button("Calc");
 	  
 	private FlexTable numTable = new FlexTable();
 	private String[] operators = new String[] {"/", "*", "-", "+", "="};
@@ -52,6 +41,7 @@ public class ExempelProjekt implements EntryPoint {
   /**
    * Entry point method.
    */
+	@Override
 	public void onModuleLoad() {
 		
 		// TODO Assemble Main panel.	  
@@ -65,14 +55,6 @@ public class ExempelProjekt implements EntryPoint {
 		// TODO Move cursor focus to the input box.	
 //		addPanel.getElement().getStyle().setCursor(Cursor.POINTER);
  
-		// Listen for keyboard events in the input box
-		operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
-			public void onKeyDown(KeyDownEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					calculate();
-				}
-			}
-		});		
 	    
 	    // Create buttons
 		Button button;
@@ -90,7 +72,8 @@ public class ExempelProjekt implements EntryPoint {
 		    		button = new Button(clears[indexClears]);
 		    		addClickHandlerToButtons(button);
 				    button.addClickHandler(new ClickHandler() {
-				        public void onClick(ClickEvent event) {
+				        @Override
+						public void onClick(ClickEvent event) {
 
 				        }}); 	
 		    		indexClears++;	    		
@@ -126,18 +109,20 @@ public class ExempelProjekt implements EntryPoint {
 	
 	private void addClickHandlerToButtons(Button button) {
 	    button.addClickHandler(new ClickHandler() {
-	    	public void onClick(ClickEvent event) {
-	    		if (button.getText() == "=") {
-	    			calcArrayList.add(button.getText());
+	    	@Override
+			public void onClick(ClickEvent event) {
+	    		if (button.getText().equals("=")) {
 	    			calculate();
+//	    			calculateOneDigit();
 	    			getStringFromArray();
+	    			return;
 	    		}
 	    		
-	    		if (button.getText() == "AC") {
+	    		if (button.getText().equals("AC")) {
 	    			calcArrayList.clear();
 	    			calcTextBox.setText("");	    			 
 	    			
-	    		} else if (button.getText() == "C") {
+	    		} else if (button.getText().equals("C")) {
 	    			calcArrayList.remove(calcArrayList.get(calcArrayList.size() -1));
 	    			getStringFromArray();	    			
 	    		
@@ -157,87 +142,39 @@ public class ExempelProjekt implements EntryPoint {
 	}
 	
 	
-	
-//	private void calculate() {		
-//
-//		//final String str = calcTextBox.getText().trim();			
-//		
-//		// Find the operator
-//		int operatorIndex = 0;
-//		for (String string : calcArrayList) {			
-//			for (String operatorString : operators) {					
-//				if (string == operatorString && string != "=") {
-//					operator = string;
-//					operatorIndex = calcArrayList.indexOf(operator);
-//				}
-//			}		
-//		}
-//		
-//		// Get the first operand
-//		int i = 0;
-//		String listStringOp1 = "";
-//		for (String s : calcArrayList) {
-//			if (i < operatorIndex) {
-//				listStringOp1 += s;
-//			}
-//			i++;			
-//		}
-//
-//		operand1 = Double.parseDouble(listStringOp1);
-//		
-//		
-//		// Get the second operand
-//		int j = operatorIndex + 1;
-//		String listStringOp2 = "";
-//		for (String s : calcArrayList) {
-//			s = calcArrayList.get(j);
-//			listStringOp2 += s;
-//			j++;
-//			
-//		}
-//		
-//		operand2 = Double.parseDouble(listStringOp2);
-//		Window.alert(" op1: " + operand1 + " op2: " + operand2);
-//		
-//		 if (operator == "/" && operand2 == 0) {
-//			 Window.alert("Zero is not a valid divisor.");
-//			 return;
-//		 }
-//
-//		 
-//		 switch (operator) {
-//		 	case "+" : 
-//		 		answer = add(operand1, operand2);
-//		 		break;
-//		 	case "-" : 
-//		 		answer = subtract(operand1, operand2);
-//		 		break;			 	
-//		 	case "*" : 
-//		 		answer = multiply(operand1, operand2);
-//			 	break;			 	
-//			case "/" : 
-//				answer = divide(operand1, operand2);
-//				break;			 		 		
-//		 }
-//		 
-//		 // Round up to 2 decimal places.	 
-//		 answer = Math.round(answer * 100.0) / 100.0;		 
-//		 calcArrayList.add(String.valueOf(answer));
-//		 Window.alert("Answer: " + answer);
-//	} 
-
-	private void calculate() {	 // one digit
+	private void calculate() {	
 		
 		// Find the operator
-		operator = calcArrayList.get(1);
+		int operatorIndex = 0;
+		for (String string : calcArrayList) {			
+			for (String operatorString : operators) {					
+				if (string.equals(operatorString) && !string.equals("=")) {
+					operator = string;
+					operatorIndex = calcArrayList.indexOf(operator);
+				}
+			}		
+		}
 		
 		// Get the first operand
-		operand1 = Double.parseDouble(calcArrayList.get(0));
-
-		// Get the second operand
-		operand2 = Double.parseDouble(calcArrayList.get(2));				
+		int i = 0;
+		String listStringOp1 = "";
+		for (String s : calcArrayList) {
+			if (i < operatorIndex) {
+				listStringOp1 += s;
+			}
+			i++;			
+		}
+		operand1 = Double.parseDouble(listStringOp1);
 		
-		 if (operator == "/" && operand2 == 0) {
+		// Get the second operand		
+		String listStringOp2 = "";
+		for (int j = operatorIndex + 1; j < calcArrayList.size(); j++) {
+			String s = calcArrayList.get(j);		
+			listStringOp2 += s;
+		}		
+		operand2 = Double.parseDouble(listStringOp2);
+		
+		 if (operator.equals("/") && operand2 == 0) {
 			 Window.alert("Zero is not a valid divisor.");
 			 return;
 		 }
@@ -259,8 +196,7 @@ public class ExempelProjekt implements EntryPoint {
 		 
 		 // Round up to 2 decimal places.	 
 		 answer = Math.round(answer * 100.0) / 100.0;		 
-		 calcArrayList.add(String.valueOf(answer));
-		 Window.alert("Answer: " + answer);
+		 calcArrayList.add("=" + String.valueOf(answer));
 	} 
 
 	// Addition
