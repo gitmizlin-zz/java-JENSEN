@@ -1,0 +1,45 @@
+package jdbc_miniproject;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+public class EmployeeManager {	
+	
+	public static Employee getEmployee(ResultSet rs) throws SQLException {
+		
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setFname(rs.getString("fname"));
+		employee.setLname(rs.getString("lname"));
+		employee.setOffice(rs.getInt("office"));
+		employee.setProject(rs.getInt("project"));
+		
+		return employee;
+	}
+	
+	public static void printEmployee(ResultSet rs) throws SQLException {
+		Employee employee = getEmployee(rs);
+
+		System.out.println(employee.getId() + " " + employee.getFname() + " " + 
+				employee.getLname() + " " + employee.getOffice() + " " +
+				employee.getProject());
+	}
+	
+	public static void getAllRows(ResultSet rs) throws SQLException {		
+		while (rs.next()) {
+            System.out.print(rs.getInt("id") + " " + rs.getString("fname") + " " + 
+            		rs.getString("lname") + " " + rs.getInt("office") + " " + 
+            		rs.getInt("project") + "\n");
+		}
+	}
+	
+	public static void deleteRow(ResultSet rs) throws SQLException {
+		String query = "DELETE FROM employees WHERE id = ?";
+
+		Employee employee = getEmployee(rs);
+		
+
+	}
+}

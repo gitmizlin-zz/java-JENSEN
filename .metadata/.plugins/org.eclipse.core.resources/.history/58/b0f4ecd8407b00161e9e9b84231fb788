@@ -1,0 +1,20 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	
+	public static void main(String[] args) {
+
+	}
+	
+
+				
+
+			
+
+}	
+	

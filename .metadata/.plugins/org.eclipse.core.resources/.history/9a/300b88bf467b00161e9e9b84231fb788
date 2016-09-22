@@ -1,0 +1,92 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	
+	public static void main(String[] args) {
+		demo();
+	}
+	
+	public static void demo() {
+
+		boolean end = false;
+		do {
+			System.out.println("1: Add");
+			System.out.println("2: Update");
+			System.out.println("3: Delete");
+			System.out.println("4: Display");			
+			
+			try {
+				int input = InputHelper.getIntegerInput("Enter a number 1 - 4: "); 
+				
+				switch(input) {
+					case 1: System.out.println("1 selected"); 
+							end = true;
+							break;				
+					case 2: System.out.println("2 selected");
+							end = true;
+							break;				
+					case 3: System.out.println("3 selected"); 
+							end = true;
+							break;				
+					case 4: display();
+							end = true;
+							break;
+				}
+				
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+			
+		} while (!end);
+	}
+	
+	public static void display() {
+	    String query = "SELECT * FROM ? ";
+	    String table = "";
+	    Object object = null;
+	    
+	    try (Connection conn = DriverManager.getConnection(CONN_STRING,USERNAME,PASSWORD);
+	    		PreparedStatement stm = conn.prepareStatement(query);)  {
+	    	
+			System.out.println("************************");
+			int input = InputHelper.getIntegerInput("1: Employees \n2: Offices \n3: Projects\nSelect a table: ");
+			
+			
+			switch(input) {
+				case 1: table = "employees";
+					object = new Employee();
+					break;
+				case 2: table = "offices";
+					break;
+				case 3: table = "projects";
+					break;				
+			}
+			stm.setString(1, table);
+			ResultSet rs = stm.executeQuery();
+			rs.next();
+			
+			switch(input) {
+				case 1: table = "employees";
+					EmployeeManager.getEmployee(rs);	
+					break;
+				case 2: table = "offices";
+					OfficeManager.getOffice(rs);
+					break;
+				case 3: table = "projects";
+					ProjectManager.getProject(rs);
+				break;				
+			}
+			
+			object.getAllRows();			
+			
+	    } catch (Exception e) {
+	    	System.err.println(e.getMessage());
+	    } 
+	}	
+}	
+	

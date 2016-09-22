@@ -1,0 +1,112 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	
+	
+	
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	private static Connection conn = null;
+	
+	public static void main(String[] args) {
+		
+		boolean end = false;
+		
+		do  {
+			try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);) {
+				selectTable();
+				end = true;
+		
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+			
+		} while (!end);
+	}
+	
+	public static void selectTable() throws SQLException {
+		System.out.println("1: Employees");
+		System.out.println("2: Offices");
+		System.out.println("3: Projects\n");
+		
+		int input = InputHelper.getIntegerInput("Se1ect a table: "); 		
+		if (input == 1) {
+			try (PreparedStatement stmt = conn.prepareStatement("Select * from employees");) {
+				
+				ResultSet rs = stmt.executeQuery();
+				EmployeeManager.getAllRows(rs);					
+				
+				
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		} else if (input == 2) {
+			
+			try(PreparedStatement stmt = conn.prepareStatement("Select * from offices");) {
+				ResultSet rs = stmt.executeQuery();
+				OfficeManager.getAllRows(rs);
+				
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		} else if (input == 3) {
+			
+			try(PreparedStatement stmt = conn.prepareStatement("Select * from projects");) {
+				ResultSet rs = stmt.executeQuery();
+				ProjectManager.getAllRows(rs);
+				
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		switch (editTable()) {
+			case 1: 
+				EmployeeManager.addRow(conn);
+				break;		
+			case 2: 
+				EmployeeManager.deleteRow(conn);
+				break;				
+		}	
+		
+	}		
+
+	
+	public static int editTable() {
+		int menuNumber = 0;
+		
+		System.out.println("------------------------");
+		System.out.println("1: Add data");
+		System.out.println("2: Delete data");
+		System.out.println("3: Go back to main menu\n");
+		
+		try {				
+
+			int input = InputHelper.getIntegerInput("Select a number: "); 
+			
+			switch(input) {
+				case 1:	System.out.println("Add data");
+					menuNumber = 1;
+						
+				case 2: System.out.println("Delete data");					
+					menuNumber = 2;
+						
+				case 3: System.out.println("Go back to main");
+					break;			
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Invalid input.");	
+			System.err.println(e.getMessage());							
+		}
+		
+		return menuNumber;
+	}
+}	
+	

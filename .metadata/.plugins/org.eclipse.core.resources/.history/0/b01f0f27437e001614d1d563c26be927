@@ -1,0 +1,48 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	
+	public static void main(String[] args) {
+		System.out.println("hej");
+		selectTable();
+	}
+	
+	public static int selectTable() {
+		
+		boolean end = false;
+		
+		do {
+			System.out.println("1: Employees");
+			System.out.println("2: Offices");
+			System.out.println("3: Projects");
+			
+			try {					
+
+				int input = InputHelper.getIntegerInput("Select a table: "); 
+				
+				switch(input) {
+					case 1: System.out.println("1 selected"); 
+							return 1;
+				case 2: System.out.println("2 selected");
+							return 2;			
+					case 3: System.out.println("3 selected"); 
+							return 3;			
+				}
+				
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+		end = true;	
+		
+		} while (!end);
+		
+		return 0;
+	}
+
+}	
+	

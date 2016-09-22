@@ -1,0 +1,5 @@
+package lektionmedjdbc;
+
+public class Items extends JDBC {
+
+}

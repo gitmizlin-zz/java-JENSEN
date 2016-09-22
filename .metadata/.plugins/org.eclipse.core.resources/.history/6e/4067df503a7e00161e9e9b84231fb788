@@ -1,0 +1,51 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	
+	public static void main(String[] args) {
+		selectTable();
+	}
+	
+	public static void selectTable() {
+		System.out.println("hej");
+		boolean end = false;
+		String table = "";
+		String query = "SELECT * FROM " + table;
+		
+		do {
+			System.out.println("1: Employees");
+			System.out.println("2: Offices");
+			System.out.println("3: Projects");
+//			
+//			try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+//					PreparedStatement stmt = conn.prepareStatement(query);)
+					
+			try		{
+				int input = InputHelper.getIntegerInput("Enter a number: "); 
+				
+				switch(input) {
+					case 1: System.out.println("1 selected"); 
+							end = true;
+							break;				
+					case 2: System.out.println("2 selected");
+							end = true;
+							break;				
+					case 3: System.out.println("3 selected"); 
+							end = true;
+							break;				
+				}
+				
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+			
+		} while (!end);
+	}
+
+}	
+	

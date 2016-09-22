@@ -1,0 +1,7 @@
+package lektionmedjdbc;
+
+public class PrintOut {
+	
+	public void printOut(Object obj) {
+		
+}

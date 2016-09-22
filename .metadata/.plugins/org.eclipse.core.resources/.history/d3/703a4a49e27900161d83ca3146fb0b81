@@ -1,0 +1,28 @@
+package lektionmedjdbc;
+
+import java.sql.*;
+
+public class JDBC_02 {
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/epic_rpg";	
+	
+	public static void main(String[] args)  {
+
+		try		
+		(
+			Connection conn = DriverManager.getConnection(CONN_STRING,USERNAME,PASSWORD);
+			Statement stm = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery("SELECT name FROM class");	
+		)
+		{			
+			while (rs.next()) {		
+				CharacterClass characterClass = ClassManager.getCharacterClass(rs);
+				System.out.println(characterClass.getName());		
+			}
+		} 
+		catch (SQLException e) {			
+			System.err.println(e.getMessage());
+		}		
+	}
+}

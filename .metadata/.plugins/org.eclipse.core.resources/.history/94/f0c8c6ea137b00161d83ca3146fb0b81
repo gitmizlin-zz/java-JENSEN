@@ -1,0 +1,39 @@
+package lektionmedjdbc;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+public class CharacterManager {	
+	
+	public static Character getCharacter(ResultSet rs) throws SQLException {
+		Character character = new Character();
+		character.setId(rs.getInt("id"));
+		character.setFname(rs.getString("fname"));
+		character.setLname(rs.getString("lname"));
+		character.setExperience(rs.getInt("experience"));
+		character.setLevel(rs.getInt("level"));
+		character.setRace(rs.getString("race"));
+		character.setClassId(rs.getInt("class"));
+		character.setBirthDate(rs.getString("birthdate"));		
+		
+		return character;
+	}
+	
+	public static void getAllRows(ResultSet rs) throws SQLException {
+
+		 //skriv ut all data ifrån Character-tabellen.
+		
+		while (rs.next()) {
+            System.out.print(rs.getInt("id") + " ");
+            System.out.print(" / Name: " + rs.getString("fname") + " ");
+            System.out.print(rs.getString("lname") + " ");
+            System.out.print(" / Experience: " + rs.getInt("experience") + " ");
+            System.out.print(" / Level: " + rs.getInt("level") + " ");
+            System.out.print(" / Race: " + rs.getString("race") + " ");
+            System.out.print(" / Birth date: " + rs.getString("birthdate") + " ");
+            System.out.print(" / Class: " + rs.getInt("class") + "\n");
+		}
+	}
+}

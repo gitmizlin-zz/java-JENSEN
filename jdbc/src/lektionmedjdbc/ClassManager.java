@@ -1,0 +1,14 @@
+package lektionmedjdbc;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ClassManager {	
+	
+	public static CharacterClass getCharacterClass(ResultSet rs) throws SQLException {
+		CharacterClass characterClass = new CharacterClass();
+		characterClass.setId(rs.getInt("id"));
+		characterClass.setName(rs.getString("name"));
+		return characterClass;
+	}			
+}

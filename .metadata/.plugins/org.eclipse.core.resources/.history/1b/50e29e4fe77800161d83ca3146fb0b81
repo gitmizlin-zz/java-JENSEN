@@ -1,0 +1,84 @@
+package lektionmedjdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Savepoint;
+
+public class JDBC {
+	
+	final static String CONN_STRING = "jdbc:mysql://localhost/epic_rpg";
+	final static String USER = "root";
+	final static String PASSWORD = "";
+
+	public static void main(String[] args) {
+		
+		Savepoint savepoint = null;	
+		
+		try  (
+				
+			// parameter for try-method
+			Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+				
+			PreparedStatement preparedStmtItem = conn.prepareStatement
+					("SELECT * FROM items WHERE id = ?");
+			)	
+		{
+			conn.setAutoCommit(false); // does not occur before commit
+			savepoint = conn.setSavepoint(); // kommer tillbaka hit när det blir rollback
+			
+			preparedStmtItem.setInt(1, 3); // set 3 to the 1st "?" in the query
+			ResultSet rs1 = preparedStmtItem.executeQuery();
+			rs1.next();
+			String name = rs1.getString("name");
+			System.out.println(name);
+			
+			Item item =ItemManager.getItem(rs1);
+			ItemManager.printOutItem(item);	
+			
+			PreparedStatement preparedStmtCharacter = conn.prepareStatement
+					("SELECT * FROM characters WHERE id = ?");
+			
+			if (item.getId() < 4) {
+				conn.rollback(savepoint); // goes back to savepoint if something does wrong
+				System.out.println("Transaction rolled back.");
+			}
+			
+			conn.commit(); 
+
+			preparedStmtCharacter.setInt(1, 5);
+			ResultSet rs2 = preparedStmtCharacter.executeQuery();
+			rs2.next();
+			Character character =CharacterManager.getCharacter(rs2);
+			CharacterManager.printOutCharacter(character);	
+	
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}		
+	}
+
+}
+
+
+//Connection
+//Statement
+//ResultSet
+
+//getConnection tar tre parametrar. FÖrsta är en URL-string till vår databas
+//användarmn och lösenord''
+
+//ResultSet-metoder
+//next()
+//previous()
+//absolute(int id)
+//first()
+//last()
+//getRow()
+//isBeforeFirst()
+//isAfterLast()
+//isFirst()
+//isLast()
+//getString(String columname)
+//getInt(int columnID)

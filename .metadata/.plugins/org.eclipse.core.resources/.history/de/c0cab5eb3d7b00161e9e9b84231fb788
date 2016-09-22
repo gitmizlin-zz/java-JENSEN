@@ -1,0 +1,14 @@
+package jdbc_miniproject;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ClassManager {	
+	
+	public static Office getCharacterClass(ResultSet rs) throws SQLException {
+		Office characterClass = new Office();
+		characterClass.setId(rs.getInt("id"));
+		characterClass.setName(rs.getString("name"));
+		return characterClass;
+	}			
+}

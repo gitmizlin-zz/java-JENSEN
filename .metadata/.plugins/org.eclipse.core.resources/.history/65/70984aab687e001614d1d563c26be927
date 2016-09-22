@@ -1,0 +1,95 @@
+package jdbc_miniproject;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class OfficeManager {	
+	
+	public static Office getOffice(ResultSet rs) throws SQLException {
+		Office office = new Office();
+		office.setId(rs.getInt("id"));
+		office.setName(rs.getString("name"));
+		return office;
+	}	
+	
+	public static void getAllRows(ResultSet rs) throws SQLException {		
+		while (rs.next()) {
+            System.out.print(rs.getInt("id") + " " + rs.getString("name") + "\n");
+		}
+	}
+	
+	public static void editTable(Connection conn) {
+		
+		System.out.println("------------------------");
+		System.out.println("1: Add data");
+		System.out.println("2: Delete data");
+		System.out.println("3: Go back to main menu\n");
+		
+		try {				
+
+			int input = InputHelper.getIntegerInput("Select a number: "); 
+			
+			switch(input) {
+				case 1:	System.out.println("Add data");
+					addRow(conn);
+					break;
+						
+				case 2: System.out.println("Delete data");	
+					deleteRow(conn);
+					break;
+						
+				case 3: System.out.println("Go back to main");
+					break;			
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Invalid input.");	
+			System.err.println(e.getMessage());							
+		}
+	}
+	
+	public static void addRow(Connection conn) throws SQLException {
+		
+		String officeName = InputHelper.getStringInput("Enter an Office (location) name: "); 
+		
+		String query = "INSERT INTO offices (officeName) VALUES ('" + officeName + "')";
+		
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.executeUpdate(query);
+		System.out.println("A row has been inserted.");	
+
+		// Print out the last row
+		String query2 = "SELECT * FROM offices ORDER by id DESC LIMIT 1";
+		PreparedStatement stmt2 = conn.prepareStatement(query2);
+		ResultSet rs = stmt2.executeQuery();
+		rs.last();
+		System.out.println(getOffice(rs).toString());		
+	}
+	
+	public static void deleteRow(Connection conn) throws SQLException {		
+		
+		int input = InputHelper.getIntegerInput("Enter a row number to "
+				+ "delete.\nTo delete the last row, enter 0: "); 
+		
+		if (input == 0) {
+			String query = "SELECT * FROM offices ORDER by id DESC LIMIT 1";
+			PreparedStatement stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			rs.last();
+			input = getOffice(rs).getId();		
+		} 
+		
+		try {
+			
+			String queryDelete = "DELETE FROM offices WHERE id = " + input;
+			PreparedStatement stmt2 = conn.prepareStatement(queryDelete);
+			stmt2.executeUpdate();
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+}
+

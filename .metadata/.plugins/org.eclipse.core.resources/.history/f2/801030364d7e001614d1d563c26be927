@@ -1,0 +1,93 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	
+	public static void main(String[] args) {
+		boolean end = false;
+		
+		do  {
+			displayTable();			
+			editTable();
+		} while (!end);
+	}
+	
+	public static void displayTable() {
+		System.out.println("1: Employees");
+		System.out.println("2: Offices");
+		System.out.println("3: Projects\n");
+		
+		int input = InputHelper.getIntegerInput("Se1ect a number: "); 		
+
+		try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);) {
+			if (input == 1) {
+				try (PreparedStatement stmt = conn.prepareStatement("Select * from employees");) {
+					
+					ResultSet rs = stmt.executeQuery();
+					EmployeeManager.getAllRows(rs);			
+					
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				
+			} else if (input == 2) {
+				
+				try(PreparedStatement stmt = conn.prepareStatement("Select * from offices");) {
+					ResultSet rs = stmt.executeQuery();
+					OfficeManager.getAllRows(rs);
+					
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				
+			} else if (input == 3) {
+				
+				try(PreparedStatement stmt = conn.prepareStatement("Select * from projects");) {
+					ResultSet rs = stmt.executeQuery();
+					ProjectManager.getAllRows(rs);
+					
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+		} catch  (SQLException e) {
+			System.out.println("Invalid input.");
+			System.out.println(e.getMessage());
+		}
+	}		
+
+	
+	public static void editTable() {
+		System.out.println("1: Add data");
+		System.out.println("2: Delete data");
+		System.out.println("3: Go back to main menu\n");
+		
+		try {				
+
+			int input = InputHelper.getIntegerInput("Select a number: "); 
+			
+			switch(input) {
+				case 1:	System.out.println("Add data");
+				end = true;
+					break;
+						
+				case 2: System.out.println("Delete data");
+				end = true;
+					break;
+						
+				case 3:
+					break;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Invalid input.");	
+			System.err.println(e.getMessage());							
+		}
+	}
+}	
+	

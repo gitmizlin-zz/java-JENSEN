@@ -1,0 +1,216 @@
+package jdbc_miniproject;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+public class EmployeeManager {	
+	
+	public static Employee getEmployee(ResultSet rs) throws SQLException {
+		
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setFname(rs.getString("fname"));
+		employee.setLname(rs.getString("lname"));
+		employee.setOffice(rs.getInt("office"));
+		employee.setProject(rs.getInt("project"));
+		
+		return employee;
+	}
+	
+
+	public static void printEmployee(ResultSet rs) throws SQLException {
+		Employee employee = getEmployee(rs);
+		System.out.println(employee.getId() + " " + employee.getFname() + " " + 
+				employee.getLname() + " " + employee.getOffice() + " " +
+				employee.getProject());
+	}
+	
+	public static void getAllRows(ResultSet rs) throws SQLException {		
+		while (rs.next()) {
+            System.out.print(rs.getInt("id") + " " + rs.getString("fname") + " " + 
+            		rs.getString("lname") + " / " + rs.getString("offices.name") + " / " + 
+            		rs.getString("projects.name") + "\n");
+		}
+		System.out.println("");
+	}
+	
+	public static void editTable(ResultSet rs, Connection conn) throws SQLException {
+		getAllRows(rs);
+		
+		System.out.println("------------------------");
+		System.out.println("1: Add data");
+		System.out.println("2: Delete data");
+		System.out.println("3: Search data");
+		System.out.println("4: Stats");
+		System.out.println("5: Go back to main menu\n");
+		
+		try {				
+
+			int input = InputHelper.getIntegerInput("Select a number: "); 
+			
+			switch(input) {
+				case 1:	System.out.println("Add data");
+					addRow(conn);
+					break;
+						
+				case 2: System.out.println("Delete data");	
+					deleteRow(conn);
+					break;
+					
+				case 3: System.out.println("Search data");	
+					search(conn);
+					break;
+					
+				case 4: System.out.println("Statistics");	
+					getStats(conn);
+					break;
+							
+				case 5: System.out.println("Go back to main");
+					break;			
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Invalid input.");	
+			System.err.println(e.getMessage());							
+		}
+	}
+	
+	public static void addRow(Connection conn) throws SQLException {
+		
+		String fName = InputHelper.getStringInput("Enter a first name: "); 
+		String lName = InputHelper.getStringInput("Enter a last name: "); 
+		String officeNumber = InputHelper.getStringInput("Enter an office number: ");
+		String projectNumber = InputHelper.getStringInput("Enter an project number: ");
+		
+		String query = "INSERT INTO employees (fname, lname, project, office) VALUES ('" + fName + 
+				"', '" + lName + "', " + projectNumber + ", " + officeNumber + ")";
+		
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.executeUpdate(query);
+		System.out.println("A row has been inserted.");	
+
+		// Print out the last row
+		String query2 = "SELECT * FROM employees ORDER by id DESC LIMIT 1";
+		PreparedStatement stmt2 = conn.prepareStatement(query2);
+		ResultSet rs = stmt2.executeQuery();
+		rs.last();
+		System.out.println(getEmployee(rs).toString());		
+	}
+	
+	public static void deleteRow(Connection conn) throws SQLException {		
+		System.out.println("*****************************");
+		
+		int input = InputHelper.getIntegerInput("Enter a row number to "
+				+ "delete.\nTo delete the last row, enter 0: "); 
+		
+		if (input == 0) {
+			String query = "SELECT * FROM employees ORDER by id DESC LIMIT 1";
+			PreparedStatement stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			rs.last();
+			input = getEmployee(rs).getId();		
+		} 
+		
+		try {
+			
+			String queryDelete = "DELETE FROM employees WHERE id = " + input;
+			PreparedStatement stmt2 = conn.prepareStatement(queryDelete);
+			stmt2.executeUpdate();
+			System.out.println("The row " + input + " has been deleted.");
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	public static void search(Connection conn) throws SQLException {
+		
+		System.out.println("------------------------");
+		System.out.println("1: Search employee by name");
+		System.out.println("2: Search employee by project");
+		System.out.println("3: Go back to main menu\n");
+		
+		try {				
+
+			int input = InputHelper.getIntegerInput("Select a number: "); 
+			
+			switch(input) {
+				case 1:	
+					getNameByName(conn);
+					break;
+						
+				case 2:
+					getEmployeeByProject(conn);
+					break;
+						
+				case 3: System.out.println("Go back to main");
+					break;			
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Invalid input.");	
+			System.err.println(e.getMessage());							
+		}
+	}
+	
+	public static void getNameByName(Connection conn) throws SQLException {		
+		System.out.println("*****************************");
+		
+		String input = InputHelper.getStringInput("Enter a letter / letters. \n"
+				+ "All the employees with a name containing the letter(s) will be "
+				+ "displayed: "); 
+		
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM employees "
+				+ "WHERE fname LIKE ? OR lname LIKE ?");) {
+			
+			stmt.setString(1, "%" + input + "%");
+			stmt.setString(2, "%" + input + "%");	
+			
+			ResultSet rs = stmt.executeQuery();
+			getAllRows(rs);			
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}		
+	}
+	
+	public static void getEmployeeByProject(Connection conn) throws SQLException {		
+		System.out.println("*****************************");
+		
+		int input = InputHelper.getIntegerInput("Enter a project number: "); 
+		
+		try {
+			
+			String query = "SELECT * FROM employees WHERE project = " + input;
+			System.out.println(query);
+			PreparedStatement stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			printEmployee(rs);			
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}		
+	}
+	
+	public static void getStats(Connection conn) throws SQLException {
+		
+		System.out.println("+++++++++++++++++");
+		
+		try {
+			String query = "SELECT COUNT(project), COUNT(office) FROM employees GROUP BY project";
+			System.out.println(query);
+			PreparedStatement stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			printEmployee(rs);			
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}	
+	}
+}

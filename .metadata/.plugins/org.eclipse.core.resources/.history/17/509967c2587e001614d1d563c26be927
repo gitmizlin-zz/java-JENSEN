@@ -1,0 +1,66 @@
+package jdbc_miniproject;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+public class EmployeeManager {	
+	
+	public static Employee getEmployee(ResultSet rs) throws SQLException {
+		
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setFname(rs.getString("fname"));
+		employee.setLname(rs.getString("lname"));
+		employee.setOffice(rs.getInt("office"));
+		employee.setProject(rs.getInt("project"));
+		
+		return employee;
+	}
+	
+	public static void printEmployee(ResultSet rs) throws SQLException {
+		Employee employee = getEmployee(rs);
+
+		System.out.println(employee.getId() + " " + employee.getFname() + " " + 
+				employee.getLname() + " " + employee.getOffice() + " " +
+				employee.getProject());
+	}
+	
+	public static void getAllRows(ResultSet rs) throws SQLException {		
+		while (rs.next()) {
+            System.out.print(rs.getInt("id") + " " + rs.getString("fname") + " " + 
+            		rs.getString("lname") + " " + rs.getInt("office") + " " + 
+            		rs.getInt("project") + "\n");
+		}
+		System.out.println("");
+	}
+	
+	public static void addRow(Connection conn) throws SQLException {
+		
+		String fName = InputHelper.getStringInput("Enter a first name: "); 
+		String lName = InputHelper.getStringInput("Enter a last name: "); 
+		int officeNumber = InputHelper.getIntegerInput("Enter an office number: ");
+		int projectNumber = InputHelper.getIntegerInput("Enter a project number: ");
+		
+		String query = "INSEERT INTO employees (fname, lname, office, project) VALUES (" + fName + 
+				", " + lName + ", " + officeNumber + ", " + projectNumber;
+		
+		PreparedStatement stmt = conn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+	}
+	
+	public static void deleteRow(Connection conn) throws SQLException {
+		
+		int input = InputHelper.getIntegerInput("Enter a row number to delete: "); 
+		String query = "DELETE FROM employees WHERE id = " + input;
+		
+		PreparedStatement stmt = conn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+	}
+	
+	
+}

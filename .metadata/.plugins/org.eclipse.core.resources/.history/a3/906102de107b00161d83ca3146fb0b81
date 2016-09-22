@@ -1,0 +1,35 @@
+package lektionmedjdbc;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+public class CharacterManager {	
+	
+	public static Character getCharacter(ResultSet rs) throws SQLException {
+		Character character = new Character();
+		character.setId(rs.getInt("id"));
+		character.setFname(rs.getString("fname"));
+		character.setLname(rs.getString("lname"));
+		character.setExperience(rs.getInt("experience"));
+		character.setLevel(rs.getInt("level"));
+		character.setRace(rs.getString("race"));
+		character.setClassId(rs.getInt("class"));
+		character.setBirthDate(rs.getString("birthdate"));		
+		
+		return character;
+	}
+	
+	public void getAllRows(ResultSet rs) throws SQLException {
+		
+		rs.last();
+		int numberOfRows = rs.getRow();
+
+		while (rs.next()) {
+		    for(int i = 1; i < numberOfRows; i++)
+		        System.out.print(rs.getString(i) + " ");
+		    System.out.println();
+		}
+	}
+}

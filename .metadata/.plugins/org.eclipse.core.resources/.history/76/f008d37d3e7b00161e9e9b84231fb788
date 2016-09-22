@@ -1,0 +1,41 @@
+package jdbc_miniproject;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+public class EmployeeManager {	
+	
+	public static Employee getEmployee(ResultSet rs) throws SQLException {
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setFname(rs.getString("fname"));
+		employee.setLname(rs.getString("lname"));
+		employee.setExperience(rs.getInt("experience"));
+		employee.setLevel(rs.getInt("level"));
+		employee.setRace(rs.getString("race"));
+		employee.setClassId(rs.getInt("class"));
+		charemployeeacter.setBirthDate(rs.getString("birthdate"));		
+		
+		return employee;
+	}
+	
+	public static void printEmployee(ResultSet rs) throws SQLException {
+		Employee employee = getEmployee(rs);
+
+		System.out.println(employee.getId() + " " + employee.getFname() + " " + 
+				employee.getLname() + " " + employee.getOffice() + " " +
+				employee.getProject());
+		}
+	
+	public static void getAllRows(ResultSet rs) throws SQLException {		
+		while (rs.next()) {
+            System.out.print(rs.getInt("id") + " ");
+            System.out.print("Name: " + rs.getString("fname") + " ");
+            System.out.print(rs.getString("lname") + " ");
+            System.out.print(" / Office: " + rs.getInt("office") + " ");
+            System.out.print(" / Project: " + rs.getInt("project") + " ");
+		}
+	}
+}
