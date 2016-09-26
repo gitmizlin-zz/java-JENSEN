@@ -1,0 +1,93 @@
+package jdbc_miniproject;
+
+import java.sql.*;
+
+public class CompanyDemo {
+	
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
+	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
+	private static Connection conn = null;
+	
+	
+	public static void main(String[] args) {
+		boolean end = false;
+
+		try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);) {
+			
+			while (!end)  {
+				System.out.println("*********************");
+				selectTable();
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void selectTable() throws SQLException {
+		System.out.println("1: Employees");
+		System.out.println("2: Offices");
+		System.out.println("3: Projects\n");
+		
+		int tableId = InputHelper.getIntegerInput("Se1ect a table: "); 		
+		if (tableId == 1) {
+			try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+				PreparedStatement stmt = conn.prepareStatement("Select * from employees LEFT JOIN projects ON projects.id = employees.project LEFT JOIN offices on offices.id = employees.office");) {
+
+				ResultSet rs = stmt.executeQuery();		
+				EmployeeManager.getAllRows(rs);
+				boolean editEnd = false;
+				while(!editEnd) {
+					EmployeeManager.editTable(rs, conn);
+					try {
+						int i = InputHelper.getIntegerInput("--------------\n1. Continue to edit "
+								+ "this table \n2. Go back to Main memu\n"); 	
+						if (i == 1)
+							continue;
+						else if (i == 2)
+							editEnd = true;	
+					} catch (Exception e){
+						System.out.println("Invalid input.");	
+						return;
+					}						
+				}				
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		} else if (tableId == 2) {
+			
+			try(Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+					PreparedStatement stmt = conn.prepareStatement("Select * from offices");) {
+				ResultSet rs = stmt.executeQuery();
+				boolean editEnd = false;
+				while(!editEnd) {
+					OfficeManager.editTable(rs, conn);
+					int i = InputHelper.getIntegerInput("--------------\n1. Continue to edit "
+							+ "this table \n2. Go back to Main memu\n"); 	
+					if (i == 1)
+						continue;
+					if (i == 2)
+						editEnd = true;						
+				}
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		} else if (tableId == 3) {
+			
+			try(Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+					PreparedStatement stmt = conn.prepareStatement("Select * from projects");) {
+				ResultSet rs = stmt.executeQuery();
+				ProjectManager.editTable(rs, conn);
+				
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}	
+}	
+	

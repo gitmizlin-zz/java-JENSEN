@@ -30,15 +30,17 @@ public class CompanyDemo {
 		System.out.println("2: Offices");
 		System.out.println("3: Projects\n");
 		
-		int tableId = InputHelper.getIntegerInput("Se1ect a table: "); 		
+		int tableId = InputHelper.getIntegerInput("Se1ect a table: "); 
+		
 		if (tableId == 1) {
 			try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
 				PreparedStatement stmt = conn.prepareStatement("Select * from employees LEFT JOIN projects ON projects.id = employees.project LEFT JOIN offices on offices.id = employees.office");) {
 
 				ResultSet rs = stmt.executeQuery();		
-				EmployeeManager.getAllRows(rs);
-				EmployeeManager.editTable(rs, conn);
 
+				EmployeeManager.editTable(rs, conn);
+				
+				
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
@@ -60,10 +62,12 @@ public class CompanyDemo {
 					PreparedStatement stmt = conn.prepareStatement("Select * from projects");) {
 				ResultSet rs = stmt.executeQuery();
 				ProjectManager.editTable(rs, conn);
-				
+
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
+		} else {
+			System.out.println("Invalid input.");
 		}
 	}	
 }	

@@ -40,43 +40,34 @@ public class EmployeeManager {
 	}
 	
 	public static void editTable(ResultSet rs, Connection conn) throws SQLException {
-		getAllRows(rs);
+		boolean editEnd = false;
 		
-		System.out.println("------------------------");
-		System.out.println("1: Add data");
-		System.out.println("2: Delete data");
-		System.out.println("3: Search data");
-		System.out.println("4: Stats");
-		System.out.println("5: Go back to main menu\n");
-		
-		try {				
-
+		while (!editEnd) {
+			System.out.println("--------Table: employees--------");
+			System.out.println("1: Add data");
+			System.out.println("2: Update data");
+			System.out.println("3: Delete data");
+			System.out.println("4: Search data");
+			System.out.println("5: Stats");
+			System.out.println("6: Show all employees");
+			System.out.println("7: Go back to main menu\n");
+			
 			int input = InputHelper.getIntegerInput("Select a number: "); 
 			
-			switch(input) {
-				case 1:	System.out.println("Add data");
-					addRow(conn);
-					break;
-						
-				case 2: System.out.println("Delete data");	
-					deleteRow(conn);
-					break;
-					
-				case 3: System.out.println("Search data");	
-					search(conn);
-					break;
-					
-				case 4: System.out.println("Statistics");	
-					getStats(conn);
-					break;
-							
-				case 5: System.out.println("Go back to main");
-					break;			
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Invalid input.");	
-			System.err.println(e.getMessage());							
+			if (input == 1)
+				addRow(conn);				
+			else if (input == 2)
+				updateRow(conn);
+			else if (input == 3)
+				deleteRow(conn);
+			else if (input == 4)
+				search(conn);
+			else if (input == 5) 
+				getStats(conn);
+			else if (input == 6) 
+				getAllRows(rs);
+			else if (input == 7) 
+				editEnd = true;			
 		}
 	}
 	
@@ -99,6 +90,28 @@ public class EmployeeManager {
 		PreparedStatement stmt2 = conn.prepareStatement(query2);
 		ResultSet rs = stmt2.executeQuery();
 		rs.last();
+		System.out.println(getEmployee(rs).toString());		
+	}
+	
+	public static void updateRow(Connection conn) throws SQLException {
+		
+		int employeeId = InputHelper.getIntegerInput("Enter a employee id you want to update: "); 
+		String officeNumber = InputHelper.getStringInput("Enter a new office number: ");
+		String projectNumber = InputHelper.getStringInput("Enter a new project number: ");
+		
+		String query = "UPDATE employees "
+				+ "SET office = " + officeNumber + ", project = " + projectNumber + 
+				" WHERE id = " + employeeId; 
+
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.executeUpdate(query);
+		System.out.println("Employee ID " + employeeId + " has been updated.");	
+
+		// Print out the last row
+		String query2 = "SELECT * FROM employees WHERE id = " + employeeId;
+		PreparedStatement stmt2 = conn.prepareStatement(query2);
+		ResultSet rs = stmt2.executeQuery();
+		rs.next();
 		System.out.println(getEmployee(rs).toString());		
 	}
 	
@@ -168,7 +181,10 @@ public class EmployeeManager {
 				+ "displayed: "); 
 		
 		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM employees "
-				+ "WHERE fname LIKE ? OR lname LIKE ?");) {
+				+ "JOIN offices on employees.office = offices.id "
+				+ "JOIN projects on employees.project = projects.id "
+				+ "WHERE fname LIKE ? "
+				+ "OR lname LIKE ?");) {
 			
 			stmt.setString(1, "%" + input + "%");
 			stmt.setString(2, "%" + input + "%");	

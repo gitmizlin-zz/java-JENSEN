@@ -22,41 +22,33 @@ public class OfficeManager {
 	}
 	
 	public static void editTable(ResultSet rs, Connection conn) throws SQLException {		
-		getAllRows(rs);
+			
+		boolean editEnd = false;
 		
-		System.out.println("------------------------");
-		System.out.println("1: Add data");
-		System.out.println("2: Delete data");
-		System.out.println("3: Search data");
-		System.out.println("4: Go back to main menu\n");
-		
-		try {				
-
+		while (!editEnd) {
+			
+			System.out.println("--------Table: offices--------");
+			System.out.println("1: Add data");
+			System.out.println("2: Delete data");
+			System.out.println("3: Search data");
+			System.out.println("4: Show all offices");
+			System.out.println("5: Go back to main menu\n");
+			
 			int input = InputHelper.getIntegerInput("Select a number: "); 
 			
-			switch(input) {
-				case 1:	System.out.println("Add data");
-					addRow(conn);
-					break;
-						
-				case 2: System.out.println("Delete data");	
-					deleteRow(conn);
-					break;
-						
-				case 3: System.out.println("Search data");	
+			if (input == 1)
+				addRow(conn);				
+			else if (input == 2)
+				deleteRow(conn);
+			else if (input == 3)
 				search(rs, conn);
-				break;
-					
-			case 4: System.out.println("Go back to main");
-				break;			
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Invalid input.");	
-			System.err.println(e.getMessage());							
+			else if (input == 4) 
+				getAllRows(rs);
+			else if (input == 5) 
+				editEnd = true;		
 		}
 	}
-	
+
 	public static void addRow(Connection conn) throws SQLException {
 		
 		String officeName = InputHelper.getStringInput("Enter an Office (location) name: "); 
@@ -155,9 +147,8 @@ public class OfficeManager {
 		String query = "";
 		
 		System.out.println("*****************************");
-		System.out.println("1. By min number of employees");
-		System.out.println("2. By max number of employees");
-		System.out.println("3. By range of the number of employees");
+		System.out.println("1. Search by min number of employees");
+		System.out.println("2. Search by max number of employees");
 		
 		int input = InputHelper.getIntegerInput("Select a number: "); 
 		
