@@ -13,14 +13,12 @@ public class Demo {
 		Leaf conditioner = new Leaf("cond", 2);
 		Leaf papper = new Leaf("paper", 30);
 		Leaf ring = new Leaf("ring", 1);
-		Leaf doll = new Leaf("doll", 4);
 		
 		bag.add(jeans);
 		bag.add(papper);
 		pouch.add(shampoo);
 		small_box.add(ring);
 		big_box.add(small_box);
-		big_box.add(doll);
 		
 		suitcase.add(conditioner);
 		suitcase.add(big_box);
