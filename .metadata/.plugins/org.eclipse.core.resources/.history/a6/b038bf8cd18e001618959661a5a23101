@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+
+public class Composite extends Component {
+	
+	public Composite (String name, int weight) {		
+		this.name = name;
+		this.weight = weight;
+	}
+	
+	ArrayList<Component> list = new ArrayList<Component>();
+	
+	public void add(Component component) {		
+		list.add(component);
+	}
+	
+	public void remove(Component component) {		
+		list.remove(component);		
+	}
+
+	public String getName() {
+		String s = name;		
+		
+		if (list.isEmpty()) {
+			return s;
+		} else {
+			for (Component c : list) {
+				if (c instanceof Leaf) 
+					s = s + " " + c.name; 
+				else
+					s = s + " " + c.getName();
+			}	
+		} 
+		return s;
+	}
+	
+	public int getWeight() {
+		int w = weight;		
+		
+		if (list.isEmpty()) {
+			return w;
+		} else {
+			for (Component c : list) {
+				if (c instanceof Leaf) 
+					w = w + c.weight; 
+				else
+					w = w + c.getWeight();
+			}	
+		} 
+		return w;
+	}
+	
+	
+	public String getAll() {
+		String s = "";
+				
+		if (list.isEmpty()) {
+			s = name + " / " + weight;
+		} else {
+			for (Component c : list) {
+				if (c instanceof Leaf) 
+					s = s + c.name + " / " + c.weight + "\n";
+				else
+					s = s + c.getAll();
+			}	
+		} 
+		return s;
+	}
+}

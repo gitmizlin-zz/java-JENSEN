@@ -1,0 +1,26 @@
+import java.util.ArrayList;
+
+public class Composite extends Component {
+	
+	ArrayList<Component> list = new ArrayList<Component>();
+	
+	public void add(Leaf item) {
+		
+	}
+	
+	public void remove(Leaf item) {
+		
+	}
+	
+	public String getName(Leaf item) {
+		
+	}
+	
+	public int getWeight(Leaf item) {
+		
+	}
+	
+	
+	
+
+}

@@ -14,7 +14,6 @@
 <fullyQualifiedTypeName name="com.google.gwt.event.dom.client.KeyDownHandler"/>
 <fullyQualifiedTypeName name="com.google.gwt.event.dom.client.KeyCodes"/>
 <fullyQualifiedTypeName name="com.google.gwt.user.client.Window"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.google.gwt.user.client.Timer"/>
 <fullyQualifiedTypeName name="com.google.gwt.user.client.Random"/>
 <fullyQualifiedTypeName name="com.google.gwt.i18n.client.NumberFormat"/>
@@ -22,4 +21,6 @@
 <fullyQualifiedTypeName name="com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="com.google.gwt.core.client.GWT"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

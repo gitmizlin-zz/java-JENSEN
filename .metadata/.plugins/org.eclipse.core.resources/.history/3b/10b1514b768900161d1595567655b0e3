@@ -1,0 +1,40 @@
+import java.util.ArrayList;
+
+public class Composite extends Component {
+	
+	public Composite (String name, int weight) {		
+		this.name = name;
+		this.weight = weight;
+	}
+	
+	ArrayList<Component> list = new ArrayList<Component>();
+	
+	public void add(Component component) {		
+		list.add(component);
+	}
+	
+	public void remove(Component component) {
+		
+		list.remove(component);		
+	}
+	
+	public String getName() {
+		String s = "";	
+		String nameOfComp = "";
+		
+		if (!list.isEmpty()) {
+			System.out.println("items:");
+			for (Component c : list) {
+				nameOfComp = c.getName();
+				s = s + nameOfComp + "\n";
+			}
+		} 
+		return "Container: " + name + "\n" + s;
+	}
+	
+	public int getWeight() {
+		
+		
+		return weight;
+	}
+}

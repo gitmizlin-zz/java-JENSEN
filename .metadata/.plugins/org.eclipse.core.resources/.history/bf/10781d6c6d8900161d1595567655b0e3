@@ -1,0 +1,11 @@
+public abstract class Component {
+	
+	protected String name;
+	protected int weight;
+	
+	public abstract void add(T<>);
+	public abstract void remove(T<>);
+	public abstract String getName(); 
+	public abstract int getWeight();
+	
+}

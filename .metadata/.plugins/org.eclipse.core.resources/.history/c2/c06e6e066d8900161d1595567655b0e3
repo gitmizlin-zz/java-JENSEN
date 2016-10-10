@@ -1,0 +1,10 @@
+// composite
+
+public class Composite extends Component{
+	
+	ArrayList<Component> list = new ArrayList<Component>();
+	
+	Composite suitecase = new Composite();
+	
+
+}

@@ -1,0 +1,6 @@
+public abstract class Component {
+	
+	public int getWeight();	
+	public void toString();
+	
+}

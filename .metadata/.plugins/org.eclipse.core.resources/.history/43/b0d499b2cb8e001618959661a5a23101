@@ -1,0 +1,26 @@
+public class Demo {
+	
+	public static void main (String[] args) {
+		
+		Composite suitcase = new Composite("sc1", 5);
+		Composite bag = new Composite("bag1", 2);
+		Composite pouch = new Composite("p1", 1);
+		
+		Leaf jeans = new Leaf("jeans", 1);
+		Leaf shampoo = new Leaf("shampoo", 1);
+		Leaf conditioner = new Leaf("cond", 2);
+		
+		bag.add(jeans);
+		pouch.add(shampoo);
+		suitcase.add(conditioner);
+		
+		suitcase.add(bag);
+		suitcase.add(pouch);
+		
+		System.out.println("Suite case wight: " + suitcase.getWeight());
+		System.out.println("bag wight: " + bag.getWeight());
+		System.out.println("pouch wight: " + pouch.getWeight());
+		
+	}
+
+}

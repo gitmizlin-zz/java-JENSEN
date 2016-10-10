@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;EmployeeManager.java&apos; to &apos;jdbc_miniproject.InputHelper.java&apos;&#x0A;- Original project: &apos;jdbc_miniproject&apos;&#x0A;- Destination element: &apos;jdbc_miniproject.InputHelper.java&apos;&#x0A;- Original element: &apos;jdbc_miniproject.EmployeeManager.java&apos;" description="Copy compilation unit" destination="/src&lt;jdbc_miniproject{InputHelper.java" element1="/src&lt;jdbc_miniproject{EmployeeManager.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1475149949480" units="1" version="1.0"/>
+</session>

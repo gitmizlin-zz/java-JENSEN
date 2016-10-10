@@ -9,9 +9,16 @@ public class Employee {
 	private String lname;
 	private int office;
 	private int project;
-
+	
 	Employee() {
 		
+	}
+
+	Employee(String fname, String lname, int office, int project) {
+		this.fname = fname;
+		this.lname = lname;
+		this.office = office;
+		this.project = project;		
 	}
 
 	public int getId() {
