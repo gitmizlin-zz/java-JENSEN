@@ -1,0 +1,14 @@
+package jdbc_slutprojekt.view;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class EmployeeView extends JFrame {
+	
+    JPanel panel = new JPanel();
+    JLabel label = new JLabel("This is a label");  
+    panel.add(label);
+}
+
+

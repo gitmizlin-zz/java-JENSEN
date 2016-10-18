@@ -1,0 +1,27 @@
+package jdbc_slutprojekt.view;
+
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.JTextField;
+
+public class View extends JFrame {
+	public JPanel panel = new JPanel();
+	public JTextField textField = new JTextField();
+	JButton displayButton = new JButton();
+	
+    public View () {    	
+	    setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    setSize(500,500);
+	    setLocation(100, 100); 
+	    textField.setText("hej!");
+	    add(textField);
+	    displayButton.setPreferredSize(new Dimension(40, 40));
+	    add(displayButton);	    
+	    setVisible(true);
+    }
+}

@@ -1,0 +1,11 @@
+package jdbc_slutprojekt.view;
+
+public class EmployeeView extends JFrame {
+	
+    private JPanel panel;
+    JLabel label = new JLabel("This is a label");  
+    panel.add(label);
+
+}
+
+
