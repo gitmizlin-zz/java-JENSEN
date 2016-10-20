@@ -2,78 +2,66 @@ package jdbc_slutprojekt.controll;
 
 import java.sql.*;
 
-import javax.swing.text.View;
-
-import jdbc_slutprojekt.view.EmployeeView;
+import jdbc_slutprojekt.view.SelectTableView;
+import jdbc_slutprojekt.view.SelectActionForTableView;
 
 public class Engine {
+	private final String USER = "root";
+	private final String PASSWORD = "";
+	private final String CONN_STRING ="jdbc:mysql://localhost/company";
+	private Connection conn;
 	
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
-	private static final String CONN_STRING ="jdbc:mysql://localhost/company";
-	private static Connection conn = null;
+	public Engine() throws SQLException {
+		System.out.println("trying!");
+		new SelectTableView("Select a table", this);
+		conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);	
+		System.out.println("end of constructor");
+	}
 
-	EmployeeView employeeView;
-	
-	public static void main(String[] args) {
-		boolean end = false;
-
-		try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);) {
-			
-			while (!end)  {
-//				View view = new View();
-				EmployeeView employeeView = new EmployeeView();
-//				selectTable();
-			}
-			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+	public static void main(String[] args) throws SQLException {
+		new Engine();
 	}
 	
-	public static void selectTable(int tableId) throws SQLException {
-		System.out.println("1: Employees");
-		System.out.println("2: Offices");
-		System.out.println("3: Projects\n");
-		
-//		int tableId = InputHelper.getIntegerInput("Se1ect a table: "); 
-		
+	public void selectTable(int tableId) throws SQLException {
+
 		if (tableId == 1) {
-			try (Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
-				PreparedStatement stmt = conn.prepareStatement("Select * from employees LEFT JOIN projects ON projects.id = employees.project LEFT JOIN offices on offices.id = employees.office");) {
-
-				ResultSet rs = stmt.executeQuery();		
-
-				EmployeeManager.editTable(rs, conn);
+			try {
+				System.out.println("stmt!!");
+				PreparedStatement stmt = conn.prepareStatement
+						("Select * from employees LEFT JOIN projects ON projects.id = employees.project "
+								+ "LEFT JOIN offices on offices.id = employees.office");
+				ResultSet rs = stmt.executeQuery();					
+				new SelectActionForTableView("Select an action", 1, rs);
 				
-				
-			} catch (SQLException e) {
+			} catch (Exception e) {
+				System.out.println("conn----" + conn);
 				System.out.println(e.getMessage());
 			}
 			
-		} else if (tableId == 2) {
+		} 
+//		else if (tableId == 2) {
 			
-			try(Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
-					PreparedStatement stmt = conn.prepareStatement("Select * from offices");) {
-				ResultSet rs = stmt.executeQuery();
-				OfficeManager.editTable(rs, conn);
-
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
+//			try(Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+//				PreparedStatement stmt = conn.prepareStatement("Select * from offices");) {
+//				ResultSet rs = stmt.executeQuery();
+//				OfficeManager.editTable(rs, conn, 2);
+//
+//			} catch (SQLException e) {
+//				System.out.println(e.getMessage());
+//			}
 			
-		} else if (tableId == 3) {
+//		} else if (tableId == 3) {
 			
-			try(Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
-					PreparedStatement stmt = conn.prepareStatement("Select * from projects");) {
-				ResultSet rs = stmt.executeQuery();
-				ProjectManager.editTable(rs, conn);
-
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
-		} else {
-			System.out.println("Invalid input.");
-		}
+//			try(Connection conn = DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+//				PreparedStatement stmt = conn.prepareStatement("Select * from projects");) {
+//				ResultSet rs = stmt.executeQuery();
+//				ProjectManager.editTable(rs, conn);
+//
+//			} catch (SQLException e) {
+//				System.out.println(e.getMessage());
+//			}
+//		} else {
+//			System.out.println("invalid input");
+//		}
 	}	
 }	

@@ -1,0 +1,69 @@
+package jdbc_slutprojekt.view;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import javax.swing.*;
+
+import jdbc_slutprojekt.controll.Engine;
+
+public class SelectActionForTableView extends JFrame {
+
+	private JPanel panel = new JPanel();
+	private JButton addButton = new JButton("Add");
+	private JButton deleteButton = new JButton("Delete");
+	private JButton searchButton = new JButton("Search");
+	private JButton showAllButton = new JButton("Show all data");
+	private JButton goBackToMainButton = new JButton("Go back to main menu");
+	private Box box = Box.createVerticalBox();
+
+	public JTextArea errorMessage = new JTextArea(5, 20);
+
+	public SelectActionForTableView(String title) {
+		super(title);
+		
+		panel.setPreferredSize(new Dimension(200, 1000));
+		
+		setLayout(new FlowLayout());
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(700, 700);
+		setLocation(100, 100);
+
+		addButton.setMinimumSize(new Dimension(200, 100));
+		deleteButton.setMinimumSize(new Dimension(200, 100));
+		searchButton.setMinimumSize(new Dimension(200, 100));
+		showAllButton.setMinimumSize(new Dimension(200, 100));
+		goBackToMainButton.setMinimumSize(new Dimension(200, 100));
+		
+		panel.add(addButton);
+		panel.add(deleteButton);
+		panel.add(searchButton);
+		panel.add(showAllButton);
+		panel.add(goBackToMainButton);
+
+		add(box);
+		box.add(panel);
+
+		setVisible(true);
+
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					System.out.println("Add-button pressed!");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
+	}
+}

@@ -23,31 +23,18 @@ public class ProjectManager {
 		}
 	}
 	
-	public static void editTable(ResultSet rs, Connection conn) throws SQLException {
-	
-		boolean editEnd = false;
+	public static void editTable(ResultSet rs, Connection conn, int input) throws SQLException {			
+		if (input == 1)
+			addRow(conn);				
+		else if (input == 2)
+			deleteRow(conn);
+		else if (input == 3)
+			search(rs, conn);
+		else if (input == 4) 
+			getAllRows(rs);
+		else if (input == 5) 
+			return;		
 		
-		while (!editEnd) {
-			System.out.println("--------Table: projects--------");
-			System.out.println("1: Add data");
-			System.out.println("2: Delete data");
-			System.out.println("3: Search data");
-			System.out.println("4: Show all projects");
-			System.out.println("5: Go back to main menu\n");
-			
-			int input = InputHelper.getIntegerInput("Select a number: "); 
-			
-			if (input == 1)
-				addRow(conn);				
-			else if (input == 2)
-				deleteRow(conn);
-			else if (input == 3)
-				search(rs, conn);
-			else if (input == 4) 
-				getAllRows(rs);
-			else if (input == 5) 
-				editEnd = true;			
-		}
 	}
 	
 	public static void addRow(Connection conn) throws SQLException {

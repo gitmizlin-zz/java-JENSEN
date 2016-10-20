@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import com.mysql.jdbc.ResultSetMetaData;
 
 import jdbc_slutprojekt.model.Employee;
+import jdbc_slutprojekt.view.ResultView;
+import jdbc_slutprojekt.view.SelectActionForTableView;
 
 public class EmployeeManager {	
 	
@@ -32,45 +34,39 @@ public class EmployeeManager {
 				employee.getProject());
 	}
 	
-	public static void getAllRows(ResultSet rs) throws SQLException {		
-		while (rs.next()) {
-            System.out.print(rs.getInt("id") + " " + rs.getString("fname") + " " + 
-            		rs.getString("lname") + " / " + rs.getString("offices.name") + " / " + 
-            		rs.getString("projects.name") + "\n");
-		}
-		System.out.println("");
+	public static void getAllRows(ResultSet rs) throws SQLException {
+
+		String id = rs.getInt("id") + "";
+
+//		rs.next();
+		String txt = id;
+		
+
+//		while (rs.next()) {
+//            txt = rs.getInt("id") + " " + rs.getString("fname") + " " + 
+//            		rs.getString("lname") + " / " + rs.getString("offices.name") + " / " + 
+//            		rs.getString("projects.name") + "\n";
+//		}
+		ResultView.result.setText(txt);
 	}
 	
 	public static void editTable(ResultSet rs, Connection conn) throws SQLException {
-		boolean editEnd = false;
+//		new SelectActionForTableView("Employee table");
 		
-		while (!editEnd) {
-			System.out.println("--------Table: employees--------");
-			System.out.println("1: Add data");
-			System.out.println("2: Update data");
-			System.out.println("3: Delete data");
-			System.out.println("4: Search data");
-			System.out.println("5: Stats");
-			System.out.println("6: Show all employees");
-			System.out.println("7: Go back to main menu\n");
-			
-			int input = InputHelper.getIntegerInput("Select a number: "); 
-			
-			if (input == 1)
-				addRow(conn);				
-			else if (input == 2)
-				updateRow(conn);
-			else if (input == 3)
-				deleteRow(conn);
-			else if (input == 4)
-				search(conn);
-			else if (input == 5) 
-				getStats(conn);
-			else if (input == 6) 
-				getAllRows(rs);
-			else if (input == 7) 
-				editEnd = true;			
-		}
+//		if (input == 1)
+//			addRow(conn);				
+//		else if (input == 2)
+//			updateRow(conn);
+//		else if (input == 3)
+//			deleteRow(conn);
+//		else if (input == 4)
+//			search(conn);
+//		else if (input == 5) 
+//			getStats(conn);
+//		else if (input == 6) 
+//			getAllRows(rs);
+//		else if (input == 7)
+//			return;
 	}
 	
 	public static void addRow(Connection conn) throws SQLException {
@@ -192,7 +188,7 @@ public class EmployeeManager {
 			stmt.setString(2, "%" + input + "%");	
 			
 			ResultSet rs = stmt.executeQuery();
-			getAllRows(rs);			
+//			getAllRows(rs);			
 		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -228,9 +224,9 @@ public class EmployeeManager {
 			ResultSet rs = stmt.executeQuery();
 			
 			System.out.print("The number of employees in each project \n");
-			while (rs.next()) {
-	            System.out.print(rs.getString("projects.name") + " : " + rs.getString("number_of_employees_by_project") + "\n");
-			}
+//			while (rs.next()) {
+//	            System.out.print(rs.getString("projects.name") + " : " + rs.getString("number_of_employees_by_project") + "\n");
+//			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -244,9 +240,9 @@ public class EmployeeManager {
 			
 			System.out.println("+++++++++++++++++");
 			System.out.print("The number of employees in each office \n");
-			while (rs2.next()) {
-	            System.out.print(rs2.getString("offices.name") + " : " + rs2.getString("number_of_employees_by_office") + "\n");
-			}
+//			while (rs2.next()) {
+//	            System.out.print(rs2.getString("offices.name") + " : " + rs2.getString("number_of_employees_by_office") + "\n");
+//			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
