@@ -1,20 +1,36 @@
 package jdbc_slutprojekt.controll;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 import com.mysql.jdbc.ResultSetMetaData;
 
 import jdbc_slutprojekt.model.Employee;
-import jdbc_slutprojekt.view.ResultView;
-import jdbc_slutprojekt.view.SelectActionForTableView;
+import jdbc_slutprojekt.view.EmployeeResultView;
+import jdbc_slutprojekt.view.EmployeeSelectActionView;
 
 public class EmployeeManager {	
+	Engine engine;
+	EmployeeResultView ev;
 	
-	public static Employee getEmployee(ResultSet rs) throws SQLException {
+	public EmployeeManager(Engine engine) throws SQLException {
+		this.engine = engine;
+		ev = new EmployeeResultView("Employee search result:");
+	}
+
+	private Employee getEmployee(ResultSet rs) throws SQLException {
 		
 		Employee employee = new Employee();
 		employee.setId(rs.getInt("id"));
@@ -25,32 +41,16 @@ public class EmployeeManager {
 		
 		return employee;
 	}
-	
 
-	public static void printEmployee(ResultSet rs) throws SQLException {
+	public String printEmployee(ResultSet rs) throws SQLException {
 		Employee employee = getEmployee(rs);
-		System.out.println(employee.getId() + " " + employee.getFname() + " " + 
-				employee.getLname() + " " + employee.getOffice() + " " +
-				employee.getProject());
-	}
-	
-	public static void getAllRows(ResultSet rs) throws SQLException {
-
-		String id = rs.getInt("id") + "";
-
-//		rs.next();
-		String txt = id;
 		
-
-//		while (rs.next()) {
-//            txt = rs.getInt("id") + " " + rs.getString("fname") + " " + 
-//            		rs.getString("lname") + " / " + rs.getString("offices.name") + " / " + 
-//            		rs.getString("projects.name") + "\n";
-//		}
-		ResultView.result.setText(txt);
+		return employee.getId() + " " + employee.getFname() + " " + 
+				employee.getLname() + " " + employee.getOffice() + " " +
+				employee.getProject() + "\n";
 	}
-	
-	public static void editTable(ResultSet rs, Connection conn) throws SQLException {
+
+	public void editTable(ResultSet rs, Connection conn) throws SQLException {
 //		new SelectActionForTableView("Employee table");
 		
 //		if (input == 1)
@@ -69,7 +69,7 @@ public class EmployeeManager {
 //			return;
 	}
 	
-	public static void addRow(Connection conn) throws SQLException {
+	public void addRow(Connection conn) throws SQLException {
 		
 		String fName = InputHelper.getStringInput("Enter a first name: "); 
 		String lName = InputHelper.getStringInput("Enter a last name: "); 
@@ -91,7 +91,7 @@ public class EmployeeManager {
 		System.out.println(getEmployee(rs).toString());		
 	}
 	
-	public static void updateRow(Connection conn) throws SQLException {
+	public void updateRow(Connection conn) throws SQLException {
 		
 		int employeeId = InputHelper.getIntegerInput("Enter a employee id you want to update: "); 
 		String officeNumber = InputHelper.getStringInput("Enter a new office number: ");
@@ -113,34 +113,8 @@ public class EmployeeManager {
 		System.out.println(getEmployee(rs).toString());		
 	}
 	
-	public static void deleteRow(Connection conn) throws SQLException {		
-		System.out.println("*****************************");
-		
-		int input = InputHelper.getIntegerInput("Enter a row number to "
-				+ "delete.\nTo delete the last row, enter 0: "); 
-		
-		if (input == 0) {
-			String query = "SELECT * FROM employees ORDER by id DESC LIMIT 1";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
-			rs.last();
-			input = getEmployee(rs).getId();		
-		} 
-		
-		try {
-			
-			String queryDelete = "DELETE FROM employees WHERE id = " + input;
-			PreparedStatement stmt2 = conn.prepareStatement(queryDelete);
-			stmt2.executeUpdate();
-			System.out.println("The row " + input + " has been deleted.");
-		
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		
-	}
 	
-	public static void search(Connection conn) throws SQLException {
+	public void search(Connection conn) throws SQLException {
 		
 		System.out.println("------------------------");
 		System.out.println("1: Search employee by name");
@@ -170,7 +144,7 @@ public class EmployeeManager {
 		}
 	}
 	
-	public static void getEmployeeByName(Connection conn) throws SQLException {
+	public void getEmployeeByName(Connection conn) throws SQLException {
 	
 		System.out.println("*****************************");
 		
@@ -195,7 +169,7 @@ public class EmployeeManager {
 		}		
 	}
 	
-	public static void getEmployeeByProject(Connection conn) throws SQLException {	
+	public void getEmployeeByProject(Connection conn) throws SQLException {	
 		
 		System.out.println("*****************************");
 		
@@ -214,7 +188,7 @@ public class EmployeeManager {
 		}		
 	}
 	
-	public static void getStats(Connection conn) throws SQLException {
+	public void getStats(Connection conn) throws SQLException {
 		
 		System.out.println("+++++++++++++++++");
 		
@@ -247,5 +221,43 @@ public class EmployeeManager {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}	
+	}
+	
+	public void getAllRows(ResultSet rs) throws SQLException {
+
+		String txt = "";		
+
+		while (rs.next()) {
+
+			txt = txt + printEmployee(rs);            
+		}
+		ev.result.setText(txt);		
+	}
+	
+	public void getAllRowsWithDeleteButton(ResultSet rs) throws SQLException {
+		
+		while (rs.next()) {			
+			JButton btn = new JButton(printEmployee(rs));
+			ev.add(btn);
+			
+			int employeeId = getEmployee(rs).getId();
+			
+			btn.addActionListener(new ActionListener() {				
+				public void actionPerformed(ActionEvent e) {					
+//					try {						
+//						String queryDelete = "DELETE FROM employees WHERE id = " + employeeId;
+//						PreparedStatement stmt2 = engine.conn.prepareStatement(queryDelete);
+//						stmt2.executeUpdate();
+//						System.out.println("The row " + employeeId + " has been deleted.");
+//					
+//					} catch (SQLException ex) {
+//						System.out.println(ex.getMessage());
+//					}
+					btn.setVisible(false);
+				}
+
+			});			
+		}
+		ev.setVisible(true);
 	}
 }
