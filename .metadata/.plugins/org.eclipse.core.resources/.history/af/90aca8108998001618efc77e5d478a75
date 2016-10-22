@@ -1,0 +1,5 @@
+package jdbc_slutprojekt.model;
+
+public class DefaultTableModel {
+
+}

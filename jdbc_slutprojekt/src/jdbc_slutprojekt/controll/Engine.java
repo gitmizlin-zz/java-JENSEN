@@ -10,8 +10,8 @@ public class Engine {
 	private final String USER = "root";
 	private final String PASSWORD = "";
 	private final String CONN_STRING = "jdbc:mysql://localhost/company";
-	public Connection conn;
-	public EmployeeManager em;
+	private Connection conn;
+	private EmployeeManager em;
 	EmployeeResultView rv = new EmployeeResultView("Employee search result");
 
 	Engine() throws SQLException {
@@ -21,7 +21,7 @@ public class Engine {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		Engine engine = new Engine();
+		new Engine();
 	}
 
 	public void selectTable(int tableId) throws SQLException {
@@ -32,7 +32,7 @@ public class Engine {
 						"Select * from employees LEFT JOIN projects ON projects.id = employees.project "
 								+ "LEFT JOIN offices on offices.id = employees.office");
 				ResultSet rs = stmt.executeQuery();
-				new EmployeeSelectActionView("Employee table: Select an action", rs);
+				new EmployeeSelectActionView("Employee table: Select an action", rs, conn);
 
 			} catch (Exception e) {
 				System.out.println("conn----" + conn);
@@ -46,7 +46,7 @@ public class Engine {
 		// PASSWORD);
 		// PreparedStatement stmt = conn.prepareStatement("Select * from
 		// offices");) {
-		// ResultSet rs = stmt.executeQuery();
+//		 ResultSet rs = stmt.executeQuery();
 		// OfficeManager.editTable(rs, conn, 2);
 		//
 		// } catch (SQLException e) {

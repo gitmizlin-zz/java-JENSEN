@@ -9,13 +9,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.*;
 
 import jdbc_slutprojekt.controll.EmployeeManager;
-import jdbc_slutprojekt.controll.Engine;
 
 public class EmployeeSelectActionView extends JFrame {
 
@@ -25,13 +25,11 @@ public class EmployeeSelectActionView extends JFrame {
 	private JButton showAllButton = new JButton("Show all data");
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private Box box = Box.createVerticalBox();
-	public ResultSet rs = null;	
-	public Engine engine;
 
-	public EmployeeSelectActionView (String title, ResultSet rs) throws SQLException {
+	public EmployeeSelectActionView (String title, ResultSet rs, Connection conn) throws SQLException {
 		super(title);
-		this.rs = rs;
-		EmployeeManager em = new EmployeeManager(engine);
+		
+		EmployeeManager em = new EmployeeManager(conn);
 		
 		try {
 			System.out.println("constructor closed? " + rs.isClosed());

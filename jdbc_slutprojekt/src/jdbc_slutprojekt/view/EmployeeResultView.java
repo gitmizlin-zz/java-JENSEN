@@ -13,8 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.ResultSetMetaData;
 
 import jdbc_slutprojekt.controll.EmployeeManager;
 import jdbc_slutprojekt.controll.Engine;
@@ -23,7 +25,6 @@ public class EmployeeResultView extends JFrame {
 
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	public JTextArea result = new JTextArea();
-
 	public EmployeeResultView(String title) throws SQLException {
 		super(title);
 				
@@ -35,7 +36,8 @@ public class EmployeeResultView extends JFrame {
 		add(goBackToMainButton);
 		add(result);
 		
-		setVisible(true);		
+		setVisible(true);
+
 
 		goBackToMainButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

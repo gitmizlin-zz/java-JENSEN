@@ -1,6 +1,7 @@
 package jdbc_slutprojekt.controll;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,11 +24,11 @@ import jdbc_slutprojekt.view.EmployeeResultView;
 import jdbc_slutprojekt.view.EmployeeSelectActionView;
 
 public class EmployeeManager {	
-	Engine engine;
-	EmployeeResultView ev;
+	private Connection conn;
+	private EmployeeResultView ev;
 	
-	public EmployeeManager(Engine engine) throws SQLException {
-		this.engine = engine;
+	public EmployeeManager(Connection conn) throws SQLException {
+		this.conn = conn;
 		ev = new EmployeeResultView("Employee search result:");
 	}
 
@@ -235,25 +237,35 @@ public class EmployeeManager {
 	}
 	
 	public void getAllRowsWithDeleteButton(ResultSet rs) throws SQLException {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		
-		while (rs.next()) {			
-			JButton btn = new JButton(printEmployee(rs));
-			ev.add(btn);
+		while (rs.next()) {	
+			JPanel p2 = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+			JLabel l = new JLabel(printEmployee(rs));
+			JButton btn = new JButton("delete");
+			p2.add(btn);
+			p2.add(l);			
+			p.add(p2);
+			ev.add(p);
 			
 			int employeeId = getEmployee(rs).getId();
 			
 			btn.addActionListener(new ActionListener() {				
 				public void actionPerformed(ActionEvent e) {					
-//					try {						
-//						String queryDelete = "DELETE FROM employees WHERE id = " + employeeId;
-//						PreparedStatement stmt2 = engine.conn.prepareStatement(queryDelete);
-//						stmt2.executeUpdate();
-//						System.out.println("The row " + employeeId + " has been deleted.");
-//					
-//					} catch (SQLException ex) {
-//						System.out.println(ex.getMessage());
-//					}
-					btn.setVisible(false);
+					try {	
+						l.setText("*** Employee " + employeeId + " has been deleted ***");
+						btn.setVisible(false);
+						String queryDelete = "DELETE FROM employees WHERE id = " + employeeId;
+						System.out.println("queryDelete: " + queryDelete );
+						PreparedStatement stmt2 = conn.prepareStatement(queryDelete);
+						stmt2.executeUpdate();					
+
+					} catch (SQLException ex) {
+						System.out.println(ex.getMessage());
+					}
+
 				}
 
 			});			
