@@ -25,10 +25,19 @@ public class EmployeeResultView extends JFrame {
 
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private JTextArea result = new JTextArea();	
+	private JPanel empPanel = new JPanel();
+	
+    private JScrollPane pane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    JScrollPane scrPane = new JScrollPane(empPanel);
+	
+
 
 	public EmployeeResultView(String title) throws SQLException {
 		super(title);
-		setLayout(new FlowLayout());
+	    empPanel.add(scrPane);
+	    scrPane.setLayout(new ScrollPaneLayout());
+
+//		setLayout(new FlowLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(700, 700);
 		setLocation(100, 100);

@@ -25,9 +25,14 @@ public class EmployeeResultView extends JFrame {
 
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private JTextArea result = new JTextArea();	
+	
+	private JTextArea setResult(String st, JTextArea ta) {
+		ta.setText(st);
+	}
 
 	public EmployeeResultView(String title) throws SQLException {
 		super(title);
+				
 		setLayout(new FlowLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(700, 700);
@@ -49,13 +54,5 @@ public class EmployeeResultView extends JFrame {
 				}
 			}
 		});
-	}
-	
-	public void setResultInTextArea(String st, JTextArea ta) {		
-		ta.setText(st);
-	}
-	
-	public JTextArea getResultTextArea () {
-		return result;
 	}
 }

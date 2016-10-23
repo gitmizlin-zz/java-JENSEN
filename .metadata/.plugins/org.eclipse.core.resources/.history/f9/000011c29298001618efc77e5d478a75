@@ -233,7 +233,7 @@ public class EmployeeManager {
 
 			txt = txt + printEmployee(rs);            
 		}
-		ev.setResultInTextArea(txt, ev.getResultTextArea());		
+		ev.getResult.setText(txt);		
 	}
 	
 	public void getAllRowsWithDeleteButton(ResultSet rs) throws SQLException {

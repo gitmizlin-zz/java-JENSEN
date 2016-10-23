@@ -25,16 +25,28 @@ public class EmployeeResultView extends JFrame {
 
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private JTextArea result = new JTextArea();	
+	
+    private JScrollPane pane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+	
+	public void setResultInTextArea(String st, JTextArea ta) {		
+		ta.setText(st);
+	}
+	
+	public JTextArea getResultTextArea () {
+		return result;
+	}
 
 	public EmployeeResultView(String title) throws SQLException {
 		super(title);
-		setLayout(new FlowLayout());
+	    setContentPane(pane);	
+//		setLayout(new FlowLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(700, 700);
 		setLocation(100, 100);
 
-		add(goBackToMainButton);
-		add(result);		
+		pane.add(goBackToMainButton);
+		pane.add(result);		
 		setVisible(true);
 
 		goBackToMainButton.addActionListener(new ActionListener() {
@@ -49,13 +61,5 @@ public class EmployeeResultView extends JFrame {
 				}
 			}
 		});
-	}
-	
-	public void setResultInTextArea(String st, JTextArea ta) {		
-		ta.setText(st);
-	}
-	
-	public JTextArea getResultTextArea () {
-		return result;
 	}
 }
