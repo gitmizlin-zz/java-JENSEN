@@ -208,7 +208,7 @@ public class EmployeeManager {
 		});
 		ev.addToMainPanel(projectField);
 
-		JButton addRowBtn = new JButton("Add");
+		JButton addRowBtn = new JButton("Add employee");
 		ev.addToMainPanel(addRowBtn);
 
 		ev.setVisible(true);

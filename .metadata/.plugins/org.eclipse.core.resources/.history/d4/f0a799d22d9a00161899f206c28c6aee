@@ -47,16 +47,16 @@ public class OfficeManager {
 	public void addRow(Connection conn) throws SQLException {
 
 		JTextField officeNameField = new JTextField("Enter office name");
-		officeNameField.addMouseListener(new MouseAdapter() {
+		fnameField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				officeNameField.setText("");
+				fnameField.setText("");
 			}
 		});
 
 		ov.addToMainPanel(officeNameField);
 
-		JButton addRowBtn = new JButton("Add");
+		JButton addRowBtn = new JButton("Add employee");
 		ov.addToMainPanel(addRowBtn);
 
 		ov.setVisible(true);

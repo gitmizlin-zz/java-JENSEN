@@ -2,8 +2,6 @@ package jdbc_slutprojekt.controll;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,9 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import jdbc_slutprojekt.model.Employee;
 import jdbc_slutprojekt.model.Office;
 import jdbc_slutprojekt.view.EmployeeResultView;
 import jdbc_slutprojekt.view.OfficeResultView;
@@ -43,69 +39,24 @@ public class OfficeManager {
 		}
 		ov.setResultInTextArea(txt, ov.getResultTextArea());
 	}
-	
-	public void addRow(Connection conn) throws SQLException {
 
-		JTextField officeNameField = new JTextField("Enter office name");
-		officeNameField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				officeNameField.setText("");
-			}
-		});
+	public static void addRow(Connection conn) throws SQLException {
 
-		ov.addToMainPanel(officeNameField);
+		String name = InputHelper.getStringInput("Enter an Office (location) name: ");
 
-		JButton addRowBtn = new JButton("Add");
-		ov.addToMainPanel(addRowBtn);
+		String query = "INSERT INTO offices (name) VALUES ('" + name + "')";
 
-		ov.setVisible(true);
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.executeUpdate(query);
+		System.out.println("A row has been inserted.");
 
-		addRowBtn.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				try (PreparedStatement stmtAddRow = conn.prepareStatement(
-						"INSERT INTO offices (name) VALUES (?)");) {
-				
-					String officeName = officeNameField.getText();
-					stmtAddRow.setString(1, officeName);
-					stmtAddRow.executeUpdate();
-
-					// get the last row
-					String query2 = "SELECT * FROM offices ORDER by id DESC LIMIT 1";
-					PreparedStatement stmt2 = conn.prepareStatement(query2);
-					ResultSet rsLastRow = stmt2.executeQuery();
-					rsLastRow.last();
-					Office lastOffice = getOffice(rsLastRow);
-					String addedOffice = "Office ***" + lastOffice.getId() + " " + lastOffice.getName() + " *** has been added.";
-
-					ov.getResultTextArea().setText(addedOffice);
-
-				} catch (Exception e1) {
-
-					e1.printStackTrace();
-				}
-			}
-		});
+		// Print out the last row
+		String query2 = "SELECT * FROM offices ORDER by id DESC LIMIT 1";
+		PreparedStatement stmt2 = conn.prepareStatement(query2);
+		ResultSet rs = stmt2.executeQuery();
+		rs.last();
+		System.out.println(getOffice(rs).toString());
 	}
-//
-//	public static void addRow(Connection conn) throws SQLException {
-//
-//		String name = InputHelper.getStringInput("Enter an Office (location) name: ");
-//
-//		String query = "INSERT INTO offices (name) VALUES ('" + name + "')";
-//
-//		PreparedStatement stmt = conn.prepareStatement(query);
-//		stmt.executeUpdate(query);
-//		System.out.println("A row has been inserted.");
-//
-//		// Print out the last row
-//		String query2 = "SELECT * FROM offices ORDER by id DESC LIMIT 1";
-//		PreparedStatement stmt2 = conn.prepareStatement(query2);
-//		ResultSet rs = stmt2.executeQuery();
-//		rs.last();
-//		System.out.println(getOffice(rs).toString());
-//	}
 
 	public void deleteRow(ResultSet rs) throws SQLException {
 		JPanel p = new JPanel();
