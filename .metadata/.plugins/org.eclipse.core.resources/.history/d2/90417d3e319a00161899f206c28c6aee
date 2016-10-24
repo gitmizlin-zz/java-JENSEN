@@ -121,11 +121,9 @@ public class EmployeeManager {
 
 	public void getEmployeeByName(Connection conn, String s) throws SQLException {
 
-		try (PreparedStatement stmt = conn.prepareStatement("SELECT employees.id, employees.fname, employees.lname,"
-				+ " employees.office, employees.project, projects.name AS projectName, offices.name as officeName"
-				+ " FROM employees LEFT JOIN projects ON projects.id = employees.project"
-				+ " LEFT JOIN offices on offices.id = employees.office WHERE fname LIKE ? "
-				+ " " + "OR lname LIKE ?");) {	
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM employees "
+				+ "JOIN offices on employees.office = offices.id " + "JOIN projects on employees.project = projects.id "
+				+ "WHERE fname LIKE ? " + "OR lname LIKE ?");) {
 
 			stmt.setString(1, "%" + s + "%");
 			stmt.setString(2, "%" + s + "%");

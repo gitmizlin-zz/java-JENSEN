@@ -66,8 +66,8 @@ public class OfficeSelectActionView extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				try {
-					om.search(conn);
-					setVisible(false);
+//					em.search(conn);
+//					setVisible(false);
 
 				} catch (Exception e1) {
 

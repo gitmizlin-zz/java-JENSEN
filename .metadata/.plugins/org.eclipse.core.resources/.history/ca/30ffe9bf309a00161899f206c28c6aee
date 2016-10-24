@@ -211,7 +211,7 @@ public class OfficeManager {
 		p.add(searchResultTa);
 		p.add(searchStartBtn);
 		ov.addToMainPanel(p);
-		ov.setVisible(true);
+		p.setVisible(true);
 
 		searchStartBtn.addActionListener(new ActionListener() {
 

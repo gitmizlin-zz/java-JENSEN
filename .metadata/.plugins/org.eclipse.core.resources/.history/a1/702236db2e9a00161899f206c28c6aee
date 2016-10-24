@@ -192,7 +192,6 @@ public class OfficeManager {
 	}
 	
 	public void search(Connection conn) throws SQLException {
-		JPanel p = new JPanel();
 
 		JTextField field = new JTextField("Enter a letter / letters for name search.");
 		JTextArea searchResultTa = new JTextArea();
@@ -206,11 +205,8 @@ public class OfficeManager {
 		});
 
 		JButton searchStartBtn = new JButton("Search");
-		
-		p.add(field);
-		p.add(searchResultTa);
-		p.add(searchStartBtn);
-		ov.addToMainPanel(p);
+		ov.add(field);
+		ov.add(searchStartBtn);
 		ov.setVisible(true);
 
 		searchStartBtn.addActionListener(new ActionListener() {
