@@ -63,22 +63,21 @@ public class OfficeManager {
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 
 		while (rs.next()) {
-			int officeId = getOffice(rs).getId();
-			String OfficeName = getOffice(rs).getName();
-			
 			JPanel p2 = new JPanel();
 			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-			JLabel l = new JLabel(officeId + " " + OfficeName);
+			JLabel l = new JLabel(getOffice(rs));
 			JButton btn = new JButton("delete");
-			p2.add(l);
 			p2.add(btn);
+			p2.add(l);
 			p.add(p2);
 			ov.addToMainPanel(p);
+
+			String OfficeName = getOffice(rs).getName();
 
 			btn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						l.setText("*** Office " + OfficeName + " has been deleted ***");
+						l.setText("*** Office " + name + " has been deleted ***");
 						btn.setVisible(false);
 						String queryDelete = "DELETE FROM offices WHERE id = " + officeId;
 						PreparedStatement stmt = conn.prepareStatement(queryDelete);
@@ -87,6 +86,7 @@ public class OfficeManager {
 					} catch (SQLException ex) {
 						System.out.println(ex.getMessage());
 					}
+
 				}
 
 			});
@@ -94,36 +94,36 @@ public class OfficeManager {
 		ov.setVisible(true);
 	}
 
-	// public void search(ResultSet rs, Connection conn) throws SQLException {
-	//
-	// System.out.println("------------------------");
-	// System.out.println("1: Search office by name");
-	// System.out.println("2: Search office by size");
-	// System.out.println("3: Go back to main menu\n");
-	//
-	// try {
-	//
-	// int input = InputHelper.getIntegerInput("Select a number: ");
-	//
-	// switch (input) {
-	// case 1:
-	// getOfficeByName(conn);
-	// break;
-	//
-	// case 2:
-	// getOfficeBySize(conn);
-	// break;
-	//
-	// case 3:
-	// System.out.println("Go back to main");
-	// break;
-	// }
-	//
-	// } catch (Exception e) {
-	// System.out.println("Invalid input.");
-	// System.err.println(e.getMessage());
-	// }
-	// }
+//	public void search(ResultSet rs, Connection conn) throws SQLException {
+//
+//		System.out.println("------------------------");
+//		System.out.println("1: Search office by name");
+//		System.out.println("2: Search office by size");
+//		System.out.println("3: Go back to main menu\n");
+//
+//		try {
+//
+//			int input = InputHelper.getIntegerInput("Select a number: ");
+//
+//			switch (input) {
+//			case 1:
+//				getOfficeByName(conn);
+//				break;
+//
+//			case 2:
+//				getOfficeBySize(conn);
+//				break;
+//
+//			case 3:
+//				System.out.println("Go back to main");
+//				break;
+//			}
+//
+//		} catch (Exception e) {
+//			System.out.println("Invalid input.");
+//			System.err.println(e.getMessage());
+//		}
+//	}
 
 	public void getOfficeByName(Connection conn) throws SQLException {
 		System.out.println("*****************************");
@@ -143,44 +143,41 @@ public class OfficeManager {
 		}
 	}
 
-	// public static void getOfficeBySize(Connection conn) throws SQLException {
-	//
-	// String query = "";
-	//
-	// System.out.println("*****************************");
-	// System.out.println("1. Search by min number of employees");
-	// System.out.println("2. Search by max number of employees");
-	//
-	// int input = InputHelper.getIntegerInput("Select a number: ");
-	//
-	// switch (input) {
-	// case 1:
-	// int inputMin = InputHelper.getIntegerInput("Enter a min number: ");
-	// query = "SELECT * FROM offices where size >= " + inputMin + " ORDER BY
-	// size ASC";
-	// break;
-	// case 2:
-	// int inputMax = InputHelper.getIntegerInput("Enter a max number: ");
-	// query = "SELECT * FROM offices where size <= " + inputMax + " ORDER BY
-	// size ASC";
-	// break;
-	// case 3:
-	// int inputMinRange = InputHelper.getIntegerInput("Enter a min number: ");
-	// int inputMaxRange = InputHelper.getIntegerInput("Enter a max number: ");
-	// query = "SELECT * FROM offices where size >= " + inputMinRange + " AND
-	// size <= " + inputMaxRange
-	// + " ORDER BY size ASC";
-	// break;
-	// }
-	//
-	// try (PreparedStatement stmt = conn.prepareStatement(query);) {
-	//
-	// ResultSet rs = stmt.executeQuery();
-	// System.out.println("---------------------");
-	// getAllRows(rs);
-	//
-	// } catch (SQLException e) {
-	// System.out.println(e.getMessage());
-	// }
-	// }
+//	public static void getOfficeBySize(Connection conn) throws SQLException {
+//
+//		String query = "";
+//
+//		System.out.println("*****************************");
+//		System.out.println("1. Search by min number of employees");
+//		System.out.println("2. Search by max number of employees");
+//
+//		int input = InputHelper.getIntegerInput("Select a number: ");
+//
+//		switch (input) {
+//		case 1:
+//			int inputMin = InputHelper.getIntegerInput("Enter a min number: ");
+//			query = "SELECT * FROM offices where size >= " + inputMin + " ORDER BY size ASC";
+//			break;
+//		case 2:
+//			int inputMax = InputHelper.getIntegerInput("Enter a max number: ");
+//			query = "SELECT * FROM offices where size <= " + inputMax + " ORDER BY size ASC";
+//			break;
+//		case 3:
+//			int inputMinRange = InputHelper.getIntegerInput("Enter a min number: ");
+//			int inputMaxRange = InputHelper.getIntegerInput("Enter a max number: ");
+//			query = "SELECT * FROM offices where size >= " + inputMinRange + " AND size <= " + inputMaxRange
+//					+ " ORDER BY size ASC";
+//			break;
+//		}
+//
+//		try (PreparedStatement stmt = conn.prepareStatement(query);) {
+//
+//			ResultSet rs = stmt.executeQuery();
+//			System.out.println("---------------------");
+//			getAllRows(rs);
+//
+//		} catch (SQLException e) {
+//			System.out.println(e.getMessage());
+//		}
+//	}
 }

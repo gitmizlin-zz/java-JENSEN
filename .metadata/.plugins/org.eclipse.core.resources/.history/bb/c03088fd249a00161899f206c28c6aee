@@ -5,7 +5,6 @@ import java.sql.*;
 import jdbc_slutprojekt.view.SelectTableView;
 import jdbc_slutprojekt.view.EmployeeResultView;
 import jdbc_slutprojekt.view.EmployeeSelectActionView;
-import jdbc_slutprojekt.view.OfficeSelectActionView;
 
 public class Engine {
 	private final String USER = "root";
@@ -39,20 +38,10 @@ public class Engine {
 				new EmployeeSelectActionView("Employee table: Select an action", rs, conn);
 
 			} catch (Exception e) {
+				System.out.println("conn----" + conn);
 				System.out.println(e.getMessage());
 			}
-		}
-		
-		if (tableId == 2) {
-			try {
-				PreparedStatement stmt = conn.prepareStatement(
-						"Select * from offices");
-				ResultSet rs = stmt.executeQuery();
-				new OfficeSelectActionView("Office table: Select an action", rs, conn);
 
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
 		}
 	}
 }

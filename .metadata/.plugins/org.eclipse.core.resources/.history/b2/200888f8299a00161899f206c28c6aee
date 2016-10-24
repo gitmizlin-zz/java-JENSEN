@@ -70,10 +70,12 @@ public class OfficeManager {
 			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 			JLabel l = new JLabel(officeId + " " + OfficeName);
 			JButton btn = new JButton("delete");
-			p2.add(l);
 			p2.add(btn);
+			p2.add(l);
 			p.add(p2);
 			ov.addToMainPanel(p);
+
+
 
 			btn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
