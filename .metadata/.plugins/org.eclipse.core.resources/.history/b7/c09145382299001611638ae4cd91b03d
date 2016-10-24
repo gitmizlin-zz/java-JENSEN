@@ -1,0 +1,20 @@
+package jdbc_slutprojekt.controll;
+
+import javax.swing.JTextArea;
+
+public class Assert {
+	
+	private void assertNotNull (String s) {
+		if (s == null)
+			throw new IllegalArgumentException("Fields is empty");
+	}
+	
+	private void assertInt (String s) {
+		try {
+			Integer.parseInt(s); 
+			
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Invalid input. Enter a number.");
+		}
+	}
+}

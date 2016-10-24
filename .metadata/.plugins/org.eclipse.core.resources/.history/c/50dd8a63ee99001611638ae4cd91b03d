@@ -1,0 +1,135 @@
+package jdbc_slutprojekt.view;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import java.sql.PreparedStatement;
+
+
+import jdbc_slutprojekt.controll.EmployeeManager;
+import jdbc_slutprojekt.controll.Engine;
+
+public class EmployeeResultView extends JFrame {
+	
+	private Connection conn;
+
+	private JButton goBackToMainButton = new JButton("Go back to main menu");
+	private JTextArea result = new JTextArea();	
+	
+	private JTextField fnameField;
+	private JTextField lnameField;
+	private JTextField officeNoField;
+	private JTextField projectNoField;
+	private JButton addEmployeeButton;
+
+
+	public EmployeeResultView(String title, Connection conn) throws SQLException {
+		super(title);
+		setLayout(new FlowLayout());
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(700, 700);
+		setLocation(100, 100);
+
+		add(goBackToMainButton);
+		add(result);		
+		setVisible(true);
+
+		goBackToMainButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setVisible(false);
+					Engine.main(null);
+					
+				} catch (Exception e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public void setResultInTextArea(String st, JTextArea ta) {		
+		ta.setText(st);
+	}
+	
+	public JTextArea getResultTextArea () {
+		return result;
+	}
+
+	public void showAddForm(ResultSet rs) {
+		fnameField = new JTextField("Type first name here");
+		fnameField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	fnameField.setText("");
+            }
+        });
+        
+		lnameField = new JTextField("Type last name here");	
+		lnameField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	lnameField.setText("");
+            }
+        });        
+		
+		officeNoField = new JTextField("Type office number here");	
+		officeNoField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	officeNoField.setText("");
+            }
+        });   
+		
+		projectNoField = new JTextField("Type project number here");
+		projectNoField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	projectNoField.setText("");
+            }
+        }); 
+		
+		addEmployeeButton = new JButton("Add employee");
+		
+		add(fnameField);
+		add(lnameField);
+		add(officeNoField);
+		add(projectNoField);
+		add(addEmployeeButton);
+		
+		setVisible(true);	
+		
+		addEmployeeButton.addActionListener(new ActionListener() {			
+			
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "INSERT INTO employees (fname, lname, project, "
+							+ "office) VALUES ('" + fnameField.getText() + 
+							"', '" + lnameField.getText() + "', " + 
+							officeNoField.getText() + ", " + projectNoField.getText() 
+							+ ")";
+//					PreparedStatement stmt = conn.prepareStatement(query);
+//					stmt.executeUpdate(query);
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+}

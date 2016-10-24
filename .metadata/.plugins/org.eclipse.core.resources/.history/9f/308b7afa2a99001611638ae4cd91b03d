@@ -1,0 +1,12 @@
+package jdbc_slutprojekt.controll;
+
+public class Assert {
+	
+	public boolean assertNotNull (String s) {
+		return (s != null);
+	}
+	
+	public int convertToInt (String s) {
+		return Integer.parseInt(s);
+	}
+}

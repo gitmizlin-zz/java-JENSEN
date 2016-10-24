@@ -1,8 +1,0 @@
-package jdbc_slutprojekt.view;
-
-public class EmployeeView {
-
-	   public void print (String name){
-	      System.out.println("Name : " + name);
-	   }
-}

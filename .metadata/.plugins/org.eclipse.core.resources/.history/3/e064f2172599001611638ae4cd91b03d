@@ -1,0 +1,17 @@
+package jdbc_slutprojekt.controll;
+
+import javax.swing.JTextArea;
+
+public class Assert {
+	
+	public boolean assertNotNull (String s) {
+		if (s == null)
+			return false;
+		else
+			return true;
+	}
+	
+	public int assertInt (String s) {
+		return Integer.parseInt(s);
+	}
+}

@@ -29,8 +29,11 @@ public class Engine {
 		if (tableId == 1) {
 			try {
 				PreparedStatement stmt = conn.prepareStatement(
-						"Select * from employees LEFT JOIN projects ON projects.id = employees.project "
-								+ "LEFT JOIN offices on offices.id = employees.office");
+						"Select employees.id, employees.fname, employees.lname, "
+						+ "employees.office, employees.project, "
+						+ "projects.name AS projectName, offices.name as officeName from employees LEFT JOIN "
+						+ "projects ON projects.id = employees.project "
+						+ "LEFT JOIN offices on offices.id = employees.office");
 				ResultSet rs = stmt.executeQuery();
 				new EmployeeSelectActionView("Employee table: Select an action", rs, conn);
 
@@ -40,33 +43,5 @@ public class Engine {
 			}
 
 		}
-		// else if (tableId == 2) {
-
-		// try(Connection conn = DriverManager.getConnection(CONN_STRING, USER,
-		// PASSWORD);
-		// PreparedStatement stmt = conn.prepareStatement("Select * from
-		// offices");) {
-//		 ResultSet rs = stmt.executeQuery();
-		// OfficeManager.editTable(rs, conn, 2);
-		//
-		// } catch (SQLException e) {
-		// System.out.println(e.getMessage());
-		// }
-
-		// } else if (tableId == 3) {
-
-		// try(Connection conn = DriverManager.getConnection(CONN_STRING, USER,
-		// PASSWORD);
-		// PreparedStatement stmt = conn.prepareStatement("Select * from
-		// projects");) {
-		// ResultSet rs = stmt.executeQuery();
-		// ProjectManager.editTable(rs, conn);
-		//
-		// } catch (SQLException e) {
-		// System.out.println(e.getMessage());
-		// }
-		// } else {
-		// System.out.println("invalid input");
-		// }
 	}
 }

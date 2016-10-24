@@ -1,12 +1,6 @@
 package jdbc_slutprojekt.view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -26,28 +20,22 @@ public class EmployeeSelectActionView extends JFrame {
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private Box box = Box.createVerticalBox();
 
-	public EmployeeSelectActionView (String title, ResultSet rs, Connection conn) throws SQLException {
+	public EmployeeSelectActionView(String title, ResultSet rs, Connection conn) throws SQLException {
 		super(title);
-		
+
 		EmployeeManager em = new EmployeeManager(conn);
-		
+
 		try {
 			System.out.println("constructor closed? " + rs.isClosed());
 		} catch (SQLException e2) {
-			// TODO Auto-generated catch block
+
 			e2.printStackTrace();
 		}
 
 		setLayout(new FlowLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(700, 700);
+		setSize(900, 400);
 		setLocation(100, 100);
-
-		// addButton.setMinimumSize(new Dimension(200, 100));
-		// deleteButton.setMinimumSize(new Dimension(200, 100));
-		// searchButton.setMinimumSize(new Dimension(200, 100));
-		// showAllButton.setMinimumSize(new Dimension(200, 100));
-		// goBackToMainButton.setMinimumSize(new Dimension(200, 100));
 
 		box.add(addButton);
 		box.add(deleteButton);
@@ -57,10 +45,10 @@ public class EmployeeSelectActionView extends JFrame {
 
 		add(box);
 
-		setVisible(true);		
+		setVisible(true);
 
 		showAllButton.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				try {
 					System.out.println("btn callback closed? " + rs.isClosed());
@@ -73,9 +61,9 @@ public class EmployeeSelectActionView extends JFrame {
 				}
 			}
 		});
-		
+
 		deleteButton.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				try {
 					em.getAllRowsWithDeleteButton(rs);
@@ -87,5 +75,32 @@ public class EmployeeSelectActionView extends JFrame {
 			}
 		});
 
+		searchButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					em.search(conn);
+					setVisible(false);
+
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		addButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					em.addRow(conn);
+					setVisible(false);
+
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 }

@@ -9,16 +9,20 @@ public class Employee {
 	private String lname;
 	private int office;
 	private int project;
+	private String officeName;
+	private String projectName;
 	
 	public Employee() {
 		
 	}
 
-	Employee(String fname, String lname, int office, int project) {
+	Employee(String fname, String lname, int office, int project, String officeName, String projectName) {
 		this.fname = fname;
 		this.lname = lname;
 		this.office = office;
 		this.project = project;		
+		this.officeName = officeName;
+		this.projectName = projectName;
 	}
 
 	public int getId() {
@@ -52,6 +56,14 @@ public class Employee {
 	public void setOffice(int office) {
 		this.office = office;
 	}
+	
+	public String getOfficeName() {
+		return officeName;
+	}
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
 
 	public int getProject() {
 		return project;
@@ -59,6 +71,14 @@ public class Employee {
 
 	public void setProject(int project) {
 		this.project = project;
+	}
+	
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	@Override
