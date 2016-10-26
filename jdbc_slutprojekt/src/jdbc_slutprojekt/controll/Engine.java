@@ -6,6 +6,7 @@ import jdbc_slutprojekt.view.SelectTableView;
 import jdbc_slutprojekt.view.EmployeeResultView;
 import jdbc_slutprojekt.view.EmployeeSelectActionView;
 import jdbc_slutprojekt.view.OfficeSelectActionView;
+import jdbc_slutprojekt.view.ProjectSelectActionView;
 
 public class Engine {
 	private final String USER = "root";
@@ -33,8 +34,8 @@ public class Engine {
 						"Select employees.id, employees.fname, employees.lname, "
 						+ "employees.office, employees.project, "
 						+ "projects.name AS projectName, offices.name as officeName from employees LEFT JOIN "
-						+ "projects ON projects.id = employees.project "
-						+ "LEFT JOIN offices on offices.id = employees.office");
+						+ "projects ON projects.id=employees.project "
+						+ "LEFT JOIN offices on offices.id=employees.office");
 				ResultSet rs = stmt.executeQuery();
 				new EmployeeSelectActionView("Employee table: Select an action", rs, conn);
 
@@ -49,6 +50,18 @@ public class Engine {
 						"Select * from offices");
 				ResultSet rs = stmt.executeQuery();
 				new OfficeSelectActionView("Office table: Select an action", rs, conn);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		if (tableId == 3) {
+			try {
+				PreparedStatement stmt = conn.prepareStatement(
+						"Select * from projects");
+				ResultSet rs = stmt.executeQuery();
+				new ProjectSelectActionView("Project table: Select an action", rs, conn);
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

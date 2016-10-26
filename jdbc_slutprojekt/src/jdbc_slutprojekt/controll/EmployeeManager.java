@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.BoxLayout;
@@ -23,9 +24,10 @@ import jdbc_slutprojekt.view.EmployeeResultView;
 
 public class EmployeeManager {
 	private Connection conn;
+	private ResultSet rs;
 	private EmployeeResultView ev;
 
-	public EmployeeManager(Connection conn) throws SQLException {
+	public EmployeeManager(Connection conn, ResultSet rs) throws SQLException {
 		this.conn = conn;
 		ev = new EmployeeResultView("Employee search result:");
 	}
@@ -47,29 +49,8 @@ public class EmployeeManager {
 	public String printEmployee(ResultSet rs) throws SQLException {
 		Employee employee = getEmployee(rs);
 
-		return employee.getId() + " " + employee.getFname() + " " + employee.getLname() + " / " + employee.getOfficeName()
-				+ " / " + employee.getProjectName() + "\n";
-	}
-
-	public void updateRow(Connection conn) throws SQLException {
-
-		int employeeId = InputHelper.getIntegerInput("Enter a employee id you want to update: ");
-		String officeNumber = InputHelper.getStringInput("Enter a new office number: ");
-		String projectNumber = InputHelper.getStringInput("Enter a new project number: ");
-
-		String query = "UPDATE employees " + "SET office = " + officeNumber + ", project = " + projectNumber
-				+ " WHERE id = " + employeeId;
-
-		PreparedStatement stmt = conn.prepareStatement(query);
-		stmt.executeUpdate(query);
-		System.out.println("Employee ID " + employeeId + " has been updated.");
-
-		// Print out the last row
-		String query2 = "SELECT * FROM employees WHERE id = " + employeeId;
-		PreparedStatement stmt2 = conn.prepareStatement(query2);
-		ResultSet rs = stmt2.executeQuery();
-		rs.next();
-		System.out.println(getEmployee(rs).toString());
+		return employee.getId() + " " + employee.getFname() + " " + employee.getLname() + " / "
+				+ employee.getOfficeName() + " / " + employee.getProjectName() + "\n";
 	}
 
 	public void getAllRows(ResultSet rs) throws SQLException {
@@ -124,8 +105,8 @@ public class EmployeeManager {
 		try (PreparedStatement stmt = conn.prepareStatement("SELECT employees.id, employees.fname, employees.lname,"
 				+ " employees.office, employees.project, projects.name AS projectName, offices.name as officeName"
 				+ " FROM employees LEFT JOIN projects ON projects.id = employees.project"
-				+ " LEFT JOIN offices on offices.id = employees.office WHERE fname LIKE ? "
-				+ " " + "OR lname LIKE ?");) {	
+				+ " LEFT JOIN offices on offices.id = employees.office WHERE fname LIKE ? " + " "
+				+ "OR lname LIKE ?");) {
 
 			stmt.setString(1, "%" + s + "%");
 			stmt.setString(2, "%" + s + "%");
@@ -172,54 +153,16 @@ public class EmployeeManager {
 	}
 
 	public void addRow(Connection conn) throws SQLException {
-
 		JTextField fnameField = new JTextField("Enter first name");
-		fnameField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				fnameField.setText("");
-			}
-		});
-
-		ev.addToMainPanel(fnameField);
-
 		JTextField lnameField = new JTextField("Enter last name");
-		lnameField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				lnameField.setText("");
-			}
-		});
-		ev.addToMainPanel(lnameField);
-
 		JTextField officeField = new JTextField("Enter office number");
-		officeField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				officeField.setText("");
-			}
-		});
-		ev.addToMainPanel(officeField);
-
 		JTextField projectField = new JTextField("Enter project number");
-		projectField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				projectField.setText("");
-			}
-		});
-		ev.addToMainPanel(projectField);
 
 		JButton addRowBtn = new JButton("Add");
-		ev.addToMainPanel(addRowBtn);
-
-		ev.setVisible(true);
-
 		addRowBtn.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				try (PreparedStatement stmtAddRow = conn.prepareStatement(
-						"INSERT INTO employees (fname, lname, project, office) " + "VALUES (?, ?, ?, ?)");) {
+						"INSERT INTO employees (fname, lname, project, office) VALUES (?, ?, ?, ?)");) {
 
 					String fName = fnameField.getText();
 					String lName = lnameField.getText();
@@ -234,13 +177,18 @@ public class EmployeeManager {
 					stmtAddRow.executeUpdate();
 
 					// get the last row
-					String query2 = "SELECT * FROM employees ORDER by id DESC LIMIT 1";
+					String query2 = "SELECT employees.id, employees.fname, employees.lname, "
+							+ "employees.office, employees.project, "
+							+ "projects.name AS projectName, offices.name AS officeName FROM employees LEFT JOIN "
+							+ "projects ON projects.id=employees.project "
+							+ "LEFT JOIN offices ON offices.id=employees.office ORDER by id DESC LIMIT 1";
+
 					PreparedStatement stmt2 = conn.prepareStatement(query2);
 					ResultSet rsLastRow = stmt2.executeQuery();
 					rsLastRow.last();
 					Employee lastE = getEmployee(rsLastRow);
 					String addedE = "Employee ***" + lastE.getId() + " " + lastE.getFname() + " " + lastE.getLname()
-							+ " " + lastE.getOffice() + " " + lastE.getProject() + "*** has been added.";
+							+ "*** has been added.";
 
 					ev.getResultTextArea().setText(addedE);
 
@@ -250,5 +198,134 @@ public class EmployeeManager {
 				}
 			}
 		});
+
+		fnameField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fnameField.setText("");
+			}
+		});
+
+		ev.addToMainPanel(fnameField);
+
+		lnameField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lnameField.setText("");
+			}
+		});
+		ev.addToMainPanel(lnameField);
+
+		officeField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				officeField.setText("");
+			}
+		});
+		ev.addToMainPanel(officeField);
+
+		projectField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				projectField.setText("");
+			}
+		});
+		ev.addToMainPanel(projectField);
+
+		ev.addToMainPanel(addRowBtn);
+
+		ev.setVisible(true);
+
 	}
+
+	public void updateRow(ResultSet rs) throws SQLException, NumberFormatException {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+		while (rs.next()) {
+
+			JPanel p1 = new JPanel();
+
+			Employee employee = getEmployee(rs);
+			System.out.println("employee: " + employee);
+
+			JTextField idField = new JTextField(Integer.toString(employee.getId()));
+			System.out.println("employee.getId : " + employee.getId());
+			idField.setEditable(false);
+
+			JTextField fnameField = new JTextField(employee.getFname());
+			JTextField lnameField = new JTextField(employee.getLname());
+
+			JTextField officeNumberField = new JTextField(employee.getOffice());
+			JTextField officeNameField = new JTextField(employee.getOfficeName());
+			officeNameField.setEditable(false);
+
+			JTextField projectNumberField = new JTextField(employee.getProject());
+			JTextField projectNameField = new JTextField(employee.getProjectName());
+			projectNameField.setEditable(false);
+
+			p1.add(idField);
+			p1.add(fnameField);
+			p1.add(lnameField);
+			p1.add(officeNumberField);
+			p1.add(officeNameField);
+			p1.add(projectNumberField);
+			p1.add(projectNameField);
+			p.add(p1);
+			p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+
+			officeNumberField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					officeNumberField.setText("");
+				}
+			});
+
+			projectNumberField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					projectNumberField.setText("");
+				}
+			});
+
+			JButton btn = new JButton("update");
+			p1.add(btn);
+
+			ev.addToMainPanel(p1);
+
+			int employeeId = getEmployee(rs).getId();
+
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					try (PreparedStatement stmtUpdateRow = conn.prepareStatement(
+							"UPDATE employees " + "SET fname=?, lname=?, project=?, office=? WHERE id=?");) {
+
+						String fName = fnameField.getText();
+						String lName = lnameField.getText();
+						int officeNumber = Integer.parseInt(officeNumberField.getText());
+						int projectNumber = Integer.parseInt(projectNumberField.getText());
+
+						stmtUpdateRow.setString(1, fName);
+						stmtUpdateRow.setString(2, lName);
+						stmtUpdateRow.setInt(3, officeNumber);
+						stmtUpdateRow.setInt(4, projectNumber);
+						stmtUpdateRow.setInt(5, employeeId);
+
+						stmtUpdateRow.executeUpdate();
+						JTextField updateResultField = new JTextField();
+						updateResultField.setText("*** Employee " + employeeId + " has been updated ***");
+						p1.add(updateResultField);
+					} catch (SQLException ex) {
+						System.out.println(ex.getMessage());
+					}
+
+				}
+
+			});
+
+		}
+		ev.setVisible(true);
+	}
+
 }

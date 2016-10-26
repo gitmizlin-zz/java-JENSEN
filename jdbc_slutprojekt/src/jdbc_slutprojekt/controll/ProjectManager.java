@@ -1,155 +1,182 @@
 package jdbc_slutprojekt.controll;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jdbc_slutprojekt.model.Project;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-public class ProjectManager {	
-	
-	public static Project getProject(ResultSet rs) throws SQLException {
+import jdbc_slutprojekt.model.Employee;
+import jdbc_slutprojekt.model.Office;
+import jdbc_slutprojekt.model.Project;
+import jdbc_slutprojekt.view.EmployeeResultView;
+import jdbc_slutprojekt.view.OfficeResultView;
+import jdbc_slutprojekt.view.ProjectResultView;
+
+public class ProjectManager {
+	private Connection conn;
+	private ProjectResultView pv;
+
+	public ProjectManager(Connection conn) throws SQLException {
+		this.conn = conn;
+		pv = new ProjectResultView("Project search result:");
+	}
+
+	public Project getProject(ResultSet rs) throws SQLException {
 		Project project = new Project();
 		project.setId(rs.getInt("id"));
 		project.setName(rs.getString("name"));
-		
 		return project;
 	}
-	
-	public static void getAllRows(ResultSet rs) throws SQLException {		
+
+	public void getAllRows(ResultSet rs) throws SQLException {
+		String txt = "";
 		while (rs.next()) {
-            System.out.print(rs.getInt("id") + " " + rs.getString("name") + "\n");
+			txt = txt + rs.getInt("id") + " " + rs.getString("name");
 		}
+		pv.setResultInTextArea(txt, pv.getResultTextArea());
 	}
-	
-	public static void editTable(ResultSet rs, Connection conn, int input) throws SQLException {			
-		if (input == 1)
-			addRow(conn);				
-		else if (input == 2)
-			deleteRow(conn);
-		else if (input == 3)
-			search(rs, conn);
-		else if (input == 4) 
-			getAllRows(rs);
-		else if (input == 5) 
-			return;		
-		
-	}
-	
-	public static void addRow(Connection conn) throws SQLException {
-		
-		String projectName = InputHelper.getStringInput("Enter a project name: "); 
-		
-		String query = "INSERT INTO projects (name) VALUES ('" + projectName + "')";
-		
-		PreparedStatement stmt = conn.prepareStatement(query);
-		stmt.executeUpdate(query);
-		System.out.println("A row has been inserted.");	
 
-		// Print out the last row
-		String query2 = "SELECT * FROM projects ORDER by id DESC LIMIT 1";
-		PreparedStatement stmt2 = conn.prepareStatement(query2);
-		ResultSet rs = stmt2.executeQuery();
-		rs.last();
-		System.out.println(getProject(rs).toString());		
-	}
-	
-	public static void deleteRow(Connection conn) throws SQLException {		
-		
-		int input = InputHelper.getIntegerInput("----------------------------\n"
-				+ "Enter a row number to "
-				+ "delete.\nTo delete the last row, enter 0: "); 
-		
-		if (input == 0) {
-			String query = "SELECT * FROM projects ORDER by id DESC LIMIT 1";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
-			rs.last();
-			input = getProject(rs).getId();		
-		} 
-		
-		try {
-			
-			String queryDelete = "DELETE FROM projects WHERE id = " + input;
-			PreparedStatement stmt2 = conn.prepareStatement(queryDelete);
-			stmt2.executeUpdate();
-			System.out.println("The row " + input + " has been deleted.");
-		
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public static void search(ResultSet rs, Connection conn) throws SQLException {
-		
-		System.out.println("------------------------");
-		System.out.println("1: Search project by name");
-		System.out.println("2: Search project by office");
-		System.out.println("3: Go back to main menu\n");
-		
-		try {				
+	public void addRow(Connection conn) throws SQLException {
 
-			int input = InputHelper.getIntegerInput("Select a number: "); 
-			
-			switch(input) {
-				case 1:	
-					getProjectByName(conn);
-					break;
-						
-				case 2:
-					getProjectByOffice(conn);
-					break;
-						
-				case 3: System.out.println("Go back to main");
-					break;			
+		JTextField projectNameField = new JTextField("Enter project name");
+		projectNameField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				projectNameField.setText("");
 			}
-			
-		} catch (Exception e) {
-			System.out.println("Invalid input.");	
-			System.err.println(e.getMessage());							
+		});
+
+		pv.addToMainPanel(projectNameField);
+
+		JButton addRowBtn = new JButton("Add");
+		pv.addToMainPanel(addRowBtn);
+
+		pv.setVisible(true);
+
+		addRowBtn.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try (PreparedStatement stmtAddRow = conn.prepareStatement("INSERT INTO projects (name) VALUES (?)");) {
+
+					String projectName = projectNameField.getText();
+					stmtAddRow.setString(1, projectName);
+					stmtAddRow.executeUpdate();
+
+					// get the last row
+					String query2 = "SELECT * FROM projects ORDER by id DESC LIMIT 1";
+					PreparedStatement stmt2 = conn.prepareStatement(query2);
+					ResultSet rsLastRow = stmt2.executeQuery();
+					rsLastRow.last();
+					Project lastP = getProject(rsLastRow);
+					String added = "Project ***" + lastP.getId() + " " + lastP.getName() + " *** has been added.";
+
+					pv.getResultTextArea().setText(added);
+
+				} catch (Exception ex) {
+
+					ex.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public void deleteRow(ResultSet rs) throws SQLException {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+		while (rs.next()) {
+			int pId = getProject(rs).getId();
+			String pName = getProject(rs).getName();
+
+			JPanel p2 = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+			JLabel l = new JLabel(pId + " " + pName);
+			JButton btn = new JButton("delete");
+			p2.add(l);
+			p2.add(btn);
+			p.add(p2);
+			pv.addToMainPanel(p);
+
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						l.setText("*** Project " + pName + " has been deleted ***");
+						btn.setVisible(false);
+						String queryDelete = "DELETE FROM projects WHERE id = " + pId;
+						PreparedStatement stmt = conn.prepareStatement(queryDelete);
+						stmt.executeUpdate();
+
+					} catch (SQLException ex) {
+						System.out.println(ex.getMessage());
+					}
+				}
+
+			});
+		}
+		pv.setVisible(true);
+	}
+
+	public void getProjectByName(Connection conn, String s) throws SQLException {
+
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM projects " + "WHERE name LIKE ?");) {
+
+			stmt.setString(1, "%" + s + "%");
+
+			ResultSet rs = stmt.executeQuery();
+			getAllRows(rs);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
-	
-	public static void getProjectByName(Connection conn) throws SQLException {		
-		System.out.println("*****************************");
-		
-		String input = InputHelper.getStringInput("Enter a letter / letters. \n"
-				+ "All the projects with a name containing the letter(s) will be "
-				+ "displayed: "); 
-		
-		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM projects "
-				+ "WHERE name LIKE ?");) {
-			
-			stmt.setString(1, "%" + input + "%");
-			
-			ResultSet rs = stmt.executeQuery();
-			getAllRows(rs);			
-		
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}		
+
+	public void search(Connection conn) throws SQLException {
+		JPanel p = new JPanel();
+
+		JTextField field = new JTextField("Enter a letter / letters for name search.");
+		JTextArea searchResultTa = new JTextArea();
+		searchResultTa.setMinimumSize(new Dimension(200, 24));
+
+		field.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				field.setText("");
+			}
+		});
+
+		JButton searchStartBtn = new JButton("Search");
+
+		p.add(field);
+		p.add(searchResultTa);
+		p.add(searchStartBtn);
+		pv.addToMainPanel(p);
+		pv.setVisible(true);
+
+		searchStartBtn.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					getProjectByName(conn, field.getText());
+
+				} catch (Exception ex) {
+
+					ex.printStackTrace();
+				}
+			}
+		});
+
 	}
-	
-	public static void getProjectByOffice(Connection conn) throws SQLException {	
-		System.out.println("*****************************");
-		
-		int input = InputHelper.getIntegerInput("Enter an office ID: "); 
-		
-		try {
-			
-			String query = "SELECT DISTINCT projects.id, projects.name FROM projects "
-					+ "INNER JOIN employees ON projects.id = employees.project "
-					+ "JOIN offices on offices.id = employees.office "					
-					+ "where offices.id = " + input + " ORDER BY projects.id ASC";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
-			System.out.println("---------------------");
-			System.out.println("Projects running in the office:");
-			getAllRows(rs);			
-		
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}		
-	}
+
 }

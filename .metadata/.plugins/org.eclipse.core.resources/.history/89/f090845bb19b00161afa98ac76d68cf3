@@ -1,0 +1,180 @@
+package jdbc_slutprojekt.controll;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import jdbc_slutprojekt.model.Employee;
+import jdbc_slutprojekt.model.Office;
+import jdbc_slutprojekt.view.EmployeeResultView;
+import jdbc_slutprojekt.view.OfficeResultView;
+
+public class ProjectManager {
+	private Connection conn;
+	private ProjectResultView pv;
+
+	public ProjectManager(Connection conn) throws SQLException {
+		this.conn = conn;
+		pv = new ProjectResultView("Office search result:");
+	}
+
+	public Project getProject(ResultSet rs) throws SQLException {
+		Project project = new Project();
+		project.setId(rs.getInt("id"));
+		project.setName(rs.getString("name"));
+		return project;
+	}
+
+	public void getAllRows(ResultSet rs) throws SQLException {
+		String txt = "";
+		while (rs.next()) {
+			txt = txt + rs.getInt("id") + " " + rs.getString("name");
+		}
+		pv.setResultInTextArea(txt, pv.getResultTextArea());
+	}
+
+	public void addRow(Connection conn) throws SQLException {
+
+		JTextField projectNameField = new JTextField("Enter project name");
+		projectNameField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				projectNameField.setText("");
+			}
+		});
+
+		pv.addToMainPanel(projectNameField);
+
+		JButton addRowBtn = new JButton("Add");
+		pv.addToMainPanel(addRowBtn);
+
+		pv.setVisible(true);
+
+		addRowBtn.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try (PreparedStatement stmtAddRow = conn.prepareStatement("INSERT INTO projects (name) VALUES (?)");) {
+
+					String projectName = projectNameField.getText();
+					stmtAddRow.setString(1, projectName);
+					stmtAddRow.executeUpdate();
+
+					// get the last row
+					String query2 = "SELECT * FROM projects ORDER by id DESC LIMIT 1";
+					PreparedStatement stmt2 = conn.prepareStatement(query2);
+					ResultSet rsLastRow = stmt2.executeQuery();
+					rsLastRow.last();
+					Office lastP = getProject(rsLastRow);
+					String added = "Office ***" + lastP.getId() + " " + lastP.getName() + " *** has been added.";
+
+					pv.getResultTextArea().setText(added);
+
+				} catch (Exception ex) {
+
+					ex.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public void deleteRow(ResultSet rs) throws SQLException {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+		while (rs.next()) {
+			int pId = getProject(rs).getId();
+			String pName = getProject(rs).getName();
+
+			JPanel p2 = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+			JLabel l = new JLabel(pId + " " + pName);
+			JButton btn = new JButton("delete");
+			p2.add(l);
+			p2.add(btn);
+			p.add(p2);
+			pv.addToMainPanel(p);
+
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						l.setText("*** Project " + pName + " has been deleted ***");
+						btn.setVisible(false);
+						String queryDelete = "DELETE FROM projects WHERE id = " + pId;
+						PreparedStatement stmt = conn.prepareStatement(queryDelete);
+						stmt.executeUpdate();
+
+					} catch (SQLException ex) {
+						System.out.println(ex.getMessage());
+					}
+				}
+
+			});
+		}
+		ov.setVisible(true);
+	}
+
+	public void getProjectByName(Connection conn, String s) throws SQLException {
+
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM projects " + "WHERE name LIKE ?");) {
+
+			stmt.setString(1, "%" + s + "%");
+
+			ResultSet rs = stmt.executeQuery();
+			getAllRows(rs);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void search(Connection conn) throws SQLException {
+		JPanel p = new JPanel();
+
+		JTextField field = new JTextField("Enter a letter / letters for name search.");
+		JTextArea searchResultTa = new JTextArea();
+		searchResultTa.setMinimumSize(new Dimension(200, 24));
+
+		field.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				field.setText("");
+			}
+		});
+
+		JButton searchStartBtn = new JButton("Search");
+
+		p.add(field);
+		p.add(searchResultTa);
+		p.add(searchStartBtn);
+		pv.addToMainPanel(p);
+		pv.setVisible(true);
+
+		searchStartBtn.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					getProjectByName(conn, field.getText());
+
+				} catch (Exception ex) {
+
+					ex.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+}

@@ -1,0 +1,329 @@
+package jdbc_slutprojekt.controll;
+
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import jdbc_slutprojekt.model.Employee;
+import jdbc_slutprojekt.view.EmployeeResultView;
+
+public class EmployeeManager {
+	private Connection conn;
+	private EmployeeResultView ev;
+
+	public EmployeeManager(Connection conn) throws SQLException {
+		this.conn = conn;
+		ev = new EmployeeResultView("Employee search result:");
+	}
+
+	private Employee getEmployee(ResultSet rs) throws SQLException {
+
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setFname(rs.getString("fname"));
+		employee.setLname(rs.getString("lname"));
+		employee.setOffice(rs.getInt("office"));
+		employee.setProject(rs.getInt("project"));
+		employee.setOfficeName(rs.getString("officeName"));
+		employee.setProjectName(rs.getString("projectName"));
+
+		return employee;
+	}
+
+	public String printEmployee(ResultSet rs) throws SQLException {
+		Employee employee = getEmployee(rs);
+
+		return employee.getId() + " " + employee.getFname() + " " + employee.getLname() + " / "
+				+ employee.getOfficeName() + " / " + employee.getProjectName() + "\n";
+	}
+
+	public void getAllRows(ResultSet rs) throws SQLException {
+
+		String txt = "";
+
+		while (rs.next()) {
+
+			txt = txt + printEmployee(rs);
+		}
+		ev.setResultInTextArea(txt, ev.getResultTextArea());
+	}
+
+	public void getAllRowsWithDeleteButton(ResultSet rs) throws SQLException {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+		while (rs.next()) {
+			JPanel p2 = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+			JLabel l = new JLabel(printEmployee(rs));
+			JButton btn = new JButton("delete");
+			p2.add(btn);
+			p2.add(l);
+			p.add(p2);
+			ev.addToMainPanel(p);
+
+			int employeeId = getEmployee(rs).getId();
+
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						l.setText("*** Employee " + employeeId + " has been deleted ***");
+						btn.setVisible(false);
+						String queryDelete = "DELETE FROM employees WHERE id = " + employeeId;
+						PreparedStatement stmt2 = conn.prepareStatement(queryDelete);
+						stmt2.executeUpdate();
+
+					} catch (SQLException ex) {
+						System.out.println(ex.getMessage());
+					}
+
+				}
+
+			});
+		}
+		ev.setVisible(true);
+	}
+
+	public void getEmployeeByName(Connection conn, String s) throws SQLException {
+
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT employees.id, employees.fname, employees.lname,"
+				+ " employees.office, employees.project, projects.name AS projectName, offices.name as officeName"
+				+ " FROM employees LEFT JOIN projects ON projects.id = employees.project"
+				+ " LEFT JOIN offices on offices.id = employees.office WHERE fname LIKE ? " + " "
+				+ "OR lname LIKE ?");) {
+
+			stmt.setString(1, "%" + s + "%");
+			stmt.setString(2, "%" + s + "%");
+
+			ResultSet rs = stmt.executeQuery();
+			getAllRows(rs);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void search(Connection conn) throws SQLException {
+
+		JTextField field = new JTextField("Enter a letter / letters for name search.");
+		JTextArea searchResultTa = new JTextArea();
+		searchResultTa.setMinimumSize(new Dimension(200, 24));
+
+		field.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				field.setText("");
+			}
+		});
+
+		JButton searchStartBtn = new JButton("Search");
+		ev.addToMainPanel(field);
+		ev.addToMainPanel(searchStartBtn);
+		ev.setVisible(true);
+
+		searchStartBtn.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					getEmployeeByName(conn, field.getText());
+
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+	public void addRow(Connection conn) throws SQLException {
+
+		JTextField fnameField = new JTextField("Enter first name");
+		fnameField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fnameField.setText("");
+			}
+		});
+
+		ev.addToMainPanel(fnameField);
+
+		JTextField lnameField = new JTextField("Enter last name");
+		lnameField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lnameField.setText("");
+			}
+		});
+		ev.addToMainPanel(lnameField);
+
+		JTextField officeField = new JTextField("Enter office number");
+		officeField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				officeField.setText("");
+			}
+		});
+		ev.addToMainPanel(officeField);
+
+		JTextField projectField = new JTextField("Enter project number");
+		projectField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				projectField.setText("");
+			}
+		});
+		ev.addToMainPanel(projectField);
+
+		JButton addRowBtn = new JButton("Add");
+		ev.addToMainPanel(addRowBtn);
+
+		ev.setVisible(true);
+
+		addRowBtn.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				try (PreparedStatement stmtAddRow = conn.prepareStatement(
+						"INSERT INTO employees (fname, lname, project, office) " + "VALUES (?, ?, ?, ?)");) {
+
+					String fName = fnameField.getText();
+					String lName = lnameField.getText();
+					int officeNumber = Integer.parseInt(officeField.getText());
+					int projectNumber = Integer.parseInt(projectField.getText());
+
+					stmtAddRow.setString(1, fName);
+					stmtAddRow.setString(2, lName);
+					stmtAddRow.setInt(3, officeNumber);
+					stmtAddRow.setInt(4, projectNumber);
+
+					stmtAddRow.executeUpdate();
+
+					// get the last row
+					String query2 = "SELECT * FROM employees ORDER by id DESC LIMIT 1";
+					PreparedStatement stmt2 = conn.prepareStatement(query2);
+					ResultSet rsLastRow = stmt2.executeQuery();
+					rsLastRow.last();
+					Employee lastE = getEmployee(rsLastRow);
+					String addedE = "Employee ***" + lastE.getId() + " " + lastE.getFname() + " " + lastE.getLname()
+							+ " " + lastE.getOffice() + " " + lastE.getProject() + "*** has been added.";
+
+					ev.getResultTextArea().setText(addedE);
+
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public void updateRow(ResultSet rs) throws SQLException, NumberFormatException {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+		while (rs.next()) {
+			
+			JPanel p1 = new JPanel();
+			p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+			Employee employee = getEmployee(rs);
+			JTextField updateResultField = new JTextField();
+
+			JTextField idField = new JTextField(employee.getId());
+			idField.setEditable(false);
+
+			JTextField fnameField = new JTextField(employee.getFname());
+			JTextField lnameField = new JTextField(employee.getLname());
+
+			JTextField officeNumberField = new JTextField(employee.getOffice());
+			JTextField officeNameField = new JTextField(employee.getOfficeName());
+			officeNameField.setEditable(false);
+
+			JTextField projectNumberField = new JTextField(employee.getProject());
+			JTextField projectNameField = new JTextField(employee.getProjectName());
+			projectNameField.setEditable(false);
+
+			p1.add(idField);
+			p1.add(fnameField);
+			p1.add(lnameField);
+			p1.add(officeNumberField);
+			p1.add(officeNameField);
+			p1.add(projectNumberField);
+			p1.add(projectNameField);
+			
+
+
+			fnameField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					fnameField.setText("");
+				}
+			});
+
+			lnameField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lnameField.setText("");
+				}
+			});
+
+			officeNumberField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					officeNumberField.setText("");
+				}
+			});
+
+			projectNumberField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					projectNumberField.setText("");
+				}
+			});
+
+			JButton btn = new JButton("update");
+			p1.add(btn);
+			p1.add(updateResultField);
+			ev.addToMainPanel(p1);
+
+			int employeeId = getEmployee(rs).getId();
+
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					try (PreparedStatement stmtUpdateRow = conn.prepareStatement(
+							"UPDATE employees (fname, lname, project, office) " + "VALUES (?, ?, ?, ?)");) {
+						String fName = fnameField.getText();
+						String lName = lnameField.getText();
+						stmtUpdateRow.setString(1, fName);
+						stmtUpdateRow.setString(2, lName);
+						stmtUpdateRow.setInt(3, Integer.parseInt(officeNumberField.getText()));
+						stmtUpdateRow.setInt(4, Integer.parseInt(projectNumberField.getText()));
+
+						updateResultField.setText("*** Employee " + employeeId + " has been updated ***");
+						stmtUpdateRow.executeUpdate();
+
+					} catch (SQLException ex) {
+						System.out.println(ex.getMessage());
+					}
+
+				}
+
+			});
+		}
+		ev.setVisible(true);
+	}
+}

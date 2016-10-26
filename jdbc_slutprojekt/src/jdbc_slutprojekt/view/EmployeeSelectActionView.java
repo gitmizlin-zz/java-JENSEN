@@ -14,16 +14,18 @@ import jdbc_slutprojekt.controll.EmployeeManager;
 public class EmployeeSelectActionView extends JFrame {
 
 	private JButton addButton = new JButton("Add");
+	private JButton updateButton = new JButton("Update");
 	private JButton deleteButton = new JButton("Delete");
 	private JButton searchButton = new JButton("Search");
 	private JButton showAllButton = new JButton("Show all data");
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private Box box = Box.createVerticalBox();
+	
 
 	public EmployeeSelectActionView(String title, ResultSet rs, Connection conn) throws SQLException {
 		super(title);
-
-		EmployeeManager em = new EmployeeManager(conn);
+		
+		EmployeeManager em = new EmployeeManager(conn, rs);
 
 		try {
 			System.out.println("constructor closed? " + rs.isClosed());
@@ -38,10 +40,12 @@ public class EmployeeSelectActionView extends JFrame {
 		setLocation(100, 100);
 
 		box.add(addButton);
+		box.add(updateButton);
 		box.add(deleteButton);
 		box.add(searchButton);
 		box.add(showAllButton);
 		box.add(goBackToMainButton);
+		
 
 		add(box);
 
@@ -102,5 +106,21 @@ public class EmployeeSelectActionView extends JFrame {
 				}
 			}
 		});
+	
+		updateButton.addActionListener(new ActionListener() {
+	
+			public void actionPerformed(ActionEvent e) {
+				try {
+					em.updateRow(rs);
+
+					setVisible(false);
+	
+				} catch (Exception e1) {
+	
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
-}
+}	
+
