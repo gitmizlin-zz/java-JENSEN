@@ -20,11 +20,10 @@ public class EmployeeSelectActionView extends JFrame {
 	private JButton showAllButton = new JButton("Show all data");
 	private JButton goBackToMainButton = new JButton("Go back to main menu");
 	private Box box = Box.createVerticalBox();
-	
 
 	public EmployeeSelectActionView(String title, ResultSet rs, Connection conn) throws SQLException {
 		super(title);
-		
+
 		EmployeeManager em = new EmployeeManager(conn, rs);
 
 		try {
@@ -45,7 +44,6 @@ public class EmployeeSelectActionView extends JFrame {
 		box.add(searchButton);
 		box.add(showAllButton);
 		box.add(goBackToMainButton);
-		
 
 		add(box);
 
@@ -106,21 +104,20 @@ public class EmployeeSelectActionView extends JFrame {
 				}
 			}
 		});
-	
+
 		updateButton.addActionListener(new ActionListener() {
-	
+
 			public void actionPerformed(ActionEvent e) {
 				try {
 					em.updateRow(rs);
 
 					setVisible(false);
-	
+
 				} catch (Exception e1) {
-	
+
 					e1.printStackTrace();
 				}
 			}
 		});
 	}
-}	
-
+}

@@ -43,7 +43,7 @@ public class ProjectManager {
 	public void getAllRows(ResultSet rs) throws SQLException {
 		String txt = "";
 		while (rs.next()) {
-			txt = txt + rs.getInt("id") + " " + rs.getString("name");
+			txt = txt + rs.getInt("id") + " " + rs.getString("name") + "\n";
 		}
 		pv.setResultInTextArea(txt, pv.getResultTextArea());
 	}
@@ -101,11 +101,11 @@ public class ProjectManager {
 			String pName = getProject(rs).getName();
 
 			JPanel p2 = new JPanel();
-			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
 			JLabel l = new JLabel(pId + " " + pName);
 			JButton btn = new JButton("delete");
-			p2.add(l);
 			p2.add(btn);
+			p2.add(l);
 			p.add(p2);
 			pv.addToMainPanel(p);
 

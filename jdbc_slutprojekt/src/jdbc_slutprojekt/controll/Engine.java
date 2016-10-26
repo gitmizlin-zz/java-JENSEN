@@ -13,7 +13,7 @@ public class Engine {
 	private final String PASSWORD = "";
 	private final String CONN_STRING = "jdbc:mysql://localhost/company";
 	private Connection conn;
-	private EmployeeManager em;
+
 	EmployeeResultView rv = new EmployeeResultView("Employee search result");
 
 	Engine() throws SQLException {

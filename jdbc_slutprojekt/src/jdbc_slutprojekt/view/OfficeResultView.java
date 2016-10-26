@@ -29,6 +29,8 @@ public class OfficeResultView extends JFrame {
 		mainPanel.add(result);
 		setContentPane(jsp);
 		
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		
 		setVisible(true);
 
 		goBackToMainButton.addActionListener(new ActionListener() {

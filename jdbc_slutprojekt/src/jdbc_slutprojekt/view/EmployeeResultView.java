@@ -28,6 +28,7 @@ public class EmployeeResultView extends JFrame {
 		mainPanel.add(goBackToMainButton);
 		mainPanel.add(result);
 		setContentPane(jsp);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
 		setVisible(true);
 

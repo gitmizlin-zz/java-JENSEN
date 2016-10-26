@@ -23,4 +23,9 @@
 <fullyQualifiedTypeName name="com.google.gwt.core.client.GWT"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="jdbc_slutprojekt.view.ProjectResultView"/>
+<fullyQualifiedTypeName name="jdbc_slutprojekt.model.Project"/>
+<fullyQualifiedTypeName name="jdbc_slutprojekt.view.ProjectSelectActionView"/>
+<fullyQualifiedTypeName name="jdbc_slutprojekt.controll.ProjectManager"/>
+<fullyQualifiedTypeName name="java.awt.BorderLayout"/>
 </qualifiedTypeNameHistroy>
