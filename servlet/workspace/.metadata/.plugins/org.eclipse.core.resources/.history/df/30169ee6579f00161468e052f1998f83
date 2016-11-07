@@ -1,0 +1,11 @@
+package com.jensen.JSPUtil;
+
+public final class JSPUtil {
+	private JSPUtil() {
+		
+	}
+	
+	public static String toLower(String string) { // static = class method
+		return string.toLowerCase();
+	}
+}

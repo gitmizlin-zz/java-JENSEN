@@ -1,0 +1,7 @@
+INDEX VERSION 1.126
+/home/mizuho/workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2248968099.index
+/test_jee
+/home/mizuho/workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/585178756.index
+/test_jee
+/home/mizuho/workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3082874910.index
+/test
