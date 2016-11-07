@@ -1,0 +1,11 @@
+<html>
+
+<br><br>
+<p align="center">
+<%=
+
+
+%>
+<jsp:include page="nav.jsp" />
+</p>
+</html>

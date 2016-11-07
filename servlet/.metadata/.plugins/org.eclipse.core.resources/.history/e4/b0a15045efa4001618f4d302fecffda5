@@ -1,0 +1,10 @@
+<html>
+
+<br><br>
+<%=
+
+new java.util.Date ()
+
+%>
+
+</html>

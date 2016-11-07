@@ -1,0 +1,18 @@
+<html>
+<body>
+
+<%@ include file="ControllerServlet" %>
+
+<%
+	String pageStr = request.getParameter("page");
+	
+	if (pageStr.equals("") || pageStr == null) {
+		out.println("Hej - vem där");
+	} else {
+		out.println("Hej - " + pageStr);
+	}
+%>
+
+
+</body>
+</html>

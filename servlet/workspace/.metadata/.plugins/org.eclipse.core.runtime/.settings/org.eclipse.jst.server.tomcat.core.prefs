@@ -1,5 +1,5 @@
-#Thu Nov 03 12:51:10 CET 2016
-locationorg.eclipse.jst.server.tomcat.runtime.60=/home/mizuho
 eclipse.preferences.version=1
-locationorg.eclipse.jst.server.tomcat.runtime.70=/usr/share/tomcat7
 locationorg.eclipse.jst.server.tomcat.runtime.55=/home/mizuho
+locationorg.eclipse.jst.server.tomcat.runtime.60=/home/mizuho
+locationorg.eclipse.jst.server.tomcat.runtime.70=/usr/share/tomcat7
+locationorg.eclipse.jst.server.tomcat.runtime.80=/home/mizuho/apache-tomcat-8.0.38

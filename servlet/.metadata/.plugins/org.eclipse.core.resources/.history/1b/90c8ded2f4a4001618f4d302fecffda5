@@ -1,0 +1,14 @@
+<html>
+<body>
+
+<nav>
+
+<a href=ovn.jsp?page=katt>Katt </a>
+<a href=ovn.jsp?page=apa>Apa </a>
+<a href=ovn.jsp?page=hund>Hund </a>
+</nav>
+
+</body>
+
+
+</html>

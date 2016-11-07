@@ -1,0 +1,11 @@
+<html>
+
+<br><br>
+<p align="center">
+<%=
+
+
+%>
+<jsp:include page="menu.jsp" />
+</p>
+</html>
