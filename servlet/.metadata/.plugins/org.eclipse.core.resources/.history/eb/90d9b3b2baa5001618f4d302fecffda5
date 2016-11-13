@@ -1,0 +1,22 @@
+<html>
+<body>
+
+<%
+
+if(request.getMethod().equalsIgnoreCase("get")) // not safe. parameter syns i länken.
+{
+String number = request.getParameter("page");
+out.println("number : " + number);
+
+}
+
+
+%>
+
+
+
+</body>
+
+
+
+</html>				

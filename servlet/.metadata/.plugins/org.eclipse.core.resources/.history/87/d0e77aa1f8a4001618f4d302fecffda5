@@ -1,0 +1,10 @@
+package com.jensen;
+
+public class BlogPage {
+	
+	private int id;	
+	private String date;
+	private String writer;
+	private String content;
+	private String link;
+}

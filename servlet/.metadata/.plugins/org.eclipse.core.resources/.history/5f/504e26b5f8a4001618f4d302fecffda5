@@ -1,0 +1,18 @@
+package com.jensen;
+
+public class BlogPage {
+
+	private int id;
+	private String date;
+	private String writer;
+	private String content;
+	private String link;
+
+	public BlogPage(int id, String date, String writer, String content, String link) {
+		this.id = id;
+		this.date = date;
+		this.writer = writer;
+		this. content = content;
+		this.link = link;			
+	}
+}

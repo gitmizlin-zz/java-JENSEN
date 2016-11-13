@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<%
+
+if(request.getMethod().equalsIgnoreCase("get")) {
+	
+	String number = request.getParameter("page");		
+	
+	if(number == null || number.equals(""))
+		out.println("Invalid page");
+	else
+		out.println("Blog ID: " + number);
+}
+
+
+%>
+
+
+</body>
+
+
+
+</html>				

@@ -1,0 +1,9 @@
+127.0.0.1 - - [13/Nov/2016:22:05:06 +0100] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [13/Nov/2016:22:05:07 +0100] "GET /ServletTest/blog.jsp HTTP/1.1" 500 2897
+127.0.0.1 - - [13/Nov/2016:22:05:18 +0100] "GET /ServletTest/index.jsp HTTP/1.1" 200 814
+127.0.0.1 - - [13/Nov/2016:22:05:24 +0100] "GET /ServletTest/ControllerServlet?id=0 HTTP/1.1" 404 1052
+127.0.0.1 - - [13/Nov/2016:22:05:29 +0100] "GET /ServletTest/index.jsp HTTP/1.1" 200 814
+127.0.0.1 - - [13/Nov/2016:22:05:40 +0100] "GET /ServletTest/WEB-INF/classes/com/jensen/BlogPage.java HTTP/1.1" 404 992
+127.0.0.1 - - [13/Nov/2016:22:05:47 +0100] "GET /ServletTest/WEB-INF/classes/com/jensen/BlogPost.java HTTP/1.1" 404 992
+127.0.0.1 - - [13/Nov/2016:22:05:52 +0100] "GET /ServletTest/index.jsp HTTP/1.1" 200 814
+127.0.0.1 - - [13/Nov/2016:22:06:02 +0100] "GET /ServletTest/ControllerServlet?id=2 HTTP/1.1" 404 1052

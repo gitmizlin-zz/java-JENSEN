@@ -1,0 +1,12 @@
+package com.jensen;
+
+import java.util.ArrayList;
+
+public class BlogMock {
+
+	public ArrayList<BlogPage> list;
+	
+	// (int id, String date, String writer, String title, String content, String link)
+	list.add(new BlogPage(1, "2013-12-31", "Thomas Vles", "Why do cats love cardboard boxes","http://blog.poopycat.com/"));
+	
+}
