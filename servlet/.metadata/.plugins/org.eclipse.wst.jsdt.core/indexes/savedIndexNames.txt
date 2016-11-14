@@ -1,8 +1,4 @@
 INDEX VERSION 1.3+/home/mizuho/miJavaJensen/java-JENSEN/servlet/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
-3317889091.index
-2908637674.index
 1876243419.index
-2595610871.index
-2496941646.index
-202213279.index
+1876243419.index
 855406058.index

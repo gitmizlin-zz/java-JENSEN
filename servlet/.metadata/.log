@@ -603,3 +603,69 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp
 
 !ENTRY org.eclipse.wst.server.discovery 1 0 2016-11-13 22:03:29.531
 !MESSAGE cacheFile=file:/home/mizuho/temp/eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:17:04.550
+!MESSAGE Invalid ZIP archive: .classpath [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:17:04.572
+!MESSAGE Invalid ZIP archive: .project [in ServletTest]
+
+!ENTRY org.eclipse.jst.jsp.core 2 2 2016-11-13 23:17:06.501
+!MESSAGE Taglib Index ZipException: /home/mizuho/miJavaJensen/java-JENSEN/servlet/ServletTest/.classpath error in opening zip file
+
+!ENTRY org.eclipse.jst.jsp.core 2 2 2016-11-13 23:17:06.503
+!MESSAGE Taglib Index ZipException: /home/mizuho/miJavaJensen/java-JENSEN/servlet/ServletTest/.project error in opening zip file
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:20:40.022
+!MESSAGE Invalid ZIP archive: .classpath [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:20:40.022
+!MESSAGE Invalid ZIP archive: .project [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:20:56.489
+!MESSAGE Invalid ZIP archive: .classpath [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:20:56.490
+!MESSAGE Invalid ZIP archive: .project [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:22:06.565
+!MESSAGE Invalid ZIP archive: .classpath [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:22:06.566
+!MESSAGE Invalid ZIP archive: .project [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:24:54.413
+!MESSAGE Invalid ZIP archive: .classpath [in ServletTest]
+
+!ENTRY org.eclipse.jdt.core 4 0 2016-11-13 23:24:54.413
+!MESSAGE Invalid ZIP archive: .project [in ServletTest]
+
+!ENTRY org.eclipse.jst.jsp.core 2 2 2016-11-13 23:24:56.410
+!MESSAGE Taglib Index ZipException: /home/mizuho/miJavaJensen/java-JENSEN/servlet/ServletTest/.classpath error in opening zip file
+
+!ENTRY org.eclipse.recommenders.rcp 2 23 2016-11-14 19:00:52.804
+!MESSAGE Failed to parse news feed
+!STACK 0
+java.net.UnknownHostException: www.codetrails.com: unknown error
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:928)
+	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1323)
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1276)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1192)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1126)
+	at org.apache.http.impl.conn.SystemDefaultDnsResolver.resolve(SystemDefaultDnsResolver.java:44)
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:102)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:319)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:363)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:57)
+	at org.apache.http.client.fluent.Executor.execute(Executor.java:206)
+	at org.eclipse.recommenders.internal.rcp.news.CheckForProjectNewsJob.getRSSFeed(CheckForProjectNewsJob.java:138)
+	at org.eclipse.recommenders.internal.rcp.news.CheckForProjectNewsJob.doRun(CheckForProjectNewsJob.java:89)
+	at org.eclipse.recommenders.internal.rcp.news.CheckForProjectNewsJob.run(CheckForProjectNewsJob.java:62)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)

@@ -1,0 +1,11 @@
+<html>
+<body>
+<form action="MyFirstServlet" method="POST" >
+User<input type="text" name="user">
+</input>
+Password<input type="text" name="pass">
+</input>
+<input type="submit"></input>
+</form>
+</body>
+</html>

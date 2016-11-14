@@ -1,11 +1,15 @@
 <html>
+<head>
+<title>Login Page</title>
+</head>
 <body>
-<form action="MyFirstServlet" method="POST" >
-User<input type="text" name="user">
-</input>
-Password<input type="text" name="pass">
-</input>
-<input type="submit"></input>
+<h3>Logga in med e-mail och lösenord</h3>
+<form action="LoginServlet" method="post">
+<strong>User Email</strong>:<input type="text" name="email"><br>
+<strong>Password</strong>:<input type="password" name="password"><br>
+<input type="submit" value="Login">
 </form>
+<br>
+Är du ny? Registrera <a href="register.html">här</a>.
 </body>
 </html>
