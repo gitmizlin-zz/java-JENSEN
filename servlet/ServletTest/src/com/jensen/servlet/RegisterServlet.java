@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jensen.util.DBConnectionManager;
 
+
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -49,10 +50,11 @@ public class RegisterServlet extends HttpServlet {
 		Connection con = (Connection) getServletContext().getAttribute("DBConnection");
 		PreparedStatement ps = null;
 		try {
-			ps = con.prepareStatement("insert into Users(name,email, password) values (?,?,?)");
-			ps.setString(1, name);
-			ps.setString(2, email);
-			ps.setString(3, password);
+			ps = con.prepareStatement("insert into users(id, name, email, password) values (?,?,?,?)");
+			ps.setInt(1, (Integer) null);
+			ps.setString(2, name);
+			ps.setString(3, email);
+			ps.setString(4, password);
 			
 			ps.execute();
 			

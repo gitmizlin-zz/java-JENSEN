@@ -18,6 +18,8 @@ public class LogoutServlet extends HttpServlet {
    
     public LogoutServlet() {
         super();
+        System.out.println("hihihi");
+
         // TODO Auto-generated constructor stub
     }
 
@@ -26,7 +28,8 @@ public class LogoutServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");  
         PrintWriter out=response.getWriter();  
-        request.getRequestDispatcher("link.html").include(request, response);  
+        request.getRequestDispatcher("index.html").include(request, response);  
+        
          
         
         //false eftersom vi inte vill skapa en ny session om det inte finns en

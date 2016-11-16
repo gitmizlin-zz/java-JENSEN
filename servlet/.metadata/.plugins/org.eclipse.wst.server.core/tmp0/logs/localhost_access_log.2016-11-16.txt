@@ -1,0 +1,6 @@
+127.0.0.1 - - [16/Nov/2016:15:25:48 +0100] "GET /ServletTest/calc.html HTTP/1.1" 200 204
+127.0.0.1 - - [16/Nov/2016:15:25:55 +0100] "POST /ServletTest/CalculatorServlet HTTP/1.1" 404 1052
+127.0.0.1 - - [16/Nov/2016:15:26:07 +0100] "GET /ServletTest/calcs.jsp HTTP/1.1" 500 2825
+127.0.0.1 - - [16/Nov/2016:15:26:32 +0100] "GET /ServletTest/index.jsp HTTP/1.1" 500 4359
+127.0.0.1 - - [16/Nov/2016:15:26:44 +0100] "GET /ServletTest/form.html HTTP/1.1" 200 224
+127.0.0.1 - - [16/Nov/2016:15:26:49 +0100] "GET /ServletTest/response.jsp?firstName=22&lastName=44 HTTP/1.1" 200 303

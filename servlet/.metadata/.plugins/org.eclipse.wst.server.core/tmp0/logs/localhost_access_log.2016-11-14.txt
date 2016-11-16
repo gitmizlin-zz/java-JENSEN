@@ -15,3 +15,17 @@
 127.0.0.1 - - [14/Nov/2016:19:34:45 +0100] "GET /ServletTest/ProfileServlet HTTP/1.1" 404 1046
 127.0.0.1 - - [14/Nov/2016:19:34:48 +0100] "GET /ServletTest/register.html HTTP/1.1" 304 -
 127.0.0.1 - - [14/Nov/2016:19:57:19 +0100] "GET /ServletTest/login.html HTTP/1.1" 200 396
+127.0.0.1 - - [14/Nov/2016:22:56:33 +0100] "GET /ServletTest/login.html HTTP/1.1" 200 396
+127.0.0.1 - - [14/Nov/2016:22:56:37 +0100] "GET /ServletTest/register.html HTTP/1.1" 304 -
+127.0.0.1 - - [14/Nov/2016:22:56:55 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:21:55 +0100] "GET /ServletTest/WEB-INF/classes/com/jensen/util/User.java HTTP/1.1" 404 992
+127.0.0.1 - - [14/Nov/2016:23:22:02 +0100] "GET /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:22:26 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:28:51 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:30:08 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:32:25 +0100] "GET /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:32:36 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:50:24 +0100] "GET /ServletTest/register.html HTTP/1.1" 304 -
+127.0.0.1 - - [14/Nov/2016:23:50:29 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:55:14 +0100] "GET /ServletTest/RegisterServlet HTTP/1.1" 404 1048
+127.0.0.1 - - [14/Nov/2016:23:55:20 +0100] "POST /ServletTest/RegisterServlet HTTP/1.1" 404 1048

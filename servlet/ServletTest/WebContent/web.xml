@@ -14,7 +14,7 @@
   </context-param>
   <context-param>
     <param-name>dbURL</param-name>
-    <param-value>jdbc:mysql://localhost/UserDB</param-value>
+    <param-value>jdbc:mysql://localhost/Users</param-value>
   </context-param>
   <error-page>
     <error-code>404</error-code>
