@@ -1,0 +1,5 @@
+package com.jensen.util;
+
+public class DBConnectionManager {
+
+}

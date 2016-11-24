@@ -1,0 +1,5 @@
+package com.jensen.errorhandler;
+
+public class WebErrorHandler {
+
+}

@@ -1,0 +1,5 @@
+package com.jensen;
+
+public class HelloWorldImpl {
+
+}

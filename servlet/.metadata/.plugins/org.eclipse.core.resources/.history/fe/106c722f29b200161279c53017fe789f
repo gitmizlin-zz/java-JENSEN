@@ -1,0 +1,8 @@
+package com.jensen;
+
+public interface HelloWorld {
+	
+	public String sayHello() {
+		
+	}
+}

@@ -1,0 +1,10 @@
+package com.jensen;
+
+import javax.jws.WebMethod;
+
+public interface HelloWorld {
+	
+	@WebMethod
+	public String sayHello();
+	
+}	

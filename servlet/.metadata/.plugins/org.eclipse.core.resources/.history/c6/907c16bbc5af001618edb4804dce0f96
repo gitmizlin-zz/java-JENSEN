@@ -1,0 +1,6 @@
+package com.jensen;
+
+@Path
+public class RestRoot {
+
+}
