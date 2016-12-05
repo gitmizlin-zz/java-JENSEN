@@ -68,7 +68,6 @@ public class LoginServlet extends HttpServlet {
 				rd.include(request, response);
 			}
 		} catch (SQLException e) {
-			System.out.println("haaa--------3");
 			e.printStackTrace();
 			throw new ServletException("DB Connection problem.");
 		}finally{

@@ -1,6 +1,0 @@
-package rest;
-
-@Path
-public class RestRoot {
-
-}

@@ -1983,3 +1983,13 @@ java.lang.RuntimeException: Exception(s) unloading resources - check log files
 
 !ENTRY org.eclipse.wst.server.discovery 1 0 2016-11-24 10:59:37.361
 !MESSAGE cacheFile=file:/home/mizuho/temp/eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
+!SESSION 2016-11-28 10:29:58.972 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_101
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2016-11-28 10:30:22.718
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
