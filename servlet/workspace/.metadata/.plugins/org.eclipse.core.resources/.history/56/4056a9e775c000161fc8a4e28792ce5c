@@ -1,0 +1,116 @@
+package com.jensen;
+
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import MISApp.utilities.*;
+
+public class ReadFileServlet extends HttpServlet {
+
+	public void init() {
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (request.getParameter("virtualPath") != null) {
+			String virtualPath = request.getParameter("virtualPath");
+			ServletContext context = getServletContext();
+			ServletUtilities.readAndDisplayFile(virtualPath, request, response, context);
+		}
+	}
+}
+// ServletUtilities.java
+package MISApp.utilities;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import java.text.*;
+
+public class ServletUtilities {
+	public static void readAndDisplayFile(String virtualPath, HttpServletRequest req, HttpServletResponse res,
+			ServletContext context) throws ServletException, IOException {
+		// get Output Stream
+		PrintWriter out = res.getWriter();
+		// set content type for writing the output
+		res.setContentType("text/html");
+		out.println("<html><head></head><body>");
+		try {
+			String actualPath = context.getRealPath(virtualPath);
+			System.out.println(actualPath);
+			File file = new File(actualPath);
+			FileReader fileReader = new FileReader(file);
+			BufferedReader buffReader = new BufferedReader(fileReader);
+			String buffer = new String();
+			while ((buffer = buffReader.readLine()) != null)
+				out.println(buffer);
+			buffReader.close();
+		} catch (IOException e) {
+			out.println("Error reading file: " + e.getMessage());
+		}
+		out.println("</body></html>");
+		out.close();
+	}
+}
+
+// package com.jensen;
+
+// import java.io.BufferedReader;
+// import java.io.IOException;
+// import java.io.InputStream;
+// import java.io.InputStreamReader;
+// import java.io.PrintWriter;
+//
+// import javax.servlet.ServletContext;
+// import javax.servlet.ServletException;
+// import javax.servlet.annotation.WebServlet;
+// import javax.servlet.http.HttpServlet;
+// import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletResponse;
+//
+// @WebServlet("/ReadFileServlet")
+// public class ReadFileServlet extends HttpServlet {
+//
+// protected void doGet(HttpServletRequest request, HttpServletResponse
+// response)
+// throws ServletException, IOException {
+//
+//
+//
+// response.setContentType("text/html");
+//
+// // Read user file placed under WEB_INF
+// String filename = "/WEB-INF/users";
+//
+// ServletContext context = getServletContext();
+// String path = context.getRealPath(filename);
+// File file = new File(path);
+//
+// InputStream inputStream = context.getResourceAsStream(filename);
+//
+// if (inputStream != null) {
+// InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+// BufferedReader reader = new BufferedReader(inputStreamReader);
+// PrintWriter writer = response.getWriter();
+// String text = "";
+//
+//
+//
+//
+// // Read the file line by line
+//
+// while ((text = reader.readLine()) != null) {
+// writer.println(text);
+// }
+// writer.println("test---");
+// }
+//
+// }
+//
+// protected void doPost(HttpServletRequest request,
+// HttpServletResponse response) throws ServletException, IOException {
+// }
+// }

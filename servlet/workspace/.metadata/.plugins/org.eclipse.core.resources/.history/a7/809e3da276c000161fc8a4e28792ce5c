@@ -1,0 +1,85 @@
+package com.jensen;
+
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import com.jensen.util.ServletUtilities;
+
+
+public class ReadFileServlet extends HttpServlet {
+
+	public void init() {
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (request.getParameter("virtualPath") != null) {
+			String virtualPath = request.getParameter("virtualPath");
+			ServletContext context = getServletContext();
+			ServletUtilities.readAndDisplayFile(virtualPath, request, response, context);
+		}
+	}
+}
+
+
+
+// package com.jensen;
+
+// import java.io.BufferedReader;
+// import java.io.IOException;
+// import java.io.InputStream;
+// import java.io.InputStreamReader;
+// import java.io.PrintWriter;
+//
+// import javax.servlet.ServletContext;
+// import javax.servlet.ServletException;
+// import javax.servlet.annotation.WebServlet;
+// import javax.servlet.http.HttpServlet;
+// import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletResponse;
+//
+// @WebServlet("/ReadFileServlet")
+// public class ReadFileServlet extends HttpServlet {
+//
+// protected void doGet(HttpServletRequest request, HttpServletResponse
+// response)
+// throws ServletException, IOException {
+//
+//
+//
+// response.setContentType("text/html");
+//
+// // Read user file placed under WEB_INF
+// String filename = "/WEB-INF/users";
+//
+// ServletContext context = getServletContext();
+// String path = context.getRealPath(filename);
+// File file = new File(path);
+//
+// InputStream inputStream = context.getResourceAsStream(filename);
+//
+// if (inputStream != null) {
+// InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+// BufferedReader reader = new BufferedReader(inputStreamReader);
+// PrintWriter writer = response.getWriter();
+// String text = "";
+//
+//
+//
+//
+// // Read the file line by line
+//
+// while ((text = reader.readLine()) != null) {
+// writer.println(text);
+// }
+// writer.println("test---");
+// }
+//
+// }
+//
+// protected void doPost(HttpServletRequest request,
+// HttpServletResponse response) throws ServletException, IOException {
+// }
+// }
