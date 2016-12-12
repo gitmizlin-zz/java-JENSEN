@@ -1,0 +1,2 @@
+127.0.0.1 - - [08/Dec/2016:07:30:54 +0100] "GET /Servlet_20161205_01/servlet/com.javawithease.business.InitParamExample HTTP/1.1" 404 1134
+127.0.0.1 - - [08/Dec/2016:07:31:04 +0100] "GET /Servlet_20161205_01/InitParamExample HTTP/1.1" 200 30

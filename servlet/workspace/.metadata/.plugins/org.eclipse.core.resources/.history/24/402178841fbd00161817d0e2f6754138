@@ -1,0 +1,33 @@
+package com.jensen;
+
+public class DeleteCookieServlet extends HttpServlet { 
+	private static final long serialVersionUID = 1L;   
+	
+	public DeleteCookieServlet() {   
+		
+	}   
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException { 
+		
+		response.setContentType("text/html"); 
+		PrintWriter out = response.getWriter();   
+		
+		try { 
+			Cookie cookies[] = request.getCookies(); 
+			out.print("Deleted cookie are:"); 
+			
+			for(Cookie cookie : cookies) {
+				
+				cookie.setMaxAge(0); 
+				out.println("Cookie name: " + cookie.getName()); 
+			}   
+			
+			out.close(); 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		
+		} 
+	} 
+}
