@@ -1,8 +1,0 @@
-package com.javawithease.business;
-
-public class Snippet {
-	public static void main(String[] args) {
-		InitParamExample
-	}
-}
-

@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("password", password);
 			out.println("Login successful:)<br/><br/>");
 			
-//			out.println("<a href='DisplaySessionValueServlet'>" + "Get session info</a>");
+			out.println("<a href='DisplaySessionValueServlet'>" + "Get session info</a>");
 			userName = (String) session.getAttribute("userName");
 			password = (String) session.getAttribute("password");
 			out.println("Username: " + userName + "<br><br>");

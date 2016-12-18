@@ -11330,3 +11330,67 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -clean -product org.ecli
 
 !ENTRY org.eclipse.core.resources 2 10035 2016-12-12 08:52:37.412
 !MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2016-12-18 12:15:03.618 -----------------------------------------------
+eclipse.buildId=4.6.0.I20160606-1100
+java.version=1.8.0_101
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.equinox.jsp.jasper 4 0 2016-12-18 12:15:05.025
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.equinox.jsp.jasper [152]
+  Unresolved requirement: Import-Package: org.apache.jasper.servlet; version="[0.0.0,8.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:444)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1620)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1599)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1571)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1514)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.equinox.jsp.jasper.registry 4 0 2016-12-18 12:15:05.044
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.equinox.jsp.jasper.registry [153]
+  Unresolved requirement: Import-Package: org.eclipse.equinox.jsp.jasper
+    -> Export-Package: org.eclipse.equinox.jsp.jasper; bundle-symbolic-name="org.eclipse.equinox.jsp.jasper"; bundle-version="1.0.500.v20150119-1358"; version="1.0.0"
+       org.eclipse.equinox.jsp.jasper [152]
+         Unresolved requirement: Import-Package: org.apache.jasper.servlet; version="[0.0.0,8.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:444)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1620)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1599)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1571)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1514)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.help.webapp 4 0 2016-12-18 12:15:05.096
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.help.webapp [196]
+  Unresolved requirement: Require-Bundle: org.eclipse.equinox.jsp.jasper.registry; bundle-version="1.0.100"
+    -> Bundle-SymbolicName: org.eclipse.equinox.jsp.jasper.registry; bundle-version="1.0.300.v20130327-1442"
+       org.eclipse.equinox.jsp.jasper.registry [153]
+         Unresolved requirement: Import-Package: org.eclipse.equinox.jsp.jasper
+           -> Export-Package: org.eclipse.equinox.jsp.jasper; bundle-symbolic-name="org.eclipse.equinox.jsp.jasper"; bundle-version="1.0.500.v20150119-1358"; version="1.0.0"
+              org.eclipse.equinox.jsp.jasper [152]
+                Unresolved requirement: Import-Package: org.apache.jasper.servlet; version="[0.0.0,8.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:444)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1620)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1599)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1571)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1514)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.ui.navigator 2 0 2016-12-18 12:15:25.848
+!MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering

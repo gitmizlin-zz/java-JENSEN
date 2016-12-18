@@ -1,0 +1,10 @@
+127.0.0.1 - - [18/Dec/2016:22:34:09 +0100] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [18/Dec/2016:22:34:29 +0100] "GET /ServletMi_20161212_02/index.html HTTP/1.1" 200 472
+127.0.0.1 - - [18/Dec/2016:22:34:33 +0100] "GET /ServletMi_20161212_02/UploadFileServlet HTTP/1.1" 404 1072
+127.0.0.1 - - [18/Dec/2016:22:34:36 +0100] "GET /ServletMi_20161212_02/DisplaySessionValueServlet HTTP/1.1" 500 92
+127.0.0.1 - - [18/Dec/2016:22:34:39 +0100] "GET /ServletMi_20161212_02/login.html HTTP/1.1" 200 379
+127.0.0.1 - - [18/Dec/2016:22:34:44 +0100] "POST /ServletMi_20161212_02/LoginServlet HTTP/1.1" 200 258
+127.0.0.1 - - [18/Dec/2016:22:34:55 +0100] "GET /ServletMi_20161212_02/DisplaySessionValueServlet HTTP/1.1" 200 194
+127.0.0.1 - - [18/Dec/2016:22:34:58 +0100] "GET /ServletMi_20161212_02/DisplaySessionValueServlet HTTP/1.1" 200 194
+127.0.0.1 - - [18/Dec/2016:22:35:01 +0100] "POST /ServletMi_20161212_02/LogoutServlet HTTP/1.1" 200 65
+127.0.0.1 - - [18/Dec/2016:22:35:03 +0100] "GET /ServletMi_20161212_02/DisplaySessionValueServlet HTTP/1.1" 500 92
