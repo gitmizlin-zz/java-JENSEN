@@ -28,9 +28,7 @@ Code Language: Java, Html5
 This project can be reached at:
 GitHub: https://github.com/gitmizlin/java-JENSEN/tree/master/servlet/workspace/ServletMi_20161212_02
 
-Owner: Mizuho Ishihara
 
-email: mizlin@gmail.com
 
 
 
