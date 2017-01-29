@@ -1,0 +1,1 @@
+~/program files/idea-IU-163.11103.6/bin$ ./idea.sh
