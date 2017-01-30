@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <!-- Simple Trigger, run every 5 seconds -->
+    <!--bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+
+        <property name="jobDetail" ref="runMeJobDetail" />
+        <property name="repeatInterval" value="5000" />
+        <property name="startDelay" value="1000" />
+
+    </bean -->
+
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+        <property name="jobDetail" ref="runMeJobDetail" />
+        <property name="cronExpression" value="0/5 * * * * ?" />
+
+    </bean>
+
+    <!-- den här skapar en crontrigger -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- crontrigger skapar en jobDetail-->
+
+    <bean id="runMeJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.fardium.intro.RunMeTask">
+        </property>
+    </bean>
+
+    <!-- den här skapar en simpletrigger -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- simpletrigger skapar en jobDetail-->
+    <bean id="runMeJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.fardium.intro.RunMeTask">
+        </property>
+    </bean>
+    
+
+</beans>
